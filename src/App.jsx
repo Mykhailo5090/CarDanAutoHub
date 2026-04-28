@@ -1,9 +1,10 @@
 const App = () => {
   return(
-    <div>
-      <h1>Hello</h1>
-      <h2>hello</h2>
-    </div>
+    <header className="header__wrapper __wrapper">
+      <div className="header__grid"> 
+        
+      </div>
+    </header>
   )
 }
 
