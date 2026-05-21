@@ -1,10 +1,8 @@
+import Header from "./components/header/header"
+
 const App = () => {
   return(
-    <header className="header__wrapper __wrapper">
-      <div className="header__grid"> 
-        
-      </div>
-    </header>
+    <Header></Header>
   )
 }
 
