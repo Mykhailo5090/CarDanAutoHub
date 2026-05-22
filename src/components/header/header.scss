@@ -90,6 +90,7 @@ select {
 $bluecolor:#0F1A32;
 $bonecolor:#F5F4F5;
 $darkbluecolor:#0F1A32;
+$graycolor:#464646;
 
 /*--------------------- Header START ----------------------*/
 
@@ -157,6 +158,16 @@ body{
   .p_p{
     font-size: 32px;
   }
+  .p_p:hover{
+    
+    
+    background-color: none
+    ;
+  }
+//   .p_p:visited{
+//     color: red($color: #992121);
+
+//   }
   .porsche_logo_gap{
     display: flex;
 
@@ -165,6 +176,15 @@ body{
   .div_user{
     display: flex;
   }
+  .heart-div{
+    margin-right: 7%;
+
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
 
 
 
@@ -175,13 +195,13 @@ body{
   .heart-img{
     height: 42px;
     width: 36px;
-    margin-right: 7%;
+    
     
   }
   .user_img{
     height: 42px;
     width: 36px;
-    margin-right: 5px;
+    margin-right: 10px;
     
   }
 

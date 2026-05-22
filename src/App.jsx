@@ -1,9 +1,13 @@
-import Header from "./components/header/header"
+import { BrowserRouter as Router } from 'react-router-dom'; // Додаємо цей імпорт
+import Header from "./components/header/header";
 
 const App = () => {
-  return(
-    <Header></Header>
-  )
+  return (
+    <Router>
+      <Header />
+      {/* Тут пізніше будуть твої Routes */}
+    </Router>
+  );
 }
 
-export default App
+export default App;
