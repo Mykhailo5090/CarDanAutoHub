@@ -94,3 +94,40 @@ $graycolor:#464646;
 //     margin-left: 50px;
 //     margin-right: 50px;
 // }
+.porsche_sub_header_img{
+    z-index: -1;
+    position: absolute;
+    
+
+}
+.main_wrapper{
+    margin-left: 50px;
+    margin-right: 50px;
+}
+.main_comp{
+    z-index: 1;
+}
+.porsche_font{
+    font-family: porsche;
+    font-size: 38px;
+    
+}
+.porsche_right_under{
+    display: flex;
+    align-items: center;
+
+    
+}
+.main_item_1{
+    color: $graycolor;
+    max-height: 1080px;
+    
+}
+.porsche_right_under_container{
+    display: flex;
+    justify-content: end;
+    margin-top: 52%;
+   
+    
+
+}
