@@ -1,25 +1,30 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Додаємо useNavigate
+import { Link, useNavigate } from 'react-router-dom';
 import '../header/header.scss';
 import logo from '../img/porschelogo.png';
 import blackheartlogo from '../img/blackheart.png';
 import userimg from '../img/user.png';
 
-
 const Header = () => {
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
-    // Перевіряємо, чи є мітка про візит у пам'яті браузера
-    const hasVisited = localStorage.getItem('hasVisitedCarDan');
+    // 1. Перевіряємо, чи користувач ВЖЕ залогінений
+    const savedUser = localStorage.getItem('user');
 
-    if (!hasVisited) {
-      // Якщо це перший раз — позначаємо, що користувач був, і ведемо на реєстрацію
-      localStorage.setItem('hasVisitedCarDan', 'true');
-      navigate('/registration');
+    if (savedUser) {
+      // Якщо дані є в базі браузера — ведемо в профіль
+      navigate('/profile');
     } else {
-      // Якщо вже був — ведемо на логін
-      navigate('/login');
+      // 2. Якщо не залогінений, перевіряємо, чи він тут вперше
+      const hasVisited = localStorage.getItem('hasVisitedCarDan');
+
+      if (!hasVisited) {
+        localStorage.setItem('hasVisitedCarDan', 'true');
+        navigate('/registration');
+      } else {
+        navigate('/login');
+      }
     }
   };
 
@@ -50,10 +55,12 @@ const Header = () => {
               <img className="heart-img" src={blackheartlogo} alt="heart-like" />
             </Link>
             
-            {/* Замість Link використовуємо div з нашою функцією кліку */}
             <div className='div_user' onClick={handleProfileClick} style={{ cursor: 'pointer' }}>
               <img className="user_img" src={userimg} alt="user-logo" />
-              <p className='p_p p_login'>Login</p>
+              {/* Міняємо текст кнопки залежно від стану */}
+              <p className='p_p p_login'>
+                {localStorage.getItem('user') ? 'Profile' : 'Login'}
+              </p>
             </div>
           </div>
         </div>

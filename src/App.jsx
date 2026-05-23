@@ -4,10 +4,11 @@ import MainPage from './components/main/mainpage';
 import BuyPage from '../src/components/buy/buypage';
 import LoginPage from '../src/components/registration/login';
 import RegistrationPage from './components/registration/registration';
+import UserPage from '../src/components/user/user';
+import SellPage from '../src/components/sell/sell';
 
 // Тимчасові компоненти для перевірки (потім заміниш на свої файли)
 
-const SellPage = () => <div style={{padding: '100px'}}>Сторінка ПРОДАЖУ (тут буде форма створення оголошення)</div>;
 const InsurancePage = () => <div style={{padding: '100px'}}>Сторінка СТРАХУВАННЯ</div>;
 const AboutPage = () => <div style={{padding: '100px'}}>Сторінка ПРО НАС</div>;
 
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/registration" element={<RegistrationPage />} />
+        <Route path="/profile" element={<UserPage />} />
       </Routes>
     </Router>
   );
