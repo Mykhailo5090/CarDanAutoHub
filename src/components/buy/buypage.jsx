@@ -17,12 +17,28 @@ const BuyPage = () => {
           <div key={car.id} style={{ border: '1px solid #ddd', borderRadius: '8px', overflow: 'hidden' }}>
             {/* Виводимо перше фото з масиву */}
             {car.images && (
-              <img 
-                src={`http://localhost:5001${JSON.parse(car.images)[0]}`} 
-                alt="car" 
-                style={{ width: '100%', height: '200px', objectFit: 'cover' }} 
-              />
-            )}
+  <img 
+    src={(() => {
+      try {
+        const imagePath = car.images.startsWith('[') 
+          ? JSON.parse(car.images)[0] 
+          : car.images;
+        const finalUrl = `http://localhost:5001${imagePath}`;
+        // Цей лог покаже нам в консолі реальний шлях до фото
+        console.log("Спроба завантажити фото:", finalUrl); 
+        return finalUrl;
+      } catch (e) {
+        console.error("Помилка обробки car.images:", car.images);
+        return "";
+      }
+    })()} 
+    alt="car" 
+    style={{ width: '100%', height: '200px', objectFit: 'cover' }} 
+    onError={(e) => {
+      console.log("Остаточна помилка завантаження (src):", e.target.src);
+    }}
+  />
+)}
             <div style={{ padding: '15px' }}>
               <h3>{car.brand} {car.model} ({car.year})</h3>
               <p style={{ color: '#d91d1d', fontWeight: 'bold', fontSize: '20px' }}>${car.price}</p>

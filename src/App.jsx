@@ -7,6 +7,7 @@ import RegistrationPage from './components/registration/registration';
 import UserPage from '../src/components/user/user';
 import SellPage from '../src/components/sell/sell';
 
+
 // Тимчасові компоненти для перевірки (потім заміниш на свої файли)
 
 const InsurancePage = () => <div style={{padding: '100px'}}>Сторінка СТРАХУВАННЯ</div>;
@@ -30,6 +31,8 @@ const App = () => {
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/profile" element={<UserPage />} />
+        
+        
       </Routes>
     </Router>
   );
