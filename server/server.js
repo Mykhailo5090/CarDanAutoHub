@@ -1,16 +1,19 @@
 import express from 'express';
 import cors from 'cors';
 import pkg from 'pg';
-import bcrypt from 'bcryptjs'; // Використовуємо bcryptjs для кращої сумісності з ES Modules
+import bcrypt from 'bcryptjs';
+import multer from 'multer'; // Додано
+import path from 'path';   // Додано
 
 const { Pool } = pkg;
-const app = express(); // 1. Спочатку створюємо app
+const app = express();
 
-// 2. Потім налаштовуємо middleware
 app.use(cors());
 app.use(express.json());
 
-// Налаштування підключення до PostgreSQL (порт 5432)
+// Робимо папку uploads публічною, щоб фронтенд міг бачити картинки за посиланням
+app.use('/uploads', express.static('uploads'));
+
 const pool = new Pool({
   user: 'postgres',           
   host: 'localhost',
@@ -19,57 +22,57 @@ const pool = new Pool({
   port: 5432,
 });
 
-// Перевірка зв'язку з базою при старті
-pool.connect((err, client, release) => {
-  if (err) {
-    return console.error('Помилка підключення до бази:', err.stack);
+// Налаштування Multer для зберігання фото
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // папка для збереження
+  },
+  filename: (req, file, cb) => {
+    // створюємо унікальне ім'я: дата + оригінальне ім'я
+    cb(null, Date.now() + '-' + file.originalname);
   }
+});
+const upload = multer({ storage: storage });
+
+pool.connect((err, client, release) => {
+  if (err) return console.error('Помилка підключення до бази:', err.stack);
   console.log('Успішно підключено до PostgreSQL на порті 5432');
   release();
 });
 
-// Ендпоінт для РЕЄСТРАЦІЇ
-app.post('/register', async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+// --- ЕНДПОЇНТИ ---
 
-    const newUser = await pool.query(
-      'INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING *',
-      [email, hashedPassword]
+// 1. Реєстрація та Логін залишаються без змін...
+app.post('/register', async (req, res) => { /* твій існуючий код */ });
+app.post('/login', async (req, res) => { /* твій існуючий код */ });
+
+// 2. ДОДАВАННЯ АВТОМОБІЛЯ (Оголошення)
+// 'images' - це назва поля, яке прийде з фронтенду (до 5 файлів)
+app.post('/api/cars', upload.array('images', 5), async (req, res) => {
+  try {
+    const { 
+      user_id, brand, model, year, price, mileage, 
+      fuel_type, transmission, engine_volume, region, description 
+    } = req.body;
+
+    // Отримуємо масив шляхів до завантажених файлів
+    const imageUrls = req.files.map(file => `/uploads/${file.filename}`);
+
+    const newCar = await pool.query(
+      `INSERT INTO cars 
+      (user_id, brand, model, year, price, mileage, fuel_type, transmission, engine_volume, region, description, images) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *`,
+      [
+        user_id, brand, model, year, price, mileage, 
+        fuel_type, transmission, engine_volume, region, description, 
+        JSON.stringify(imageUrls) // зберігаємо масив як JSON string
+      ]
     );
-    res.json({ message: "Success", user: newUser.rows[0] });
-  } catch (err) {
-    console.error(err); // Тепер помилка 'err' використовується
-    res.status(500).json({ error: "User already exists or DB error" });
-  }
-});
 
-// Ендпоінт для ЛОГІНУ
-app.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    // 1. Шукаємо користувача за email
-    const user = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-
-    if (user.rows.length > 0) {
-      // 2. Порівнюємо введений пароль з хешем у базі
-      const validPassword = await bcrypt.compare(password, user.rows[0].password_hash);
-      
-      if (validPassword) {
-        // Відправляємо дані користувача (крім пароля!) на фронтенд
-        const { password_hash, ...userData } = user.rows[0];
-        res.json({ message: "Login successful", user: userData });
-      } else {
-        res.status(401).json({ error: "Wrong password" });
-      }
-    } else {
-      res.status(404).json({ error: "User not found" });
-    }
+    res.json({ message: "Car added successfully", car: newCar.rows[0] });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "Server error while adding car" });
   }
 });
 

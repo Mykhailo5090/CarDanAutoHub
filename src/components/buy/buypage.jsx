@@ -1,33 +1,38 @@
-import '../main/mainpage.scss';
-import porschesubheader from '../main/img/porschesubheader.jpg';
+import React, { useEffect, useState } from 'react';
 
+const BuyPage = () => {
+  const [cars, setCars] = useState([]);
 
-const MainPage = () => {
+  useEffect(() => {
+    fetch('http://localhost:5001/api/cars')
+      .then(res => res.json())
+      .then(data => setCars(data));
+  }, []);
+
   return (
-    <div className='main'>
-        <div className='main_item main_item_1'>
-        <img className="porsche_sub_header_img" src={porschesubheader} alt="porsche" />
-         <div className='main_wrapper main_comp_1'>
-            
-
-
-            <div className='porsche_right_under_container'>
-            <div className='porsche_right_under'>
-            <p className='porsche_font'>Porsche</p>
-
+    <div style={{ padding: '20px' }}>
+      <h2>Всі оголошення</h2>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
+        {cars.map(car => (
+          <div key={car.id} style={{ border: '1px solid #ddd', borderRadius: '8px', overflow: 'hidden' }}>
+            {/* Виводимо перше фото з масиву */}
+            {car.images && (
+              <img 
+                src={`http://localhost:5001${JSON.parse(car.images)[0]}`} 
+                alt="car" 
+                style={{ width: '100%', height: '200px', objectFit: 'cover' }} 
+              />
+            )}
+            <div style={{ padding: '15px' }}>
+              <h3>{car.brand} {car.model} ({car.year})</h3>
+              <p style={{ color: '#d91d1d', fontWeight: 'bold', fontSize: '20px' }}>${car.price}</p>
+              <p>{car.region} • {car.mileage} км • {car.transmission}</p>
             </div>
-            </div>
-            
-            </div>
-
-
-        </div>
-
-
-
+          </div>
+        ))}
+      </div>
     </div>
-    
   );
-}
+};
 
-export default MainPage;
+export default BuyPage;
