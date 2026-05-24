@@ -6,6 +6,7 @@ import LoginPage from '../src/components/registration/login';
 import RegistrationPage from './components/registration/registration';
 import UserPage from '../src/components/user/user';
 import SellPage from '../src/components/sell/sell';
+import FavoritesPage from '../src/components/favourite/favourite';
 
 
 // Тимчасові компоненти для перевірки (потім заміниш на свої файли)
@@ -13,7 +14,7 @@ import SellPage from '../src/components/sell/sell';
 const InsurancePage = () => <div style={{padding: '100px'}}>Сторінка СТРАХУВАННЯ</div>;
 const AboutPage = () => <div style={{padding: '100px'}}>Сторінка ПРО НАС</div>;
 
-const FavoritesPage = () => <div style={{padding: '100px'}}>Твої ОБРАНІ автомобілі ❤️</div>;
+
 
 const App = () => {
   return (
