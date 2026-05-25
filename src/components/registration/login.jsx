@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import '../registration/login.scss';
+import { Link } from 'react-router-dom';
+import '../registration/registration.scss';
+
+import porschebckg from '../registration/img/porschebkg.jpg';
+import logo from '../img/porschelogo.png';
 
 const LoginPage = () => {
-  
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [agree, setAgree] = useState(false);
@@ -16,7 +20,7 @@ const LoginPage = () => {
     }
 
     try {
-      // 2. Відправляємо запит на сервер (порт 5001)
+
       const response = await fetch('http://localhost:5001/login', {
         method: 'POST',
         headers: {
@@ -28,48 +32,102 @@ const LoginPage = () => {
       const data = await response.json();
 
       if (response.ok) {
+
         alert("Вхід успішний!");
-        // 3. Зберігаємо дані користувача в браузері
+
         localStorage.setItem('user', JSON.stringify(data.user));
-        // Перенаправляємо на сторінку профілю
-        window.location.href = '/profile'; 
+
+        window.location.href = '/profile';
+
       } else {
         alert(data.error || "Помилка входу");
       }
+
     } catch (error) {
+
       console.error("Помилка:", error);
+
       alert("Сервер не відповідає. Перевір, чи запущено Node.js на порту 5001");
     }
   };
 
   return (
-    <div style={{ padding: '100px', maxWidth: '300px' }}>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        <input 
-          type="email" 
-          placeholder="enter your email" 
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input 
-          type="password" 
-          placeholder="enter your password" 
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <label>
-          <input 
-            type="checkbox" 
-            checked={agree}
-            onChange={(e) => setAgree(e.target.checked)}
-          /> I Agree
-        </label>
-        <button type="submit" style={{ cursor: 'pointer' }}>Submit</button>
-      </form>
-    </div>
+
+    <form onSubmit={handleSubmit} className='reg_container_1'>
+
+      <img className="porsche_bckg" src={porschebckg} alt="porsche" />
+
+      <div className='right_logos'>
+
+        <div className='reg_por_logo'>
+
+          <img className="logo-img" src={logo} alt="logo" />
+
+          <p className='reg_logo_por'>PORSCHE</p>
+
+        </div>
+
+        <p className='p_reg_logo'>CarDan AutoHub</p>
+
+      </div>
+
+      <div className='reg_container'>
+
+        <div className='div_reg_comp'>
+
+          <p className='p_reg_h1'>Login</p>
+
+          <p className='p_input_reg'>enter your email:</p>
+
+          <input
+            type="email"
+            placeholder="example@gmail.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className='input_reg'
+          />
+
+          <p className='p_input_reg'>enter your password:</p>
+
+          <input
+            type="password"
+            placeholder="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className='input_reg'
+          />
+
+          <div className='reg_have'>
+
+            <label className='lbl_chk'>
+
+              <input
+                type="checkbox"
+                checked={agree}
+                onChange={(e) => setAgree(e.target.checked)}
+                className='chk_reg'
+              />
+
+              I Agree
+
+            </label>
+
+            <Link to="/registration">
+              <p className='p_link_reg'>Create account</p>
+            </Link>
+
+          </div>
+
+          <button type="submit" className='reg_button'>
+            Submit
+          </button>
+
+        </div>
+      </div>
+
+    </form>
   );
 };
 

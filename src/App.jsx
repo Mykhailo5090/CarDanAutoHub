@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Header from "./components/header/header";
 import MainPage from './components/main/mainpage';
 import BuyPage from '../src/components/buy/buypage';
@@ -9,18 +9,19 @@ import SellPage from '../src/components/sell/sell';
 import FavoritesPage from '../src/components/favourite/favourite';
 import InsurancePage from './components/insurance/insurance';
 
-
-
-
 const AboutPage = () => <div style={{padding: '100px'}}>Сторінка ПРО НАС</div>;
 
+const AppLayout = () => {
+  const location = useLocation();
 
+  const hideHeaderRoutes = ['/login', '/registration'];
 
-const App = () => {
+  const shouldHideHeader = hideHeaderRoutes.includes(location.pathname);
+
   return (
-    <Router>
-      <Header />
-      
+    <>
+      {!shouldHideHeader && <Header />}
+
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/buy" element={<BuyPage />} />
@@ -31,11 +32,17 @@ const App = () => {
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/profile" element={<UserPage />} />
-        
-        
       </Routes>
+    </>
+  );
+};
+
+const App = () => {
+  return (
+    <Router>
+      <AppLayout />
     </Router>
   );
-}
+};
 
 export default App;

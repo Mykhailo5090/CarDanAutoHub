@@ -111,7 +111,7 @@ $graycolor:#464646;
     border-radius: 20px;
     mix-blend-mode: screen;
     background-color: #0F1A32;
-    margin-top: 8vh;
+    margin-top: 3vh;
     padding: 5%;
     padding-top: 2%;
     color: $bonecolor;
@@ -192,6 +192,9 @@ $graycolor:#464646;
     transition: 1s;
     transform: scale(1.1);
 }
+body {
+    overflow: hidden;
+  }
 .chk_reg{
     mix-blend-mode: exclusion;
     width: 20px;
