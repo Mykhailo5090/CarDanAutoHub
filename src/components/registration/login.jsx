@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import '../registration/login.scss';
 
 const LoginPage = () => {
-  // 1. Створюємо стани для полів вводу
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [agree, setAgree] = useState(false);

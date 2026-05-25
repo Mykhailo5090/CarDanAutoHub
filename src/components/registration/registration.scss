@@ -1,0 +1,224 @@
+$b-color: rgba(128, 128, 128, 0.354);
+$maincolor: #a93c2b;
+$submaincolor: #37100a;
+
+/*Null css START*/
+/* Указываем box sizing */
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* Убираем внутренние отступы */
+ul[class],
+ol[class] {
+  padding: 0;
+}
+
+/* Убираем внешние отступы */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Выставляем основные настройки по-умолчанию для body */
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
+ul[class],
+ol[class] {
+  list-style: none;
+}
+
+/* Элементы a, у которых нет класса, сбрасываем до дефолтных стилей */
+a:not([class]) {
+  -webkit-text-decoration-skip: ink;
+  text-decoration-skip-ink: auto;
+}
+
+/* Упрощаем работу с изображениями */
+img {
+  max-width: 100%;
+}
+
+/* Указываем понятную периодичность в потоке данных у article*/
+article > * + * {
+  margin-top: 1em;
+}
+
+/* Наследуем шрифты для инпутов и кнопок */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    -webkit-animation-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    -webkit-animation-iteration-count: 1 !important;
+    animation-iteration-count: 1 !important;
+    -webkit-transition-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+/*Null css END*/
+
+$bluecolor:#0F1A32;
+$bonecolor:#F5F4F5;
+$darkbluecolor:#0F1A32;
+$graycolor:#464646;
+
+
+.porsche_bckg{
+    position: absolute;
+    z-index: -1;
+    height: auto;
+}
+.reg_container{
+    display: grid;
+    justify-items: center;
+    height: 100%;
+    font-family: hranfsey;
+    
+}
+.div_reg_comp{
+    z-index: 1;
+    opacity: 100%;
+    border-radius: 20px;
+    mix-blend-mode: screen;
+    background-color: #0F1A32;
+    margin-top: 8vh;
+    padding: 5%;
+    padding-top: 2%;
+    color: $bonecolor;
+    
+    
+}
+.body{
+    max-height: 100%;
+}
+.p_input_reg{
+    color: $bonecolor;
+    font-size: 32px;
+    mix-blend-mode: exclusion;
+}
+.p_reg_h1{
+    color: $bonecolor;
+    text-align: center;
+    font-size: 48px;
+    mix-blend-mode: exclusion;
+
+}
+.p_link_reg{
+    color: $bonecolor;
+    font-size: 32px;
+    mix-blend-mode: exclusion;
+}
+.p_link_reg:hover{
+    font-size: 34px;
+   transition: 1s;
+   
+
+}
+
+.reg_logo_por{
+    font-family: porsche;
+    font-size: 32px;
+}
+.reg_por_logo{
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+.right_logos{
+    color: $bonecolor;
+    display: grid;
+    justify-content: end;
+    margin-right: 3%;
+    padding-top: 1%;
+   
+}
+.logo-img{
+    height: 48px;
+    width: 48px;
+}
+.p_reg_logo{
+    font-size: 28px;
+    display: grid;
+    justify-content: center;
+}
+.reg_button{
+    background-color: #0F1A32;
+    border: none;
+    border-radius: 15px;
+    mix-blend-mode: hard-light;
+    color: $bonecolor;
+    font-size: 32px;
+    padding-right: 5%;
+    padding-left: 5%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    margin-left: 25%;
+   
+   
+    
+    
+}
+.reg_button:hover{
+    transition: 1s;
+    transform: scale(1.1);
+}
+.chk_reg{
+    mix-blend-mode: exclusion;
+    width: 20px;
+    height: 20px;
+}
+.lbl_chk{
+    mix-blend-mode: exclusion;
+    font-size: 20px;
+}
+.input_reg{
+    mix-blend-mode: exclusion;
+    color: $bonecolor;
+    display: flex;
+    background-color: $bluecolor;
+    border: none;
+    border-radius: 10px;
+    padding: 2%;
+    max-width: 450px;
+    min-width: 400px;
+    max-height: 70px;
+    min-height: 65px;
+    font-size: 32px;
+
+
+}
+.reg_have{
+    display: flex;
+    align-items: center;
+    column-gap: 5%;
+}

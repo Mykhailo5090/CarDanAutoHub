@@ -10,7 +10,6 @@ import FavoritesPage from '../src/components/favourite/favourite';
 import InsurancePage from './components/insurance/insurance';
 
 
-// Тимчасові компоненти для перевірки (потім заміниш на свої файли)
 
 
 const AboutPage = () => <div style={{padding: '100px'}}>Сторінка ПРО НАС</div>;
@@ -22,7 +21,6 @@ const App = () => {
     <Router>
       <Header />
       
-      {/* Магія відбувається тут: відображається тільки ОДИН Route, що збігається з URL */}
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/buy" element={<BuyPage />} />
