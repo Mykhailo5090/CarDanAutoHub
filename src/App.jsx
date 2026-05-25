@@ -7,11 +7,12 @@ import RegistrationPage from './components/registration/registration';
 import UserPage from '../src/components/user/user';
 import SellPage from '../src/components/sell/sell';
 import FavoritesPage from '../src/components/favourite/favourite';
+import InsurancePage from './components/insurance/insurance';
 
 
 // Тимчасові компоненти для перевірки (потім заміниш на свої файли)
 
-const InsurancePage = () => <div style={{padding: '100px'}}>Сторінка СТРАХУВАННЯ</div>;
+
 const AboutPage = () => <div style={{padding: '100px'}}>Сторінка ПРО НАС</div>;
 
 
