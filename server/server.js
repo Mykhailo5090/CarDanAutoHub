@@ -60,7 +60,7 @@ app.post('/api/insurance/create-contract', async (req, res) => {
 });
 
 // --- МАРКЕТПЛЕЙС (ДОДАВАННЯ АВТО) ---
-app.post('/api/cars', upload.array('images', 5), async (req, res) => {
+app.post('/api/cars', upload.array('images', 10), async (req, res) => {
   try {
     const { user_id, brand, model, year, price, mileage, fuel_type, transmission, engine_volume, region, description, license_plate } = req.body;
     

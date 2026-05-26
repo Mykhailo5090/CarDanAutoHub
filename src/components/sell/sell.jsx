@@ -6,28 +6,33 @@ const SellPage = () => {
     model: '',
     year: '',
     price: '',
-    mileage: '0', // Додаємо значення за замовчуванням
+    mileage: '0',
     fuel_type: 'Бензин',
     transmission: 'Автомат',
     engine_volume: '',
     region: '',
-    description: ''
+    description: '',
+    license_plate: '' // 1. Додаємо поле в стан
   });
   const [images, setImages] = useState([]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    // Для номера авто робимо автоматичний Uppercase
+    const value = e.target.name === 'license_plate' ? e.target.value.toUpperCase() : e.target.value;
+    setFormData({ ...formData, [e.target.name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = JSON.parse(localStorage.getItem('user'));
     
+    if (!formData.license_plate) return alert("Введіть державний номер авто!");
+
     const data = new FormData();
     data.append('user_id', user.id);
-    // Додаємо всі текстові поля автоматично
+    
+    // Всі поля з formData автоматично потраплять у запит
     Object.keys(formData).forEach(key => data.append(key, formData[key]));
-    // Додаємо файли
     images.forEach(img => data.append('images', img));
 
     try {
@@ -47,25 +52,45 @@ const SellPage = () => {
   };
 
   return (
-    <div style={{ padding: '50px', maxWidth: '600px', margin: '0 auto' }}>
-      <h1>Продати авто</h1>
+    <div style={{ padding: '50px', maxWidth: '600px', margin: '0 auto', color: '#fff' }}>
+      <h1 style={{ color: '#fff' }}>Продати авто</h1>
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
         
-        <input name="brand" placeholder="Марка (напр. Audi)" onChange={handleChange} required />
-        <input name="model" placeholder="Модель" onChange={handleChange} required />
-        
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <input name="year" type="number" placeholder="Рік" onChange={handleChange} required style={{ flex: 1 }} />
-          <input name="price" type="number" placeholder="Ціна ($)" onChange={handleChange} required style={{ flex: 1 }} />
+        {/* НОВЕ ПОЛЕ: ДЕРЖ НОМЕР */}
+        <div style={{ backgroundColor: '#2c2c2c', padding: '15px', borderRadius: '10px' }}>
+            <label style={{ fontSize: '12px', color: '#aaa', display: 'block', marginBottom: '5px' }}>Державний номер (для страхування та перевірок)</label>
+            <input 
+                name="license_plate" 
+                placeholder="Напр: AA1234BB" 
+                value={formData.license_plate}
+                onChange={handleChange} 
+                required 
+                style={{ 
+                    width: '100%', 
+                    padding: '12px', 
+                    fontSize: '18px', 
+                    textAlign: 'center', 
+                    fontWeight: 'bold', 
+                    borderRadius: '5px',
+                    border: '2px solid #d91d1d'
+                }} 
+            />
         </div>
 
-        <input name="mileage" type="number" placeholder="Пробіг (км)" onChange={handleChange} required />
-        <input name="engine_volume" placeholder="Об'єм двигуна (напр. 2.0)" onChange={handleChange} />
-        <input name="region" placeholder="Місто/Регіон" onChange={handleChange} />
+        <input name="brand" placeholder="Марка (напр. Audi)" onChange={handleChange} required style={inputStyle} />
+        <input name="model" placeholder="Модель" onChange={handleChange} required style={inputStyle} />
+        
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <input name="year" type="number" placeholder="Рік" onChange={handleChange} required style={{ ...inputStyle, flex: 1 }} />
+          <input name="price" type="number" placeholder="Ціна ($)" onChange={handleChange} required style={{ ...inputStyle, flex: 1 }} />
+        </div>
 
-        {/* Вибір типу палива */}
+        <input name="mileage" type="number" placeholder="Пробіг (км)" onChange={handleChange} required style={inputStyle} />
+        <input name="engine_volume" placeholder="Об'єм двигуна (напр. 2.0)" onChange={handleChange} style={inputStyle} />
+        <input name="region" placeholder="Місто/Регіон" onChange={handleChange} style={inputStyle} />
+
         <label>Тип палива:
-          <select name="fuel_type" onChange={handleChange} style={{ width: '100%', padding: '8px' }}>
+          <select name="fuel_type" onChange={handleChange} style={selectStyle}>
             <option value="Бензин">Бензин</option>
             <option value="Дизель">Дизель</option>
             <option value="Електро">Електро</option>
@@ -74,9 +99,8 @@ const SellPage = () => {
           </select>
         </label>
 
-        {/* Вибір коробки передач */}
         <label>Коробка передач:
-          <select name="transmission" onChange={handleChange} style={{ width: '100%', padding: '8px' }}>
+          <select name="transmission" onChange={handleChange} style={selectStyle}>
             <option value="Автомат">Автомат</option>
             <option value="Механіка">Механіка</option>
             <option value="Варіатор">Варіатор</option>
@@ -84,16 +108,20 @@ const SellPage = () => {
           </select>
         </label>
 
-        <textarea name="description" placeholder="Опис авто" onChange={handleChange} rows="4" />
+        <textarea name="description" placeholder="Опис авто" onChange={handleChange} rows="4" style={inputStyle} />
 
         <input type="file" multiple onChange={e => setImages(Array.from(e.target.files))} accept="image/*" />
 
-        <button type="submit" style={{ padding: '12px', backgroundColor: '#d91d1d', color: '#fff', border: 'none', cursor: 'pointer' }}>
+        <button type="submit" style={{ padding: '15px', backgroundColor: '#d91d1d', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '16px', fontWeight: 'bold' }}>
           Опублікувати оголошення
         </button>
       </form>
     </div>
   );
 };
+
+// Допоміжні стилі
+const inputStyle = { padding: '12px', borderRadius: '5px', border: '1px solid #444', backgroundColor: '#222', color: '#fff' };
+const selectStyle = { width: '100%', padding: '12px', borderRadius: '5px', border: '1px solid #444', backgroundColor: '#222', color: '#fff', marginTop: '5px' };
 
 export default SellPage;

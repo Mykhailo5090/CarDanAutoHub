@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 const InsurancePage = () => {
-  // Безпечне отримання юзера
   const savedUser = localStorage.getItem('user');
   const user = savedUser && savedUser !== "undefined" ? JSON.parse(savedUser) : null;
 
@@ -13,8 +12,10 @@ const InsurancePage = () => {
   const [myCars, setMyCars] = useState([]);
 
   const [formData, setFormData] = useState({
-    surname: '', name: '', inn: '', email: '', phone: '380', vin: '', 
-    docSeries: '', docNumber: ''
+    surname: '', name: '', middleName: '', inn: '', birthday: '', 
+    phone: '380', email: '', docType: 'PASSPORT', docSeries: '', 
+    docNumber: '', docIssuedBy: '', docDate: '', city: '', 
+    street: '', house: '', flat: '', vin: ''
   });
 
   useEffect(() => {
@@ -24,16 +25,19 @@ const InsurancePage = () => {
         .then(data => setMyCars(Array.isArray(data) ? data : []))
         .catch(e => console.log("Помилка завантаження авто:", e));
     }
-  }, []);
+  }, [user?.id]);
 
   const handleSearch = async (p = plate) => {
-    if (!p) return alert("Введіть номер");
+    const targetPlate = p.toUpperCase().replace(/\s/g, '');
+    if (!targetPlate) return alert("Введіть номер");
+    
+    setPlate(targetPlate);
     setLoading(true);
     try {
       const res = await fetch('http://localhost:5001/api/insurance/get-price', {
         method: 'POST', 
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plate: p })
+        body: JSON.stringify({ plate: targetPlate })
       });
       const data = await res.json();
       
@@ -51,20 +55,24 @@ const InsurancePage = () => {
     }
   };
 
-  const handleCreate = async () => {
-    if (!formData.vin || formData.vin.length < 5) return alert("Перевірте VIN-код");
+  const handleOrder = async () => {
+    if (!formData.surname || !formData.inn || !formData.phone) {
+        return alert("Заповніть основні поля (Прізвище, ІПН, Телефон)");
+    }
     setLoading(true);
-    
-    // Тут твій об'єкт payload...
     try {
       const res = await fetch('http://localhost:5001/api/insurance/create-contract', {
         method: 'POST', 
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, pkgId: selectedPkg?.id })
+        body: JSON.stringify({ 
+            ...formData, 
+            plateNumber: plate,
+            offerIndex: result.packages.indexOf(selectedPkg)
+        })
       });
       const data = await res.json();
-      if (data.result === "success") alert(`Договір створено! Код: ${data.mainCode}`);
-      else alert(data.errorMessage || "Помилка оформлення");
+      if (data.success) alert("Дані успішно передані боту!");
+      else alert("Помилка: " + data.error);
     } catch (e) { alert("Помилка мережі"); }
     setLoading(false);
   };
@@ -72,66 +80,89 @@ const InsurancePage = () => {
   return (
     <div style={styles.page}>
       <div style={styles.container}>
-        <h1 style={{textAlign: 'center', color: '#fff'}}>CarDan Страхування</h1>
+        <h1 style={{textAlign: 'center', color: '#fff', marginBottom: '30px'}}>CarDan Insurance</h1>
 
+        {/* КРОК 1: ПОШУК ТА ВЛАСНІ ОГОЛОШЕННЯ */}
         {step === 1 && (
-          <div style={styles.card}>
-            <div style={styles.row}>
-              <input 
-                style={styles.inputPlate} 
-                placeholder="AO5090HM" 
-                value={plate} 
-                onChange={e => setPlate(e.target.value.toUpperCase())} 
-              />
-              <button style={styles.btnMain} onClick={() => handleSearch()} disabled={loading}>
-                {loading ? 'Шукаємо...' : 'Знайти'}
-              </button>
+          <div>
+            <div style={styles.card}>
+              <h3 style={{marginTop: 0, color: '#333'}}>Перевірка за номером</h3>
+              <div style={styles.row}>
+                <input 
+                  style={styles.inputPlate} 
+                  placeholder="AA1234AA" 
+                  value={plate} 
+                  onChange={e => setPlate(e.target.value.toUpperCase())} 
+                />
+                <button style={styles.btnMain} onClick={() => handleSearch()} disabled={loading}>
+                  {loading ? 'Шукаємо...' : 'Знайти ціни'}
+                </button>
+              </div>
             </div>
+
             {myCars.length > 0 && (
-              <div style={{marginTop: '20px'}}>
-                <p style={{color: '#666', fontSize: '12px'}}>Швидкий вибір:</p>
-                {myCars.map(c => (
-                  <button key={c.id} style={styles.carTag} onClick={() => handleSearch(c.license_plate)}>
-                    {c.license_plate}
-                  </button>
-                ))}
+              <div style={{marginTop: '30px'}}>
+                <h3 style={{color: '#fff', marginBottom: '15px'}}>Ваші оголошення</h3>
+                <div style={styles.myCarsGrid}>
+                  {myCars.map(car => (
+                    <div 
+                      key={car.id} 
+                      style={styles.myCarCard} 
+                      onClick={() => handleSearch(car.license_plate)}
+                    >
+                      <div style={styles.carInfo}>
+                        <div style={styles.carPlateTag}>{car.license_plate}</div>
+                        <strong style={{fontSize: '16px'}}>{car.brand} {car.model}</strong>
+                        <span style={{fontSize: '13px', color: '#666'}}>{car.year} рік</span>
+                      </div>
+                      <div style={styles.selectText}>Обрати →</div>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </div>
         )}
 
+        {/* КРОК 2: ВИБІР КОМПАНІЇ */}
         {step === 2 && result && (
           <div>
             <div style={styles.carHeader}>
-              <button onClick={() => setStep(1)} style={styles.closeBtn}>✕</button>
+              <button onClick={() => setStep(1)} style={styles.backBtn}>← Назад</button>
               <h3 style={{margin:0}}>{result.car?.brand} {result.car?.model}</h3>
               <p style={{margin:0, opacity:0.8}}>{result.car?.year} р. | {plate}</p>
             </div>
             <div style={styles.grid}>
-              {/* БЕЗПЕЧНИЙ MAP: використовуємо ?. для перевірки */}
               {result.packages?.map(pkg => (
                 <div key={pkg.id} style={styles.pkgCard}>
-                {pkg.logo && <img src={pkg.logo} alt={pkg.name} style={{height: '30px', marginBottom: '10px'}} />}
-                <h4>{pkg.name}</h4>
-                <div style={styles.price}>{pkg.price} грн</div>
-                <p style={{fontSize: '12px', color: '#666'}}>Франшиза: {pkg.franchise} грн</p>
-                <button style={styles.btnSelect} onClick={() => { setSelectedPkg(pkg); setStep(3); }}>Обрати</button>
-              </div>
+                  <div style={styles.logoRow}>
+                    {pkg.logo && <img src={pkg.logo} alt={pkg.name} style={styles.logoImg} />}
+                    <span style={styles.companyName}>{pkg.name}</span>
+                  </div>
+                  <div style={styles.price}>{pkg.price} <small>грн</small></div>
+                  <p style={styles.franchise}>Франшиза: {pkg.franchise}</p>
+                  <button style={styles.btnSelect} onClick={() => { setSelectedPkg(pkg); setStep(3); }}>Обрати</button>
+                </div>
               ))}
             </div>
           </div>
         )}
 
+        {/* КРОК 3: АНКЕТА */}
         {step === 3 && (
           <div style={styles.card}>
-            <h3>Анкета страхувальника</h3>
-            <div style={styles.formGrid}>
-              <input placeholder="Прізвище" style={styles.input} onChange={e => setFormData({...formData, surname: e.target.value})}/>
-              <input placeholder="Ім'я" style={styles.input} onChange={e => setFormData({...formData, name: e.target.value})}/>
-              <input placeholder="ІПН" style={styles.input} onChange={e => setFormData({...formData, inn: e.target.value})}/>
-              <input placeholder="VIN" style={styles.input} value={formData.vin} onChange={e => setFormData({...formData, vin: e.target.value.toUpperCase()})}/>
+            <button onClick={() => setStep(2)} style={styles.backBtn}>← До списку цін</button>
+            <h3 style={{marginTop: '15px'}}>Анкета для {selectedPkg?.name}</h3>
+            {/* ... форми без змін як у тебе були ... */}
+            <div style={styles.formSection}>
+              <div style={styles.formGrid}>
+                <input placeholder="Прізвище" style={styles.input} onChange={e => setFormData({...formData, surname: e.target.value})}/>
+                <input placeholder="Ім'я" style={styles.input} onChange={e => setFormData({...formData, name: e.target.value})}/>
+                <input placeholder="ІПН" style={styles.input} onChange={e => setFormData({...formData, inn: e.target.value})}/>
+                <input placeholder="Телефон" style={styles.input} value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})}/>
+              </div>
             </div>
-            <button style={styles.btnConfirm} onClick={handleCreate} disabled={loading}>
+            <button style={styles.btnConfirm} onClick={handleOrder} disabled={loading}>
               {loading ? "Зачекайте..." : `Оформити за ${selectedPkg?.price} грн`}
             </button>
           </div>
@@ -141,23 +172,51 @@ const InsurancePage = () => {
   );
 };
 
-// ... твої стилі без змін ...
 const styles = {
-  page: { minHeight: '100vh', background: '#0f172a', padding: '50px 20px', fontFamily: 'sans-serif' },
-  container: { maxWidth: '800px', margin: '0 auto' },
-  card: { background: '#fff', padding: '25px', borderRadius: '16px' },
+  page: { minHeight: '100vh', backgroundColor: '#1a1a1a', padding: '40px 20px' },
+  container: { maxWidth: '900px', margin: '0 auto' },
+  card: { backgroundColor: '#fff', padding: '25px', borderRadius: '15px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' },
   row: { display: 'flex', gap: '10px' },
-  inputPlate: { flex: 1, padding: '15px', fontSize: '20px', border: '2px solid #ddd', borderRadius: '10px', textAlign: 'center' },
-  btnMain: { background: '#3b82f6', color: '#fff', border: 'none', padding: '0 30px', borderRadius: '10px', cursor: 'pointer' },
-  carTag: { background: '#f1f5f9', border: 'none', padding: '5px 10px', borderRadius: '5px', marginRight: '5px', cursor: 'pointer' },
-  carHeader: { background: '#1e293b', color: '#fff', padding: '15px', borderRadius: '12px', marginBottom: '15px', position: 'relative' },
-  closeBtn: { position: 'absolute', top: '10px', right: '10px', background: 'none', border: 'none', color: '#fff', cursor: 'pointer' },
-  grid: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' },
-  pkgCard: { background: '#fff', padding: '20px', borderRadius: '12px', textAlign: 'center', border: '1px solid #eee' },
-  price: { fontSize: '24px', fontWeight: 'bold', color: '#10b981', margin: '10px 0' },
-  btnSelect: { width: '100%', background: '#f59e0b', color: '#fff', border: 'none', padding: '10px', borderRadius: '8px', cursor: 'pointer' },
-  formGrid: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', margin: '15px 0' },
-  input: { padding: '12px', border: '1px solid #ddd', borderRadius: '8px' },
-  btnConfirm: { width: '100%', background: '#10b981', color: '#fff', border: 'none', padding: '15px', borderRadius: '10px', fontSize: '18px', cursor: 'pointer' }
+  inputPlate: { flex: 1, padding: '15px', fontSize: '20px', borderRadius: '10px', border: '2px solid #ddd', textAlign: 'center', fontWeight: 'bold' },
+  btnMain: { padding: '0 30px', backgroundColor: '#2196F3', color: '#fff', border: 'none', borderRadius: '10px', cursor: 'pointer', fontSize: '16px', fontWeight: 'bold' },
+  
+  // Стилі для власних оголошень
+  myCarsGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '15px' },
+  myCarCard: { 
+    backgroundColor: '#fff', 
+    padding: '15px', 
+    borderRadius: '12px', 
+    display: 'flex', 
+    justifyContent: 'space-between', 
+    alignItems: 'center', 
+    cursor: 'pointer',
+    transition: 'transform 0.2s, box-shadow 0.2s',
+    border: '1px solid #333'
+  },
+  carInfo: { display: 'flex', flexDirection: 'column', gap: '4px' },
+  carPlateTag: { 
+    backgroundColor: '#f0f0f0', 
+    padding: '2px 8px', 
+    borderRadius: '4px', 
+    fontSize: '12px', 
+    fontWeight: 'bold', 
+    width: 'fit-content',
+    border: '1px solid #ccc'
+  },
+  selectText: { color: '#2196F3', fontWeight: 'bold', fontSize: '14px' },
+
+  // Решта стилів...
+  carHeader: { backgroundColor: '#2c2c2c', color: '#fff', padding: '20px', borderRadius: '12px', marginBottom: '20px' },
+  grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px' },
+  pkgCard: { backgroundColor: '#fff', padding: '20px', borderRadius: '12px', textAlign: 'center' },
+  logoRow: { height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px', gap: '10px' },
+  logoImg: { maxHeight: '30px' },
+  price: { fontSize: '24px', fontWeight: 'bold', color: '#2ecc71', margin: '10px 0' },
+  btnSelect: { width: '100%', padding: '10px', backgroundColor: '#333', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer' },
+  formGrid: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' },
+  input: { padding: '12px', borderRadius: '8px', border: '1px solid #ccc', width: '100%' },
+  btnConfirm: { width: '100%', padding: '18px', backgroundColor: '#2ecc71', color: '#fff', border: 'none', borderRadius: '10px', fontSize: '18px', fontWeight: 'bold', cursor: 'pointer', marginTop: '20px' },
+  backBtn: { background: 'none', border: 'none', color: '#2196F3', cursor: 'pointer', marginBottom: '10px' },
 };
+
 export default InsurancePage;
