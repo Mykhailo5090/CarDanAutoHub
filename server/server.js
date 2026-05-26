@@ -131,6 +131,23 @@ app.get('/api/favorites/:userId', async (req, res) => {
   res.json(favorites.rows);
 });
 
+// Тепер він розуміє адресу /api/favorites/4/7
+app.delete('/api/favorites/:userId/:carId', async (req, res) => {
+  try {
+    const { userId, carId } = req.params; // Беремо дані з посилання
+
+    await pool.query(
+      'DELETE FROM favorites WHERE user_id = $1 AND car_id = $2', 
+      [userId, carId]
+    );
+
+    res.json({ success: true, message: "Видалено з обраного" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: "Помилка сервера" });
+  }
+});
+
 app.post('/register', async (req, res) => {
   const { email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
