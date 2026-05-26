@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 const InsurancePage = () => {
-  const user = JSON.parse(localStorage.getItem('user'));
+  // Безпечне отримання юзера
+  const savedUser = localStorage.getItem('user');
+  const user = savedUser && savedUser !== "undefined" ? JSON.parse(savedUser) : null;
+
   const [step, setStep] = useState(1);
   const [plate, setPlate] = useState('');
   const [loading, setLoading] = useState(false);
@@ -19,7 +22,7 @@ const InsurancePage = () => {
       fetch(`http://localhost:5001/api/my-cars/${user.id}`)
         .then(r => r.json())
         .then(data => setMyCars(Array.isArray(data) ? data : []))
-        .catch(e => console.log(e));
+        .catch(e => console.log("Помилка завантаження авто:", e));
     }
   }, []);
 
@@ -28,67 +31,40 @@ const InsurancePage = () => {
     setLoading(true);
     try {
       const res = await fetch('http://localhost:5001/api/insurance/get-price', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ plate: p })
       });
       const data = await res.json();
+      
       if (data.success) {
         setResult(data);
         setFormData(prev => ({ ...prev, vin: data?.car?.vin || '' }));
         setStep(2);
+      } else {
+        alert("Бот не знайшов дані для цього номера");
       }
-    } catch (e) { alert("Помилка зв'язку"); }
-    setLoading(false);
+    } catch (e) { 
+      alert("Помилка зв'язку з сервером"); 
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCreate = async () => {
     if (!formData.vin || formData.vin.length < 5) return alert("Перевірте VIN-код");
     setLoading(true);
-
-    const payload = {
-      agentId: "polisua",
-      calculator: {
-        carRegZone: result?.car?.carRegZone || 4,
-        carType: "B1",
-        cityId: result?.car?.cityId || 174,
-        clientType: "FL",
-        fraud: false,
-        privilegeType: 0,
-        expirance3Years: true,
-        taxi: false
-      },
-      paySum: selectedPkg?.price,
-      programId: selectedPkg?.id,
-      dateFrom: new Date(Date.now() + 86400000).toISOString().split('T')[0],
-      polisType: "DIGITAL",
-      vehicleBrandName: result?.car?.brand || "Авто",
-      vehicleModelName: result?.car?.model || "Модель",
-      vehicleModelYear: Number(result?.car?.year || 2015),
-      vehicleRegistration: plate,
-      vehicleVin: formData.vin,
-      insurantSurnameOrgName: formData.surname,
-      insurantName: formData.name,
-      insurantPatronymic: " ",
-      insurantBirthDate: "1990-01-01",
-      insurantAddress: "Україна",
-      insurantEmail: formData.email,
-      insurantPhone: formData.phone,
-      insurantInnEgrpou: formData.inn,
-      insurantDocumentType: "571e45112fc6841bed2da4cd",
-      insurantDocumentSeries: formData.docSeries || " ",
-      insurantDocumentNumber: formData.docNumber || "000000",
-      insurantDocumentIssueDate: "2020-01-01",
-      insurantDocumentIssued: "МВС"
-    };
-
+    
+    // Тут твій об'єкт payload...
     try {
       const res = await fetch('http://localhost:5001/api/insurance/create-contract', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, pkgId: selectedPkg?.id })
       });
       const data = await res.json();
-      if (data.result === "success") alert(`Договір успішно створено! Код: ${data.mainCode}`);
-      else alert(data.errorMessage || "Помилка API");
+      if (data.result === "success") alert(`Договір створено! Код: ${data.mainCode}`);
+      else alert(data.errorMessage || "Помилка оформлення");
     } catch (e) { alert("Помилка мережі"); }
     setLoading(false);
   };
@@ -101,14 +77,21 @@ const InsurancePage = () => {
         {step === 1 && (
           <div style={styles.card}>
             <div style={styles.row}>
-              <input style={styles.inputPlate} placeholder="AO5090HM" value={plate || ''} onChange={e => setPlate(e.target.value.toUpperCase())} />
-              <button style={styles.btnMain} onClick={() => handleSearch()}>{loading ? '...' : 'Знайти'}</button>
+              <input 
+                style={styles.inputPlate} 
+                placeholder="AO5090HM" 
+                value={plate} 
+                onChange={e => setPlate(e.target.value.toUpperCase())} 
+              />
+              <button style={styles.btnMain} onClick={() => handleSearch()} disabled={loading}>
+                {loading ? 'Шукаємо...' : 'Знайти'}
+              </button>
             </div>
             {myCars.length > 0 && (
               <div style={{marginTop: '20px'}}>
                 <p style={{color: '#666', fontSize: '12px'}}>Швидкий вибір:</p>
                 {myCars.map(c => (
-                  <button key={c.id} style={styles.carTag} onClick={() => { setPlate(c.license_plate); handleSearch(c.license_plate); }}>
+                  <button key={c.id} style={styles.carTag} onClick={() => handleSearch(c.license_plate)}>
                     {c.license_plate}
                   </button>
                 ))}
@@ -121,16 +104,19 @@ const InsurancePage = () => {
           <div>
             <div style={styles.carHeader}>
               <button onClick={() => setStep(1)} style={styles.closeBtn}>✕</button>
-              <h3 style={{margin:0}}>{result.car.brand} {result.car.model}</h3>
-              <p style={{margin:0, opacity:0.8}}>{result.car.year} р. | {result.car.engine_volume}L | {plate}</p>
+              <h3 style={{margin:0}}>{result.car?.brand} {result.car?.model}</h3>
+              <p style={{margin:0, opacity:0.8}}>{result.car?.year} р. | {plate}</p>
             </div>
             <div style={styles.grid}>
-              {result.packages.map(pkg => (
+              {/* БЕЗПЕЧНИЙ MAP: використовуємо ?. для перевірки */}
+              {result.packages?.map(pkg => (
                 <div key={pkg.id} style={styles.pkgCard}>
-                  <h4>{pkg.name}</h4>
-                  <div style={styles.price}>{pkg.price} грн</div>
-                  <button style={styles.btnSelect} onClick={() => { setSelectedPkg(pkg); setStep(3); }}>Обрати</button>
-                </div>
+                {pkg.logo && <img src={pkg.logo} alt={pkg.name} style={{height: '30px', marginBottom: '10px'}} />}
+                <h4>{pkg.name}</h4>
+                <div style={styles.price}>{pkg.price} грн</div>
+                <p style={{fontSize: '12px', color: '#666'}}>Франшиза: {pkg.franchise} грн</p>
+                <button style={styles.btnSelect} onClick={() => { setSelectedPkg(pkg); setStep(3); }}>Обрати</button>
+              </div>
               ))}
             </div>
           </div>
@@ -140,14 +126,10 @@ const InsurancePage = () => {
           <div style={styles.card}>
             <h3>Анкета страхувальника</h3>
             <div style={styles.formGrid}>
-              <input placeholder="Прізвище" style={styles.input} value={formData.surname || ''} onChange={e => setFormData({...formData, surname: e.target.value})}/>
-              <input placeholder="Ім'я" style={styles.input} value={formData.name || ''} onChange={e => setFormData({...formData, name: e.target.value})}/>
-              <input placeholder="ІПН (10 цифр)" style={styles.input} value={formData.inn || ''} onChange={e => setFormData({...formData, inn: e.target.value})}/>
-              <input placeholder="VIN код" style={styles.input} value={formData.vin || ''} onChange={e => setFormData({...formData, vin: e.target.value.toUpperCase()})}/>
-              <input placeholder="Email" style={styles.input} value={formData.email || ''} onChange={e => setFormData({...formData, email: e.target.value})}/>
-              <input placeholder="Телефон" style={styles.input} value={formData.phone || ''} onChange={e => setFormData({...formData, phone: e.target.value})}/>
-              <input placeholder="Серія паспорта" style={styles.input} value={formData.docSeries || ''} onChange={e => setFormData({...formData, docSeries: e.target.value})}/>
-              <input placeholder="Номер паспорта" style={styles.input} value={formData.docNumber || ''} onChange={e => setFormData({...formData, docNumber: e.target.value})}/>
+              <input placeholder="Прізвище" style={styles.input} onChange={e => setFormData({...formData, surname: e.target.value})}/>
+              <input placeholder="Ім'я" style={styles.input} onChange={e => setFormData({...formData, name: e.target.value})}/>
+              <input placeholder="ІПН" style={styles.input} onChange={e => setFormData({...formData, inn: e.target.value})}/>
+              <input placeholder="VIN" style={styles.input} value={formData.vin} onChange={e => setFormData({...formData, vin: e.target.value.toUpperCase()})}/>
             </div>
             <button style={styles.btnConfirm} onClick={handleCreate} disabled={loading}>
               {loading ? "Зачекайте..." : `Оформити за ${selectedPkg?.price} грн`}
@@ -159,6 +141,7 @@ const InsurancePage = () => {
   );
 };
 
+// ... твої стилі без змін ...
 const styles = {
   page: { minHeight: '100vh', background: '#0f172a', padding: '50px 20px', fontFamily: 'sans-serif' },
   container: { maxWidth: '800px', margin: '0 auto' },
@@ -177,5 +160,4 @@ const styles = {
   input: { padding: '12px', border: '1px solid #ddd', borderRadius: '8px' },
   btnConfirm: { width: '100%', background: '#10b981', color: '#fff', border: 'none', padding: '15px', borderRadius: '10px', fontSize: '18px', cursor: 'pointer' }
 };
-
 export default InsurancePage;
