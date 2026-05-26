@@ -1,0 +1,56 @@
+.footer {
+    background-color: #111;
+    padding: 50px 20px;
+    border-top: 2px solid #d91d1d;
+    color: white;
+  }
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+  }
+  
+  .footer-info {
+    flex: 1;
+  }
+  
+  .footer-logo {
+    color: #d91d1d;
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  
+  .footer-maps {
+    flex: 2;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .map-wrapper {
+    flex: 1;
+    height: 250px;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid #333;
+    background: #222; /* Колір поки мапа вантажиться */
+  }
+  
+  /* Адаптація для мобілок */
+  @media (max-width: 900px) {
+    .footer-container {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .footer-maps {
+      width: 100%;
+      flex-direction: column;
+    }
+    .map-wrapper {
+      width: 100%;
+    }
+  }
