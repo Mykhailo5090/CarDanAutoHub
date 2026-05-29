@@ -15,13 +15,16 @@ const AboutPage = () => <div style={{padding: '100px'}}>Сторінка ПРО 
 const AppLayout = () => {
   const location = useLocation();
 
-  const hideHeaderRoutes = ['/login', '/registration'];
+  // Вказуємо шляхи, де не потрібно показувати хедер і футер
+  const hideLayoutRoutes = ['/login', '/registration'];
 
-  const shouldHideHeader = hideHeaderRoutes.includes(location.pathname);
+  // Перевіряємо, чи знаходиться поточний шлях у масиві
+  const shouldHideLayout = hideLayoutRoutes.includes(location.pathname);
 
   return (
     <>
-      {!shouldHideHeader && <Header />}
+      {/* Рендеримо Header, якщо ми не на сторінках логіну/реєстрації */}
+      {!shouldHideLayout && <Header />}
 
       <Routes>
         <Route path="/" element={<MainPage />} />
@@ -35,7 +38,8 @@ const AppLayout = () => {
         <Route path="/profile" element={<UserPage />} />
       </Routes>
 
-      <Footer/>
+      {/* Рендеримо Footer за тією ж умовою */}
+      {!shouldHideLayout && <Footer />}
     </>
   );
 };

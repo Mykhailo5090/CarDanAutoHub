@@ -17,7 +17,7 @@ const FavoritesPage = () => {
 
   const removeFromFavorite = async (carId) => {
     await fetch(`http://localhost:5001/api/favorites/${user.id}/${carId}`, { method: 'DELETE' });
-    fetchFavorites(); // Оновлюємо список
+    fetchFavorites(); 
   };
 
   if (!user) return <div style={{ padding: '20px' }}>Будь ласка, увійдіть в аккаунт.</div>;

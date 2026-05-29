@@ -82,7 +82,7 @@ const InsurancePage = () => {
       <div style={styles.container}>
         <h1 style={{textAlign: 'center', color: '#fff', marginBottom: '30px'}}>CarDan Insurance</h1>
 
-        {/* КРОК 1: ПОШУК ТА ВЛАСНІ ОГОЛОШЕННЯ */}
+
         {step === 1 && (
           <div>
             <div style={styles.card}>
@@ -124,7 +124,7 @@ const InsurancePage = () => {
           </div>
         )}
 
-        {/* КРОК 2: ВИБІР КОМПАНІЇ */}
+
         {step === 2 && result && (
           <div>
             <div style={styles.carHeader}>
@@ -148,12 +148,12 @@ const InsurancePage = () => {
           </div>
         )}
 
-        {/* КРОК 3: АНКЕТА */}
+
         {step === 3 && (
           <div style={styles.card}>
             <button onClick={() => setStep(2)} style={styles.backBtn}>← До списку цін</button>
             <h3 style={{marginTop: '15px'}}>Анкета для {selectedPkg?.name}</h3>
-            {/* ... форми без змін як у тебе були ... */}
+
             <div style={styles.formSection}>
               <div style={styles.formGrid}>
                 <input placeholder="Прізвище" style={styles.input} onChange={e => setFormData({...formData, surname: e.target.value})}/>
@@ -180,7 +180,7 @@ const styles = {
   inputPlate: { flex: 1, padding: '15px', fontSize: '20px', borderRadius: '10px', border: '2px solid #ddd', textAlign: 'center', fontWeight: 'bold' },
   btnMain: { padding: '0 30px', backgroundColor: '#2196F3', color: '#fff', border: 'none', borderRadius: '10px', cursor: 'pointer', fontSize: '16px', fontWeight: 'bold' },
   
-  // Стилі для власних оголошень
+
   myCarsGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '15px' },
   myCarCard: { 
     backgroundColor: '#fff', 
@@ -205,7 +205,7 @@ const styles = {
   },
   selectText: { color: '#2196F3', fontWeight: 'bold', fontSize: '14px' },
 
-  // Решта стилів...
+
   carHeader: { backgroundColor: '#2c2c2c', color: '#fff', padding: '20px', borderRadius: '12px', marginBottom: '20px' },
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px' },
   pkgCard: { backgroundColor: '#fff', padding: '20px', borderRadius: '12px', textAlign: 'center' },

@@ -9,14 +9,14 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
-    // 1. Перевіряємо, чи користувач ВЖЕ залогінений
+
     const savedUser = localStorage.getItem('user');
 
     if (savedUser) {
-      // Якщо дані є в базі браузера — ведемо в профіль
+
       navigate('/profile');
     } else {
-      // 2. Якщо не залогінений, перевіряємо, чи він тут вперше
+
       const hasVisited = localStorage.getItem('hasVisitedCarDan');
 
       if (!hasVisited) {
@@ -57,7 +57,7 @@ const Header = () => {
             
             <div className='div_user' onClick={handleProfileClick} style={{ cursor: 'pointer' }}>
               <img className="user_img" src={userimg} alt="user-logo" />
-              {/* Міняємо текст кнопки залежно від стану */}
+
               <p className='p_p p_login'>
                 {localStorage.getItem('user') ? 'Profile' : 'Login'}
               </p>

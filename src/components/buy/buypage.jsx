@@ -4,18 +4,18 @@ const BuyPage = () => {
   const [cars, setCars] = useState([]);
   const [filteredCars, setFilteredCars] = useState([]);
   const [favorites, setFavorites] = useState([]);
-  const [photoIndices, setPhotoIndices] = useState({}); // Для гортання фото в кожній картці
+  const [photoIndices, setPhotoIndices] = useState({}); 
 
   const user = JSON.parse(localStorage.getItem('user'));
 
-  // Стейт для всіх фільтрів з твого макета
+
   const [filters, setFilters] = useState({
     region: '', transmission: '', fuel_type: '',
     minYear: '', maxYear: '', 
     minPrice: '', maxPrice: '',
     maxMileage: '', 
     minEngine: '', maxEngine: '',
-    search: '' // Пошук по всьому (марка, модель, опис)
+    search: '' 
   });
 
   const [sortBy, setSortBy] = useState('newest');
@@ -26,7 +26,6 @@ const BuyPage = () => {
       .then(data => {
         setCars(data);
         setFilteredCars(data);
-        // Початкові індекси фото (0 для кожного авто)
         const indices = {};
         data.forEach(car => indices[car.id] = 0);
         setPhotoIndices(indices);
@@ -47,7 +46,7 @@ const BuyPage = () => {
   useEffect(() => {
     let result = [...cars];
 
-    // Пошук по всім текстовим параметрам
+
     if (filters.search) {
       const s = filters.search.toLowerCase();
       result = result.filter(c => 
@@ -57,7 +56,7 @@ const BuyPage = () => {
       );
     }
 
-    // Застосування всіх фільтрів
+
     if (filters.region) result = result.filter(c => c.region === filters.region);
     if (filters.transmission) result = result.filter(c => c.transmission === filters.transmission);
     if (filters.fuel_type) result = result.filter(c => c.fuel_type === filters.fuel_type);
@@ -68,8 +67,6 @@ const BuyPage = () => {
     if (filters.maxMileage) result = result.filter(c => Number(c.mileage) <= Number(filters.maxMileage));
     if (filters.minEngine) result = result.filter(c => Number(c.engine_volume) >= Number(filters.minEngine));
     if (filters.maxEngine) result = result.filter(c => Number(c.engine_volume) <= Number(filters.maxEngine));
-
-    // Сортування
     if (sortBy === 'cheap') result.sort((a, b) => a.price - b.price);
     if (sortBy === 'expensive') result.sort((a, b) => b.price - a.price);
     if (sortBy === 'newest') result.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
@@ -106,7 +103,7 @@ const BuyPage = () => {
   return (
     <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
       
-      {/* ПАНЕЛЬ ФІЛЬТРІВ (Згідно з макетом) */}
+
       <div style={filterBoxStyle}>
         <input placeholder="Search (brand, model...)" style={inputStyle} onChange={e => setFilters({...filters, search: e.target.value})} />
         
@@ -144,7 +141,7 @@ const BuyPage = () => {
         </select>
       </div>
 
-      {/* КАРТКИ */}
+
       <div style={gridStyle}>
         {filteredCars.map(car => {
           const images = JSON.parse(car.images);
@@ -152,7 +149,7 @@ const BuyPage = () => {
 
           return (
             <div key={car.id} style={cardStyle}>
-              {/* ФОТО СЛАЙДЕР */}
+
               <div style={{ position: 'relative', height: '220px', background: '#000' }}>
                 <img src={`http://localhost:5001${images[currentIdx]}`} alt="car" style={imgStyle} />
                 {images.length > 1 && (
@@ -181,7 +178,7 @@ const BuyPage = () => {
   );
 };
 
-// СТИЛІ (Базові, для структури)
+
 const filterBoxStyle = { display: 'flex', flexWrap: 'wrap', gap: '10px', padding: '15px', background: '#f8f9fa', borderRadius: '8px', marginBottom: '20px' };
 const inputStyle = { padding: '8px', borderRadius: '5px', border: '1px solid #ddd', minWidth: '150px' };
 const smallInput = { padding: '8px', borderRadius: '5px', border: '1px solid #ddd', width: '85px' };

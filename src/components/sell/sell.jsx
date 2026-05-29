@@ -12,12 +12,12 @@ const SellPage = () => {
     engine_volume: '',
     region: '',
     description: '',
-    license_plate: '' // 1. Додаємо поле в стан
+    license_plate: '' 
   });
   const [images, setImages] = useState([]);
 
   const handleChange = (e) => {
-    // Для номера авто робимо автоматичний Uppercase
+  
     const value = e.target.name === 'license_plate' ? e.target.value.toUpperCase() : e.target.value;
     setFormData({ ...formData, [e.target.name]: value });
   };
@@ -31,7 +31,7 @@ const SellPage = () => {
     const data = new FormData();
     data.append('user_id', user.id);
     
-    // Всі поля з formData автоматично потраплять у запит
+
     Object.keys(formData).forEach(key => data.append(key, formData[key]));
     images.forEach(img => data.append('images', img));
 
@@ -56,7 +56,7 @@ const SellPage = () => {
       <h1 style={{ color: '#fff' }}>Продати авто</h1>
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
         
-        {/* НОВЕ ПОЛЕ: ДЕРЖ НОМЕР */}
+
         <div style={{ backgroundColor: '#2c2c2c', padding: '15px', borderRadius: '10px' }}>
             <label style={{ fontSize: '12px', color: '#aaa', display: 'block', marginBottom: '5px' }}>Державний номер (для страхування та перевірок)</label>
             <input 
@@ -120,7 +120,7 @@ const SellPage = () => {
   );
 };
 
-// Допоміжні стилі
+
 const inputStyle = { padding: '12px', borderRadius: '5px', border: '1px solid #444', backgroundColor: '#222', color: '#fff' };
 const selectStyle = { width: '100%', padding: '12px', borderRadius: '5px', border: '1px solid #444', backgroundColor: '#222', color: '#fff', marginTop: '5px' };
 

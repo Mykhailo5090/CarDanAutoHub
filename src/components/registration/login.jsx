@@ -29,13 +29,13 @@ const LoginPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Перевіряємо, де лежать дані користувача
+
         const userToSave = data.user || data;
 
         if (userToSave && (userToSave.id || userToSave.email)) {
           localStorage.setItem('user', JSON.stringify(userToSave));
           alert("Вхід успішний!");
-          // Використовуємо window.location для повного оновлення стану авторизації
+
           window.location.href = '/profile';
         } else {
           alert("Помилка: Сервер повернув порожній об'єкт користувача");

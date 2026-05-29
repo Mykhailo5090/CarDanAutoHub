@@ -12,8 +12,7 @@ const ProfilePage = () => {
     const checkAuth = () => {
       try {
         const savedUser = localStorage.getItem('user');
-        
-        // Перевіряємо: чи є дані, і чи не є вони помилковим рядком "undefined"
+    
         if (savedUser && savedUser !== "undefined") {
           const parsedUser = JSON.parse(savedUser);
           if (parsedUser && parsedUser.id) {
@@ -26,7 +25,7 @@ const ProfilePage = () => {
         }
       } catch (err) {
         console.error("Auth error:", err);
-        localStorage.removeItem('user'); // Чистимо биті дані
+        localStorage.removeItem('user');
         navigate('/login');
       } finally {
         setLoading(false);
@@ -44,7 +43,7 @@ const ProfilePage = () => {
       if (!response.ok) throw new Error("Server error");
       
       const data = await response.json();
-      setMyCars(Array.isArray(data) ? data : []); // Гарантуємо, що це масив
+      setMyCars(Array.isArray(data) ? data : []); 
       setShowCars(true);
     } catch (err) {
       console.error("Помилка завантаження машин:", err);
@@ -95,7 +94,7 @@ const ProfilePage = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
               {myCars.map(car => (
                 <div key={car.id} style={{ display: 'flex', alignItems: 'center', gap: '20px', padding: '15px', border: '1px solid #ddd', borderRadius: '8px' }}>
-                  {/* Безпечне відображення фото */}
+
                   {car.images && car.images !== "null" && (
                     <img 
                       src={`http://localhost:5001${JSON.parse(car.images)[0]}`} 
