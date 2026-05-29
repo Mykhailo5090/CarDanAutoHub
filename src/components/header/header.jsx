@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../header/header.scss';
-import logo from '../img/porschelogo.png';
-import blackheartlogo from '../img/blackheart.png';
-import userimg from '../img/user.png';
+import logo from './img/porschelogo.png';
+import blackheartlogo from './img/blackheart.png';
+import userimg from './img/user.png';
 
 const Header = () => {
   const navigate = useNavigate();

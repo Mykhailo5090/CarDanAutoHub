@@ -1,6 +1,6 @@
 import '../main/mainpage.scss';
 import porschesubheader from '../main/img/porschesubheader.jpg';
-import logo from '../img/porschelogo.png';
+import logo from '../header/img/porschelogo.png';
 
 const MainPage = () => {
   return (

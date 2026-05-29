@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../registration/registration.scss';
 
 import porschebckg from '../registration/img/porschebkg.jpg';
-import logo from '../img/porschelogo.png';
+import logo from '../header/img/porschelogo.png';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');

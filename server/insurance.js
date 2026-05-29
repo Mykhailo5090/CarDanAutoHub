@@ -1,9 +1,13 @@
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
+// Імпортуємо парсер модальних вікон (дані авто + термін)
+import { parseVehicleModalData } from './carParser.js';
+// Імпортуємо наш новий парсер результатів та цін
+import { parseInsuranceOffers } from './offersParser.js';
 
-// Підключаємо stealth плагін для приховування автоматизації
 puppeteer.use(StealthPlugin());
 
+// Функція для нормалізації літер номера (переведення на укр розкладку)
 const normalizePlate = (plate) => {
   const map = {
     A: 'А', B: 'В', C: 'С', E: 'Е', H: 'Н', I: 'І', K: 'К', M: 'М', O: 'О', P: 'Р', T: 'Т', X: 'Х',
@@ -16,16 +20,18 @@ const normalizePlate = (plate) => {
     .join('');
 };
 
-// Експортуємо правильну назву, яку шукає роутер
 export const getInsuranceOffers = async (data) => {
   let plate = typeof data === 'object' ? data.plateNumber || data.plate : data;
+  if (!plate) return { success: false, message: "Номер авто не передано" };
+  
   plate = normalizePlate(plate);
+  console.log(`🚗 Початок пошуку для номера: ${plate}`);
 
-  let browser; // Оголошуємо тут, щоб змінна була доступна в блоці catch
+  let browser;
 
   try {
     browser = await puppeteer.launch({
-      headless: false,
+      headless: false, // Тримаємо false, щоб бачити весь процес на власні очі
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
@@ -37,101 +43,71 @@ export const getInsuranceOffers = async (data) => {
     });
 
     const page = await browser.newPage();
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+    await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
 
-    console.log(`🚀 Перехід на сторінку автоцивілки...`);
-    await page.goto('https://polis.ua/osago', {
+    console.log(`🌐 Переходимо на сторінку ОСЦПВ...`);
+    await page.goto('https://hotline.finance/osago', {
       waitUntil: 'networkidle2',
       timeout: 60000,
     });
 
-    try {
-      const closePopupBtn = await page.waitForSelector('.LocalePopupModule_btns__VXjlD button', { timeout: 4000 });
-      if (closePopupBtn) {
-        await closePopupBtn.click();
-        await new Promise(r => setTimeout(r, 500));
-        console.log('✨ Попап мови закрито');
-      }
-    } catch (e) {}
-
-    console.log(`🔍 Шукаємо поле вводу для номера: ${plate}`);
-    const inputSelector = 'input[placeholder*="1234"], input[name="plate"], input[type="text"]';
+    const inputSelector = 'input[placeholder*="AA"], input[placeholder*="АА"], input[name="plate"]';
     await page.waitForSelector(inputSelector, { visible: true, timeout: 15000 });
     
     await page.focus(inputSelector);
     await page.click(inputSelector, { clickCount: 3 });
     await page.keyboard.press('Backspace');
     
-    await page.type(inputSelector, plate, { delay: 120 });
-    console.log('⌨️ Номер успішно введено в поле калькулятора');
-
+    await page.type(inputSelector, plate, { delay: 150 });
     await new Promise(r => setTimeout(r, 800));
 
-    const submitButtonSelector = 'button[type="submit"], button.Button_orange';
+    const submitButtonSelector = 'form button[type="submit"], button[class*="Button_orange"], button[class*="submit"]';
     await page.waitForSelector(submitButtonSelector, { visible: true });
     
-    console.log('⚡ Натискаємо кнопку отримання результатів...');
+    console.log('⚡ Натискаємо кнопку розрахунку...');
     await page.click(submitButtonSelector);
 
-    console.log('⏳ Очікуємо відповіді від страхових (проходження reCAPTCHA)...');
-    await page.waitForFunction(
-      () => {
-        const hasCards = document.querySelectorAll('[class*="Card"], [class*="Offer"], .insurance-card').length > 3;
-        const loadedPrices = document.body.innerText.includes('грн');
-        return hasCards || loadedPrices;
-      },
-      { timeout: 50000 }
-    );
+    // ========================================================
+    // КРОК 1: Проходимо обидві модалки та збираємо інфо про ТЗ
+    // ========================================================
+    const vehicleInfo = await parseVehicleModalData(page);
+    // ========================================================
+    console.log('⏳ Чекаємо 5 секунд, поки завантажаться картки з цінами...');
+    await new Promise(r => setTimeout(r, 5000));
 
-    await new Promise(r => setTimeout(r, 3000));
+    // ========================================================
+    // КРОК 2: Збираємо ціни та пропозиції страхових компаній
+    // ========================================================
+    const insuranceOffers = await parseInsuranceOffers(page);
+    // ========================================================
 
-    const result = await page.evaluate(() => {
-      const items = Array.from(document.querySelectorAll('[class*="OfferRow"], [class*="CompanyCard"], .card'));
-      
-      const packages = items.map((item, index) => {
-        const img = item.querySelector('img');
-        const textContent = item.innerText || '';
-        
-        const priceMatch = textContent.replace(/\s/g, '').match(/(\d+)\s?грн/);
-        const price = priceMatch ? Number(priceMatch[1]) : 0;
-
-        const franchiseMatch = textContent.match(/(?:франшиза|франшиза:)\s*(\d+)/i);
-        const franchise = franchiseMatch ? franchiseMatch[1] : '0';
-
-        return {
-          id: index + 1,
-          name: img?.alt || 'Страхова компанія',
-          logo: img?.src || '',
-          price: price,
-          franchise: franchise
-        };
-      }).filter(p => p.price > 100);
-
-      return { packages };
-    });
-
-    console.log(`✅ Успішно зібрано пропозицій: ${result.packages.length}`);
+    // Закриваємо браузер після виконання всіх етапів
     await browser.close();
-    return { success: true, ...result };
+    
+    // Повертаємо чистий результат на твій сайт або в Postman
+    return { 
+      success: true, 
+      vehicle: vehicleInfo, 
+      offers: insuranceOffers,
+      message: `Успішно знайдено ${insuranceOffers.length} пропозицій для ${vehicleInfo.model || 'авто'}` 
+    };
 
   } catch (error) {
-    console.error('❌ Помилка роботи парсера:', error.message);
+    console.error('❌ Виникла помилка в головному потоці:', error.message);
     if (browser) {
       try {
         const pages = await browser.pages();
         if (pages.length > 0) {
-          await pages[0].screenshot({ path: 'polis_scraping_error.png', fullPage: true });
+          await pages[0].screenshot({ path: 'hotline_error_screenshot.png', fullPage: true });
+          console.log('📸 Скріншот помилки збережено в корінь проекту.');
         }
       } catch (sErr) {}
       await browser.close();
     }
-    return { success: false, message: error.message, packages: [] };
+    return { success: false, message: error.message };
   }
 };
 
-// Додаємо експорт цієї функції, яку вимагає твій routes/insurance.js
 export const createPolisContract = async (contractData) => {
-  console.log('📝 Запит на створення контракту отримано:', contractData);
-  // Тут буде твоя логіка відправки контракту, наразі повертаємо успішну заглушку
-  return { success: true, result: "success", message: "Контракт ініційовано" };
+  return { success: true, message: "Заглушка створення контракту" };
 };
