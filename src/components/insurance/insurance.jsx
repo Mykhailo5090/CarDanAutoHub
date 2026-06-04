@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
+import OffersGrid from './offersGrid';
+import InsuranceForm from './insuranceForm';
+
 const InsurancePage = () => {
   const savedUser = localStorage.getItem('user');
   const user = savedUser && savedUser !== "undefined" ? JSON.parse(savedUser) : null;
+  // const navigate = useNavigate();
 
   const [step, setStep] = useState(1);
   const [plate, setPlate] = useState('');
@@ -82,7 +86,7 @@ const InsurancePage = () => {
       <div style={styles.container}>
         <h1 style={{textAlign: 'center', color: '#fff', marginBottom: '30px'}}>CarDan Insurance</h1>
 
-
+        {/* КРОК 1: Пошук авто та вибір зі збережених */}
         {step === 1 && (
           <div>
             <div style={styles.card}>
@@ -124,54 +128,35 @@ const InsurancePage = () => {
           </div>
         )}
 
-
+        {/* КРОК 2: Виведення результатів парсингу (Винесено в окремий компонент) */}
         {step === 2 && result && (
-          <div>
-            <div style={styles.carHeader}>
-              <button onClick={() => setStep(1)} style={styles.backBtn}>← Назад</button>
-              <h3 style={{margin:0}}>{result.car?.brand} {result.car?.model}</h3>
-              <p style={{margin:0, opacity:0.8}}>{result.car?.year} р. | {plate}</p>
-            </div>
-            <div style={styles.grid}>
-              {result.packages?.map(pkg => (
-                <div key={pkg.id} style={styles.pkgCard}>
-                  <div style={styles.logoRow}>
-                    {pkg.logo && <img src={pkg.logo} alt={pkg.name} style={styles.logoImg} />}
-                    <span style={styles.companyName}>{pkg.name}</span>
-                  </div>
-                  <div style={styles.price}>{pkg.price} <small>грн</small></div>
-                  <p style={styles.franchise}>Франшиза: {pkg.franchise}</p>
-                  <button style={styles.btnSelect} onClick={() => { setSelectedPkg(pkg); setStep(3); }}>Обрати</button>
-                </div>
-              ))}
-            </div>
-          </div>
+          <OffersGrid 
+            result={result} 
+            plate={plate} 
+            setStep={setStep} 
+            setSelectedPkg={setSelectedPkg} 
+            styles={styles}
+          />
         )}
 
-
+        {/* КРОК 3: Анкета клієнта (Винесено в окремий компонент) */}
         {step === 3 && (
-          <div style={styles.card}>
-            <button onClick={() => setStep(2)} style={styles.backBtn}>← До списку цін</button>
-            <h3 style={{marginTop: '15px'}}>Анкета для {selectedPkg?.name}</h3>
-
-            <div style={styles.formSection}>
-              <div style={styles.formGrid}>
-                <input placeholder="Прізвище" style={styles.input} onChange={e => setFormData({...formData, surname: e.target.value})}/>
-                <input placeholder="Ім'я" style={styles.input} onChange={e => setFormData({...formData, name: e.target.value})}/>
-                <input placeholder="ІПН" style={styles.input} onChange={e => setFormData({...formData, inn: e.target.value})}/>
-                <input placeholder="Телефон" style={styles.input} value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})}/>
-              </div>
-            </div>
-            <button style={styles.btnConfirm} onClick={handleOrder} disabled={loading}>
-              {loading ? "Зачекайте..." : `Оформити за ${selectedPkg?.price} грн`}
-            </button>
-          </div>
+          <InsuranceForm 
+            selectedPkg={selectedPkg} 
+            formData={formData} 
+            setFormData={setFormData} 
+            handleOrder={handleOrder} 
+            loading={loading} 
+            setStep={setStep} 
+            styles={styles}
+          />
         )}
       </div>
     </div>
   );
 };
 
+// Залишаємо стилі тут, передаємо їх через props в дочірні компоненти
 const styles = {
   page: { minHeight: '100vh', backgroundColor: '#1a1a1a', padding: '40px 20px' },
   container: { maxWidth: '900px', margin: '0 auto' },
@@ -179,33 +164,11 @@ const styles = {
   row: { display: 'flex', gap: '10px' },
   inputPlate: { flex: 1, padding: '15px', fontSize: '20px', borderRadius: '10px', border: '2px solid #ddd', textAlign: 'center', fontWeight: 'bold' },
   btnMain: { padding: '0 30px', backgroundColor: '#2196F3', color: '#fff', border: 'none', borderRadius: '10px', cursor: 'pointer', fontSize: '16px', fontWeight: 'bold' },
-  
-
   myCarsGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '15px' },
-  myCarCard: { 
-    backgroundColor: '#fff', 
-    padding: '15px', 
-    borderRadius: '12px', 
-    display: 'flex', 
-    justifyContent: 'space-between', 
-    alignItems: 'center', 
-    cursor: 'pointer',
-    transition: 'transform 0.2s, box-shadow 0.2s',
-    border: '1px solid #333'
-  },
+  myCarCard: { backgroundColor: '#fff', padding: '15px', borderRadius: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', border: '1px solid #333' },
   carInfo: { display: 'flex', flexDirection: 'column', gap: '4px' },
-  carPlateTag: { 
-    backgroundColor: '#f0f0f0', 
-    padding: '2px 8px', 
-    borderRadius: '4px', 
-    fontSize: '12px', 
-    fontWeight: 'bold', 
-    width: 'fit-content',
-    border: '1px solid #ccc'
-  },
+  carPlateTag: { backgroundColor: '#f0f0f0', padding: '2px 8px', borderRadius: '4px', fontSize: '12px', fontWeight: 'bold', width: 'fit-content', border: '1px solid #ccc' },
   selectText: { color: '#2196F3', fontWeight: 'bold', fontSize: '14px' },
-
-
   carHeader: { backgroundColor: '#2c2c2c', color: '#fff', padding: '20px', borderRadius: '12px', marginBottom: '20px' },
   grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px' },
   pkgCard: { backgroundColor: '#fff', padding: '20px', borderRadius: '12px', textAlign: 'center' },

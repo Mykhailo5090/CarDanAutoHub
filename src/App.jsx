@@ -9,16 +9,14 @@ import SellPage from '../src/components/sell/sell';
 import FavoritesPage from '../src/components/favourite/favourite';
 import InsurancePage from './components/insurance/insurance';
 import Footer from './components/footer/footer';
+import InsuranceForm from './components/insurance/insuranceForm';
+import OffersGrid from './components/insurance/offersGrid';
 
 const AboutPage = () => <div style={{padding: '100px'}}>Сторінка ПРО НАС</div>;
 
 const AppLayout = () => {
   const location = useLocation();
-
-  // Вказуємо шляхи, де не потрібно показувати хедер і футер
   const hideLayoutRoutes = ['/login', '/registration'];
-
-  // Перевіряємо, чи знаходиться поточний шлях у масиві
   const shouldHideLayout = hideLayoutRoutes.includes(location.pathname);
 
   return (
@@ -36,6 +34,7 @@ const AppLayout = () => {
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/profile" element={<UserPage />} />
+        
       </Routes>
 
       {/* Рендеримо Footer за тією ж умовою */}
