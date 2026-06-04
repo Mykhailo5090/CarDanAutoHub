@@ -103,6 +103,12 @@ $graycolor:#464646;
 .main_wrapper{
     margin-left: 50px;
     margin-right: 50px;
+    flex: 1 0 auto;
+}
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
 }
 .main_comp{
     z-index: 1;
@@ -126,11 +132,17 @@ $graycolor:#464646;
 .porsche_right_under_container{
     display: flex;
     justify-content: end;
-    margin-top: 52%;
+    // margin-top: 52%;
    
     
 
 }
-.p_main-porsche_1{
-  font-size: 60px;
-}
+// .p_main_porsche_1{
+//   font-size: 60px;
+// }
+// .p_main_porsche_2{
+//   font-size: 60px;
+// }
+// .main{
+//   font-family: hranfsey;
+// }

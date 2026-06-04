@@ -1,56 +1,85 @@
-.footer {
-    background-color: #111;
-    padding: 50px 20px;
-    border-top: 2px solid #d91d1d;
-    color: white;
-  }
+$bluecolor:#0F1A32;
+$bonecolor:#F5F4F5;
+$darkbluecolor:#0F1A32;
+$graycolor:#464646;
+
+.wrapper_footer{
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.footer{
+  width: 100%;
+  background-color: $bonecolor; 
+  margin-top: auto;
+  font-family: hranfsey;
+}
+
+
+
+.footer_maps_container{
+  display: flex;
+  justify-content: space-between;
+  height: 100%; 
+  gap: 40px;     
+}
+
+.map_item{
+  display: flex;
+  column-gap: 3%;
+  max-width: 100%;
+  min-height: 100%;
+  flex: 1; 
   
-  .footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
+  iframe {
+    max-height: 100%; 
+    min-height: 100%;
+    flex: 1;      
+  }
+}
+
+.text_map_container{
+  font-size: 32px;
+  flex: 1; 
+}
+
+.text_map_container_2{
+  display: grid;
+  justify-items: end;
+  align-content: start; 
+  row-gap: 15px;        
+  font-size: 32px;
+  flex: 1;             
+}
+.text_map_container_1{
+  display: grid;
+  justify-items: start;
+  align-content: start; 
+  row-gap: 15px;        
+  font-size: 32px;
+  flex: 1;              
+}
+
+.text_bkg{
+  background-color: $bluecolor;
+  width:fit-content;
+  padding: 1%;
+}
+.p_text_bkg{
+  color: $bonecolor;
+  width: 100%;
+}
+.porsche_right_under_container{
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 40px;
-  }
-  
-  .footer-info {
-    flex: 1;
-  }
-  
-  .footer-logo {
-    color: #d91d1d;
-    font-size: 28px;
-    margin-bottom: 10px;
-  }
-  
-  .footer-maps {
-    flex: 2;
-    display: flex;
-    gap: 20px;
-  }
-  
-  .map-wrapper {
-    flex: 1;
-    height: 250px;
-    border-radius: 15px;
-    overflow: hidden;
-    border: 1px solid #333;
-    background: #222; /* Колір поки мапа вантажиться */
-  }
-  
-  /* Адаптація для мобілок */
-  @media (max-width: 900px) {
-    .footer-container {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-    .footer-maps {
-      width: 100%;
-      flex-direction: column;
-    }
-    .map-wrapper {
-      width: 100%;
-    }
-  }
+    justify-content: end;
+}
+.porsche_font{
+  font-size: 32px;
+}
+
+.porsche_right_under {
+  display: flex;
+  align-items: center;
+  gap: 5px; 
+}
