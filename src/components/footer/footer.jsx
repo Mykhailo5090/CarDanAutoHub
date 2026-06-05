@@ -31,7 +31,7 @@ const Footer = () => {
             <div className='text_map_container text_map_container_2'>
               <div className='porsche_right_under'>
                           <img className="porsche_logo" src={logo} alt="porsche" />
-                          <p className='porsche_font'>Porsche</p>
+                          <p className='porsche_font_1'>Porsche</p>
               
               </div>
               <div className='text_adress'> <p className='text_adress text_adress_1'>Stuttgart, Germany</p></div>

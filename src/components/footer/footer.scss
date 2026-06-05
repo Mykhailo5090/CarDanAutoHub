@@ -65,6 +65,8 @@ $graycolor:#464646;
   background-color: $bluecolor;
   width:fit-content;
   padding: 1%;
+  padding-left: 2%;
+  padding-right: 2%;
 }
 .p_text_bkg{
   color: $bonecolor;
@@ -74,8 +76,13 @@ $graycolor:#464646;
     display: flex;
     justify-content: end;
 }
-.porsche_font{
+.porsche_font_1{
   font-size: 32px;
+  font-family: porsche;
+
+
+
+
 }
 
 .porsche_right_under {
