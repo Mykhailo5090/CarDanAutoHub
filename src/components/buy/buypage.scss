@@ -375,3 +375,60 @@ $cherrycolor: #A00323;
     font-weight: bold;
   }
 }
+
+.car-card-info {
+  // Розділювач перед блоком продавця
+  .car-card-divider {
+    border: 0;
+    border-top: 1px solid #e5e5e5;
+    margin: 12px 0 8px 0;
+  }
+
+  // Блок з контактами продавця
+  .car-card-seller {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+
+    .seller-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid #0f1a32;
+    }
+
+    .seller-avatar-placeholder {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: #f5f4f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #464646;
+      border: 1px solid #ccd1d9;
+    }
+
+    .seller-details {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+
+      .seller-name {
+        font-weight: bold;
+        font-size: 14px;
+        color: #0f1a32;
+        margin: 0;
+      }
+
+      .seller-phone {
+        font-size: 12px;
+        color: #464646;
+        margin: 2px 0 0 0;
+      }
+    }
+  }
+}

@@ -233,10 +233,6 @@ const BuyPage = () => {
                     />
                   </div>
                 </div>
-
-                
-
-            
               </div>
 
               <div className="container_hr">
@@ -244,9 +240,6 @@ const BuyPage = () => {
               </div>
 
               <div className="container_buypage_filtration container_buypage_filtration_3">
-                
-                
-                
                 <div className="filter-range filter_range_1">
                   <div className="container_filter_range container_filter_range_1">
                     <p className="p_filter_range">Price:</p>
@@ -268,11 +261,8 @@ const BuyPage = () => {
                       setFilters({ ...filters, maxPrice: e.target.value })
                     }
                   />
-
                   </div>
-                  
                 </div>
-
               </div>
 
               <div className="container_hr">
@@ -283,7 +273,6 @@ const BuyPage = () => {
                 <div className="filter-range filter_range_1">
                   <div className="container_filter_range container_filter_range_1">
                     <p className="p_filter_range">Mileage:</p>
-
                   </div>
                   <div className="container_filter_range container_filter_range_2">
                     <input
@@ -294,20 +283,12 @@ const BuyPage = () => {
                     setFilters({ ...filters, maxMileage: e.target.value })
                   }
                 />
-
                   </div>
-
                 </div>
-                
-
               </div>
-                <div className="container_hr">
+              <div className="container_hr">
                 <hr className="hr_filtration" />
               </div>
-
-
-
-              
             </div>
 
             {/* ГРІД З ТАЧКАМИ (РЕНДЕРИТЬ ЛИШЕ 10 ШТУК) */}
@@ -369,6 +350,24 @@ const BuyPage = () => {
                       <p className="car-card-subtext">
                         📍 {car.region} • 🛣️ {car.mileage} km
                       </p>
+
+                      {/* --- ДОДАНИЙ БЛОК КОРИСТУВАЧА (ПРОДАВЦЯ) --- */}
+                      <hr className="car-card-divider" />
+                      <div className="car-card-seller">
+                        {car.owner_avatar ? (
+                          <img 
+                            src={`http://localhost:5001${car.owner_avatar}`} 
+                            alt="Seller" 
+                            className="seller-avatar" 
+                          />
+                        ) : (
+                          <div className="seller-avatar-placeholder">👤</div>
+                        )}
+                        <div className="seller-details">
+                          <p className="seller-name">{car.owner_name || "Продавець"}</p>
+                          <p className="seller-phone">📞 {car.owner_phone || "Не вказано"}</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 );
@@ -386,6 +385,7 @@ const BuyPage = () => {
               </select>
             </div>
           </div>
+          
           {/* --- БЛОК ПАГІНАЦІЇ --- */}
           {totalPages > 1 && (
             <div className="pagination">
@@ -409,7 +409,7 @@ const BuyPage = () => {
 
               <button
                 disabled={currentPage === totalPages}
-                onClick={() => setCurrentPage((prev) => prev + 1)}
+                onClick={() => setCurrentPage((prev) => prev - 1)}
                 className="pagination-arrow"
               >
                 Next

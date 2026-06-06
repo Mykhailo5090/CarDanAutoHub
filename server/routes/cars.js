@@ -49,17 +49,28 @@ router.post('/', upload.array('images', 10), async (req, res) => {
   }
 });
 
-// Отримання всіх авто
+// ОТРИМАННЯ ВСІХ АВТО (З ДАНИМИ ПРОДАВЦЯ)
 router.get('/', async (req, res) => {
   try {
-    const allCars = await pool.query('SELECT * FROM cars ORDER BY created_at DESC');
+    const queryText = `
+      SELECT 
+        cars.*, 
+        users.name AS owner_name, 
+        users.phone AS owner_phone, 
+        users.avatar AS owner_avatar
+      FROM cars
+      LEFT JOIN users ON cars.user_id = users.id
+      ORDER BY cars.created_at DESC
+    `;
+    const allCars = await pool.query(queryText);
     res.json(allCars.rows);
   } catch (err) {
+    console.error("Error fetching cars:", err.message);
     res.status(500).json({ error: "Error fetching cars" });
   }
 });
 
-// Отримання авто конкретного користувача
+// Отримання авто конкретного користувача (тут залишаємо як є, бо юзер дивиться на свої авто)
 router.get('/my-cars/:userId', async (req, res) => {
   try {
     const myCars = await pool.query('SELECT * FROM cars WHERE user_id = $1 ORDER BY created_at DESC', [req.params.userId]);
@@ -87,9 +98,26 @@ router.post('/favorites', async (req, res) => {
   res.json({ message: "Added" });
 });
 
+// ОТРИМАННЯ ОБРАНОГО (ТАКОЖ З ДАНИМИ ПРОДАВЦЯ, щоб картки не ламалися в списку обраного)
 router.get('/favorites/:userId', async (req, res) => {
-  const favorites = await pool.query(`SELECT cars.* FROM cars JOIN favorites ON cars.id = favorites.car_id WHERE favorites.user_id = $1`, [req.params.userId]);
-  res.json(favorites.rows);
+  try {
+    const queryText = `
+      SELECT 
+        cars.*, 
+        users.name AS owner_name, 
+        users.phone AS owner_phone, 
+        users.avatar AS owner_avatar
+      FROM cars 
+      JOIN favorites ON cars.id = favorites.car_id 
+      LEFT JOIN users ON cars.user_id = users.id
+      WHERE favorites.user_id = $1
+    `;
+    const favorites = await pool.query(queryText, [req.params.userId]);
+    res.json(favorites.rows);
+  } catch (err) {
+    console.error("Error fetching favorites:", err.message);
+    res.status(500).json({ error: "Error fetching favorites" });
+  }
 });
 
 router.delete('/favorites/:userId/:carId', async (req, res) => {

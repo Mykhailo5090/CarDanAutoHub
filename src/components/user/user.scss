@@ -1,0 +1,356 @@
+$bluecolor: #0f1a32;
+$bonecolor: #f5f4f5;
+$darkbluecolor: #0f1a32;
+$graycolor: #464646;
+$cherrycolor: #a00323;
+
+.__container_profilepage {
+  padding: 50px;
+  color: $bonecolor;
+  font-family: hranfsey, sans-serif;
+
+  h1 {
+    font-size: 36px;
+    margin-bottom: 25px;
+    color: $bonecolor;
+  }
+
+  h2 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    color: $bonecolor;
+  }
+}
+
+// Повідомлення про завантаження
+.profile-loading {
+  padding: 50px;
+  color: $bonecolor;
+  font-size: 20px;
+  font-family: hranfsey, sans-serif;
+}
+
+// Картка з інфою юзера (Зробив преміальною, як фільтр-бокс)
+.user-info-card {
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 400px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.96) 0%,
+    rgba(245, 247, 250, 0.92) 100%
+  );
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  color: $bluecolor; // Текст всередині темний для читабельності на білому
+  box-shadow: 0 20px 40px -5px rgba(15, 26, 50, 0.25);
+
+  p {
+    margin: 8px 0;
+    font-size: 16px;
+
+    strong {
+      color: $darkbluecolor;
+    }
+  }
+}
+
+// Панель з кнопками дій
+.profile-actions {
+  margin-top: 25px;
+  display: flex;
+  gap: 12px;
+
+  .btn-show-cars {
+    padding: 12px 24px;
+    background-color: $bluecolor;
+    color: $bonecolor;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: inherit;
+    transition: all 0.3s ease;
+
+    &:hover {
+      
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .btn-logout {
+    padding: 12px 24px;
+    background-color: transparent;
+    color: $cherrycolor;
+    border: 2px solid $cherrycolor;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: inherit;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: $cherrycolor;
+      color: $bonecolor;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba($cherrycolor, 0.3);
+    }
+  }
+}
+
+// Список оголошень користувача
+.user-cars-section {
+  margin-top: 40px;
+
+  .cars-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 700px; // Щоб список не розтягувався на весь екран
+  }
+
+  // Рядок однієї машини
+  .user-car-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.05); // Легкий туманний фон
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .user-car-img {
+      width: 100px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 6px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .user-car-info {
+      flex: 1;
+
+      h3 {
+        margin: 0;
+        font-size: 18px;
+        color: $bonecolor;
+      }
+
+      p {
+        margin: 5px 0 0 0;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.6);
+
+        span {
+          color: $cherrycolor;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .btn-delete-car {
+      padding: 8px 16px;
+      background-color: transparent;
+      color: #ff4d4d;
+      border: 1px solid #ff4d4d;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: #ff4d4d;
+        color: $bonecolor;
+        box-shadow: 0 0 10px rgba(255, 77, 77, 0.4);
+      }
+    }
+  }
+}
+// Переконайся, що ці змінні оголошені на початку файлу, якщо їх там немає
+$bluecolor: #0f1a32;
+$bonecolor: #f5f4f5;
+$darkbluecolor: #0f1a32;
+$graycolor: #464646;
+$cherrycolor: #a00323;
+
+.user-info-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center; // Центруємо контент картки
+  text-align: center;
+
+  @media (min-width: 480px) {
+    flex-direction: row; // Якщо екран широкий — аватарка буде ліворуч, інфа праворуч
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  // БЛОК АВАТАРКИ
+  .avatar-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .avatar-wrapper {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid $bluecolor;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      background-color: $bonecolor;
+
+      .user-avatar {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+
+      .avatar-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 50px;
+        color: $graycolor;
+      }
+
+      // Кнопка-фотоапарат поверх аватарки під час редагування
+      .upload-avatar-btn {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background-color: $cherrycolor;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 16px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        transition: transform 0.2s ease;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+
+  // ТЕКСТОВІ ПОЛЯ
+  .profile-fields {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      @media (min-width: 480px) {
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+      }
+
+      span {
+        color: #333;
+        font-size: 16px;
+      }
+    }
+
+    .user-id-text {
+      font-size: 13px;
+     
+    }
+
+    // Інпути під час редагування
+    .profile-input {
+      padding: 6px 12px;
+      font-size: 15px;
+      border: 1px solid $graycolor;
+      border-radius: 6px;
+      background-color: #fff;
+      color: $bluecolor;
+      font-family: inherit;
+      width: 100%;
+      max-width: 220px;
+
+      &:focus {
+        outline: none;
+        border-color: $cherrycolor;
+        box-shadow: 0 0 5px rgba($cherrycolor, 0.2);
+      }
+    }
+  }
+
+  // КНОПКИ РЕДАГУВАННЯ ПРОФІЛЮ
+  .edit-profile-actions {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+
+    @media (min-width: 480px) {
+      width: auto;
+      align-self: flex-end; // Притискаємо кнопку редагування до низу форми
+    }
+
+    .btn-edit-profile,
+    .btn-save-profile {
+      padding: 8px 14px;
+      background-color: $cherrycolor;
+      color: $bonecolor;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: bold;
+      font-size: 14px;
+      transition: background 0.2s ease;
+
+   
+    }
+
+    .btn-save-profile {
+      background-color: #28a745; // Зелена для збереження
+
+      &:hover {
+        background-color: #218838;
+      }
+    }
+
+    .btn-cancel-profile {
+      padding: 8px 14px;
+      background-color: transparent;
+      color: $graycolor;
+      border: 1px solid $graycolor;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 14px;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: $graycolor;
+        color: #fff;
+      }
+    }
+  }
+}

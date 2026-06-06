@@ -14,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 // Роздача статичних файлів (завантажених фото)
+
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Підключення модульних роутів

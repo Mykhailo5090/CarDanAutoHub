@@ -1,0 +1,144 @@
+// Імпортуємо твої змінні (вкажи правильний шлях до твого головного файлу, якщо треба)
+$bluecolor: #0F1A32;
+$bonecolor: #F5F4F5;
+$darkbluecolor: #0F1A32;
+$graycolor: #464646;
+$cherrycolor: #A00323;
+
+.__container_sellpage {
+  padding: 50px;
+  max-width: 600px;
+  margin: 0 auto;
+  color: $bonecolor;
+  font-family: hranfsey, sans-serif;
+
+  h1 {
+    color: $bonecolor;
+    margin-bottom: 25px;
+    font-size: 36px;
+  }
+}
+
+.sell-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  // Базовий стиль для всіх текстових інпутів, текстових областей та селектів
+  .form-input, 
+  .form-textarea, 
+  .form-select {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.05); // Легкий просвіт під дим
+    color: $bonecolor;
+    font-family: inherit;
+    font-size: 16px;
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: $cherrycolor;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .form-select {
+    width: 100%;
+    margin-top: 5px;
+    cursor: pointer;
+
+    option {
+      background-color: $bluecolor;
+      color: $bonecolor;
+    }
+  }
+
+  // Контейнери для групування (наприклад, Рік + Ціна)
+  .form-row {
+    display: flex;
+    gap: 10px;
+
+    .form-input {
+      flex: 1;
+    }
+  }
+
+  // Обгортки для селектів з текстом
+  .form-label {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  // Спеціальний блок для номера авто
+  .license-plate-box {
+    background-color: rgba(255, 255, 255, 0.07);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+
+    label {
+      font-size: 13px;
+      color: $bonecolor;
+      opacity: 0.6;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .license-plate-input {
+      width: 100%;
+      padding: 14px;
+      font-size: 22px;
+      text-align: center;
+      font-weight: bold;
+      letter-spacing: 2px; // Щоб номер виглядав як справжній
+      border-radius: 8px;
+      border: 2px solid $cherrycolor;
+      background-color: $bonecolor;
+      color: $bluecolor; // Номер буде чорним/синім на білому тлі, як в реалі
+      text-transform: uppercase;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 10px rgba($cherrycolor, 0.5);
+      }
+    }
+  }
+
+  // Інпут завантаження файлів
+  .file-input {
+    padding: 10px 0;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+  }
+
+  // Кнопка відправки
+  .submit-btn {
+    padding: 15px;
+    background-color: $cherrycolor;
+    color: $bonecolor;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba($cherrycolor, 0.3);
+
+    &:hover {
+    //   background-color: lighten($cherrycolor, 5%);
+      transform: translateY(-2px);
+    //   box-shadow: 0 6px 20px rgba($cherrycolor, 0.5);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
