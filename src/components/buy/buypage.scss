@@ -1,0 +1,377 @@
+$bluecolor:#0F1A32;
+$bonecolor:#F5F4F5;
+$darkbluecolor:#0F1A32;
+$graycolor:#464646;
+$cherrycolor: #A00323;
+
+
+.sub-body {
+    background-image: url(../background/fog-1.png);
+    animation: scroll-fog-1 40s ease-in-out infinite alternate;
+    background-size: cover;
+    background-repeat: repeat-x;
+}
+
+.sub-body__2 {
+    background-image: url(../background/fog-2.png);
+   
+    animation: scroll-fog-2 65s ease-in-out infinite alternate;
+    background-size: cover;
+    background-repeat: repeat-x;
+}
+
+
+@keyframes scroll-fog-1 {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 40% 0%;
+    }
+}
+
+@keyframes scroll-fog-2 {
+    0% {
+        background-position: 100vh 0%;
+    }
+    100% {
+        background-position: 60% 0%; 
+    }
+}
+
+@keyframes scroll {
+    100% {
+        background-position: -100vh 0%;
+    }
+}
+
+.__wrapper_buypage{
+    padding-left: 50px;
+    padding-right: 50px; 
+    padding-top: 2%;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    font-family: hranfsey;
+    color: $bluecolor;
+    column-gap: 1%;
+}
+
+.filter-box {
+  display: flex;
+  background-color: $bonecolor;
+  flex: 1;
+  height: fit-content;
+  flex-direction: column;
+  padding: 2%;
+  column-gap: 2%;
+ 
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: linear-gradient(
+    135deg, 
+    rgba(255, 255, 255, 0.96) 0%, 
+    rgba(245, 247, 250, 0.92) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  
+
+  border-radius: 12px; 
+  
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),                               
+    0 20px 40px -5px rgba(15, 26, 50, 0.25),                          
+    0 40px 80px -10px rgba(0, 0, 0, 0.4);
+  
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+
+  &:hover {
+
+    
+   
+    box-shadow: 
+      0 10px 20px -5px rgba(0, 0, 0, 0.1),
+      0 30px 60px -10px rgba(15, 26, 50, 0.35), 
+      0 60px 100px -15px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.p_buypage_filtration{
+    font-size: 32px;
+
+}
+.container_buypage_filtration_1{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2%;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+
+}
+.container_buypage_filtration_2{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+   // Робить інпути однакової красивої ширини
+    row-gap: 10px;
+    
+    // row-gap: 50%;
+    
+}
+.filter-input{
+    background-color: $bluecolor;
+    border: 1px solid  $cherrycolor;
+    color: $bonecolor;
+    font-size: 24px;
+    border-radius: 15px;
+    padding: 2%;
+    &::placeholder {
+    color: $bonecolor; 
+    box-shadow: 
+      0 10px 20px -5px rgba(0, 0, 0, 0.1),
+      0 30px 60px -10px rgba(15, 26, 50, 0.35), 
+      0 60px 100px -15px rgba(0, 0, 0, 0.5);
+    opacity: 0.8;       
+  }
+//   width: 100%;
+  height: 100%;
+
+}
+.filter_drop{
+    background-color: $bluecolor;
+    color: $bonecolor ;
+    padding: 1.5%;
+    border: 1px solid black;
+    border-radius: 15px;
+    font-size: 24px;
+
+    box-shadow: 
+      0 10px 20px -5px rgba(0, 0, 0, 0.1),
+      0 30px 60px -10px rgba(15, 26, 50, 0.35), 
+      0 60px 100px -15px rgba(0, 0, 0, 0.5);
+
+      option {
+    font-family: hranfsey; // Твій шрифт для списку
+    font-size: 24px;                   // Розмір тексту варіантів вибору
+    background-color: $bluecolor;      // Колір фону випадаючого вікна (Працює в Chrome/Windows)
+    color: $bonecolor;                 // Колір тексту варіантів
+    padding: 10px;                     // (Увага: ігнорується більшістю браузерів)
+  }
+  
+}
+
+.option_drop_menu{
+    font-size: 24px;
+
+}
+.container_hr{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.hr_filtration{
+    width: 100%;
+    height: 8px solid;
+    background-color: $bluecolor;
+    // border: none;
+    border: $bluecolor solid;
+    border-radius: 15px;
+     box-shadow: 
+      0 10px 20px -5px rgba(0, 0, 0, 0.1),
+      0 30px 60px -10px rgba(15, 26, 50, 0.35), 
+      0 60px 100px -15px rgba(0, 0, 0, 0.5);
+}
+.container_buypage_filtration_3{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+   // Робить інпути однакової красивої ширини
+    row-gap: 10px;
+}
+.filter-range{
+    display: flex;
+    // height: 100%;
+    // padding-bottom: 2%;
+    column-gap: 2%;
+   
+}
+.filter-range_1{
+    display: flex;
+    
+}
+.p_filter_range{
+    color: $bluecolor;
+    font-size: 32px;
+}
+.container_filter_range{
+    display: flex;
+    flex-direction: column;
+    row-gap: 2%;
+}
+.container_filter_range_1{
+    align-items: center;
+    justify-content: center;
+}
+.hr_select_filtration{
+    border: $bluecolor solid 1.5px;
+    width: 55%;
+}
+
+
+
+/* Грід та картки */
+.cars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  flex: 2;
+}
+
+.car-card {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background: #fff;
+}
+
+.car-card-image-wrapper {
+  position: relative;
+  height: 220px;
+  background: #000;
+}
+
+.car-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Кнопки перемикання фото всередині картки */
+.car-card-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  
+  &.btn-left { left: 5px; }
+  &.btn-right { right: 5px; }
+}
+
+.car-card-counter {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.car-card-fav-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  font-size: 18px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  color: #ccc;
+  transition: color 0.2s ease;
+
+  &.active {
+    color: #d32f2f;
+  }
+}
+
+/* Інфо блок картки */
+.car-card-info {
+  padding: 15px;
+}
+
+.car-card-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.car-card-title {
+  margin: 0;
+}
+
+.car-card-price {
+  color: #d32f2f;
+  font-weight: bold;
+}
+
+.car-card-subtext {
+  font-size: 13px;
+  color: #666;
+  margin: 5px 0;
+}
+
+/* --- СТИЛІ ДЛЯ ПАГІНАЦІЇ --- */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 40px;
+  padding-bottom: 20px;
+}
+
+.pagination-arrow {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+
+  &:disabled {
+    background-color: #f5f5f5;
+    color: #aaa;
+    cursor: not-allowed;
+    border-color: #eee;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: #f0f0f0;
+  }
+}
+
+.pagination-number {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+
+  &.active {
+    background-color: #0F1A32; // Твій фірмовий колір Порше
+    color: #fff;
+    border-color: #0F1A32;
+    font-weight: bold;
+  }
+}
