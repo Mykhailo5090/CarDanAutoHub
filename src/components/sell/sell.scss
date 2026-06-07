@@ -1,48 +1,57 @@
-// Імпортуємо твої змінні (вкажи правильний шлях до твого головного файлу, якщо треба)
-$bluecolor: #0F1A32;
-$bonecolor: #F5F4F5;
-$darkbluecolor: #0F1A32;
+$bluecolor: #0f1a32;
+$bonecolor: #f5f4f5;
+$darkbluecolor: #0f1a32;
 $graycolor: #464646;
-$cherrycolor: #A00323;
+$cherrycolor: #a00323;
 
-.__container_sellpage {
-  padding: 50px;
-  max-width: 600px;
-  margin: 0 auto;
-  color: $bonecolor;
-  font-family: hranfsey, sans-serif;
+.main_container_sellpage {
+  display: flex;
+}
 
-  h1 {
-    color: $bonecolor;
-    margin-bottom: 25px;
-    font-size: 36px;
-  }
+.sub_container_sellpage_1 {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+}
+.sub_container_sellpage_2 {
+  flex: 1.3;
+  font-family: hranfsey;
+  padding: 2%;
 }
 
 .sell-form {
+  background-color: $bonecolor;
   display: flex;
   flex-direction: column;
   gap: 15px;
+  padding: 2%;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.96) 0%,
+    rgba(245, 247, 250, 0.92) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.7);
 
-  // Базовий стиль для всіх текстових інпутів, текстових областей та селектів
-  .form-input, 
-  .form-textarea, 
-  .form-select {
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background-color: rgba(255, 255, 255, 0.05); // Легкий просвіт під дим
-    color: $bonecolor;
-    font-family: inherit;
-    font-size: 16px;
-    transition: all 0.3s ease;
+  border-radius: 12px;
 
-    &:focus {
-      outline: none;
-      border-color: $cherrycolor;
-      background-color: rgba(255, 255, 255, 0.1);
-    }
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s ease;
+
+  &:hover {
+    box-shadow:
+      0 10px 20px -5px rgba(0, 0, 0, 0.1),
+      0 30px 60px -10px rgba(15, 26, 50, 0.35),
+      0 60px 100px -15px rgba(0, 0, 0, 0.5);
   }
+
+ 
+
+
+
+
 
   .form-select {
     width: 100%;
@@ -55,7 +64,16 @@ $cherrycolor: #A00323;
     }
   }
 
-  // Контейнери для групування (наприклад, Рік + Ціна)
+  .p_gov_number_auto{
+    color: $bluecolor;
+    font-size: 24px;
+  }
+  .b_gov_numb{
+    // font-size: 32px;
+    color: $cherrycolor;
+  }
+
+
   .form-row {
     display: flex;
     gap: 10px;
@@ -101,7 +119,7 @@ $cherrycolor: #A00323;
       background-color: $bonecolor;
       color: $bluecolor; // Номер буде чорним/синім на білому тлі, як в реалі
       text-transform: uppercase;
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
 
       &:focus {
         outline: none;
@@ -132,9 +150,9 @@ $cherrycolor: #A00323;
     box-shadow: 0 4px 15px rgba($cherrycolor, 0.3);
 
     &:hover {
-    //   background-color: lighten($cherrycolor, 5%);
+      //   background-color: lighten($cherrycolor, 5%);
       transform: translateY(-2px);
-    //   box-shadow: 0 6px 20px rgba($cherrycolor, 0.5);
+      //   box-shadow: 0 6px 20px rgba($cherrycolor, 0.5);
     }
 
     &:active {

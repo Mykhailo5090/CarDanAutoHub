@@ -297,7 +297,6 @@ const BuyPage = () => {
               </div>
             </div>
 
-           
             <div className="cars-grid">
               {currentCars.map((car) => {
                 const images = JSON.parse(car.images);
@@ -369,7 +368,7 @@ const BuyPage = () => {
                               className="img_car_card img_car_card_1"
                             />
                             <h6 className="car-card-title">
-                               {car.engine_volume}L {car.fuel_type}
+                              {car.engine_volume}L {car.fuel_type}
                             </h6>
                           </div>
 
@@ -380,7 +379,7 @@ const BuyPage = () => {
                               className="img_car_card img_car_card_1"
                             />
                             <h6 className="car-card-title">
-                               {car.transmission} 
+                              {car.transmission}
                             </h6>
                           </div>
 
@@ -390,9 +389,7 @@ const BuyPage = () => {
                               alt="year-img"
                               className="img_car_card img_car_card_1"
                             />
-                            <h6 className="car-card-title">
-                               {car.mileage} km
-                            </h6>
+                            <h6 className="car-card-title">{car.mileage} km</h6>
                           </div>
                           <div className="year_container_car_card year_container_car_card_1">
                             <img
@@ -400,49 +397,35 @@ const BuyPage = () => {
                               alt="year-img"
                               className="img_car_card img_car_card_1"
                             />
-                            <h6 className="car-card-title">
-                               {car.region}  
-                            </h6>
+                            <h6 className="car-card-title">{car.region}</h6>
                           </div>
                           <div className="seller-details">
-                            
                             <h6 className="car-card-title">
-                               📞  {car.owner_phone || "Не вказано"}
+                              📞 {car.owner_phone || "Не вказано"}
                             </h6>
-                            
                           </div>
-
-                         
-                          
                         </div>
 
                         <div className="car-card-seller">
                           <div className="car_card_sell_container car_card_sell_container_1">
-                            
                             {car.owner_avatar ? (
-                            <img
-                              src={`http://localhost:5001${car.owner_avatar}`}
-                              alt="Seller"
-                              className="seller-avatar"
-                            />
-                          ) : (
-                            <div className="seller-avatar-placeholder">👤</div>
-                          )}
+                              <img
+                                src={`http://localhost:5001${car.owner_avatar}`}
+                                alt="Seller"
+                                className="seller-avatar"
+                              />
+                            ) : (
+                              <div className="seller-avatar-placeholder">
+                                👤
+                              </div>
+                            )}
 
-                          <p className="car-card-title_22">
+                            <p className="car-card-title_22">
                               {car.owner_name || "Продавець"}
                             </p>
-
                           </div>
-                          <div className="car_card_sell_container car_card_sell_container_2">
-
-                          </div>
-                          
-                          
-                          
+                          <div className="car_card_sell_container car_card_sell_container_2"></div>
                         </div>
-
-
                       </div>
 
                       {/* --- ДОДАНИЙ БЛОК КОРИСТУВАЧА (ПРОДАВЦЯ) --- */}
@@ -457,10 +440,7 @@ const BuyPage = () => {
                 className="filter_right_sort"
                 onChange={(e) => setSortBy(e.target.value)}
               >
-                
-                <option value="newest">
-                  Newest
-                  </option>
+                <option value="newest">Newest</option>
                 <option value="cheap">Cheap</option>
                 <option value="expensive">Expensive</option>
               </select>
