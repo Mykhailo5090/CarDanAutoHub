@@ -5,6 +5,14 @@ $graycolor:#464646;
 $cherrycolor: #A00323;
 
 
+
+//   position: sticky;
+//   top: 20px;                 // Відступ від верхнього краю екрана, коли блок «прилип» (відкоригуй під свій Navbar, якщо він є)
+//   align-self: flex-start;
+//   max-height: calc(100vh - 40px);
+//   overflow-y: auto;
+
+
 .sub-body {
     background-image: url(../background/fog-1.png);
     animation: scroll-fog-1 40s ease-in-out infinite alternate;
@@ -78,10 +86,7 @@ $cherrycolor: #A00323;
 
   border-radius: 12px; 
   
-  box-shadow: 
-    0 4px 6px -1px rgba(0, 0, 0, 0.05),                               
-    0 20px 40px -5px rgba(15, 26, 50, 0.25),                          
-    0 40px 80px -10px rgba(0, 0, 0, 0.4);
+
   
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
 
@@ -94,10 +99,20 @@ $cherrycolor: #A00323;
       0 30px 60px -10px rgba(15, 26, 50, 0.35), 
       0 60px 100px -15px rgba(0, 0, 0, 0.5);
   }
+  position: sticky;
+  top: 20px;                 // Відступ від верхнього краю екрана, коли блок «прилип» (відкоригуй під свій Navbar, якщо він є)
+  align-self: flex-start;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+    box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),                               
+    0 20px 40px -5px rgba(15, 26, 50, 0.25),                          
+    0 40px 80px -10px rgba(0, 0, 0, 0.4);
+
 }
 
 .p_buypage_filtration{
-    font-size: 32px;
+    font-size: 40px;
 
 }
 .container_buypage_filtration_1{
@@ -126,17 +141,22 @@ $cherrycolor: #A00323;
     font-size: 24px;
     border-radius: 15px;
     padding: 2%;
+    width: 100%;
     &::placeholder {
     color: $bonecolor; 
     box-shadow: 
       0 10px 20px -5px rgba(0, 0, 0, 0.1),
       0 30px 60px -10px rgba(15, 26, 50, 0.35), 
       0 60px 100px -15px rgba(0, 0, 0, 0.5);
-    opacity: 0.8;       
+    opacity: 0.8; 
+          
   }
 //   width: 100%;
   height: 100%;
 
+}
+.filter-input_1{
+    width: fit-content;
 }
 .filter_drop{
     background-color: $bluecolor;
@@ -152,11 +172,11 @@ $cherrycolor: #A00323;
       0 60px 100px -15px rgba(0, 0, 0, 0.5);
 
       option {
-    font-family: hranfsey; // Твій шрифт для списку
-    font-size: 24px;                   // Розмір тексту варіантів вибору
-    background-color: $bluecolor;      // Колір фону випадаючого вікна (Працює в Chrome/Windows)
-    color: $bonecolor;                 // Колір тексту варіантів
-    padding: 10px;                     // (Увага: ігнорується більшістю браузерів)
+    font-family: hranfsey; 
+    font-size: 24px;                   
+    background-color: $bluecolor;     
+    color: $bonecolor;                 
+    padding: 10px;                    
   }
   
 }
@@ -186,7 +206,6 @@ $cherrycolor: #A00323;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-   // Робить інпути однакової красивої ширини
     row-gap: 10px;
 }
 .filter-range{
@@ -215,36 +234,235 @@ $cherrycolor: #A00323;
 }
 .hr_select_filtration{
     border: $bluecolor solid 1.5px;
-    width: 55%;
+    width: 80%;
 }
 
 
 
 /* Грід та картки */
 .cars-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  display: flex;
+  flex-direction: column; 
+  column-gap: 2%;
+  row-gap: 1em;
   flex: 2;
+
 }
 
 .car-card {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  background: #fff;
+  background: $bonecolor;
+  color: $bluecolor;
+  font-family: hranfsey;
+  font-size: 32px;
+  box-shadow: 
+      0 10px 20px -5px rgba(0, 0, 0, 0.1),
+      0 30px 60px -10px rgba(15, 26, 50, 0.35), 
+      0 60px 100px -15px rgba(0, 0, 0, 0.5);
+  
+  display: flex;
+  width: 100%;
+//   border: 2px solid $bluecolor;
+
 }
 
 .car-card-image-wrapper {
   position: relative;
-  height: 220px;
+//   height: 220px;
   background: #000;
+  flex: 1;
 }
+
+
 
 .car-card-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+
 }
+.car-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid $bluecolor;
+  border-radius: 15px;
+  padding: 2%;
+//   flex-direction: row;
+}
+.car-card-info {
+  padding: 1%;
+  padding-top: .5%;
+  padding-bottom: .5;
+  height: 100%;
+  
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1%;
+}
+.car-card-price {
+  color: $cherrycolor;
+  font-weight: bold;
+}
+.car-card-title{
+    margin: 0;
+}
+.img_car_card{
+    max-width: 32px;
+    max-height: 32px;
+    padding-right: 2%;
+}
+.year_container_car_card{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // column-gap: 1%;
+    
+}
+.year_container_car_card_1{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.car-card-container{
+    display: flex;
+    height: 100%;
+    border: 2px solid #0F1A32;
+    border-radius: 15px;
+    padding: 2%;
+    column-gap: 2%;
+   
+}
+.car-card-item_1{
+    flex: 1;
+    width: fit-content;
+    border: 2px solid #0F1A32;
+    border-radius: 15px;
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2%;
+    height: 100%;
+}
+
+
+  .car-card-divider {
+    border: 0;
+    border-top: 1px solid #e5e5e5;
+    margin: 12px 0 8px 0;
+  }
+  .car_card_sell_container_1{
+    display: flex;
+    column-gap: 2%;
+    height: fit-content;
+    // align-items: center;
+    // justify-content: center;
+    flex: 1;
+
+  }
+  .car-card-title_22{
+    display: flex;
+    height: fit-content;
+    align-items: center;
+    justify-content: center;
+  }
+//   .sub_container{
+//     flex: 1;
+//   }
+
+
+
+
+
+
+  .car-card-seller {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #0F1A32;
+    border-radius: 15px;
+    padding: 2%;
+    flex: 1;
+    height: 100%;
+    column-gap: 2%;
+    // align-items: flex-start;
+    
+   
+
+    .seller-avatar {
+      width: 30%;
+      height: 35%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid $cherrycolor;
+    }
+
+    .seller-avatar-placeholder {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: $bonecolor;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: $graycolor;
+      border: 1px solid $bonecolor;
+    }
+
+    .seller-details {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+
+      
+    }
+  }
+
+
+  .filter_right_sort{
+     border-radius: 10px;
+    border: none;
+    background-color: $bonecolor;
+    font-size: 24px;
+    padding: 2%;
+    // padding-right: 0;
+    position: sticky;
+  top: 20px;                
+  align-self: flex-start;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+    box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),                               
+    0 20px 40px -5px rgba(15, 26, 50, 0.25),                          
+    0 40px 80px -10px rgba(0, 0, 0, 0.4);
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Кнопки перемикання фото всередині картки */
 .car-card-nav-btn {
@@ -254,8 +472,8 @@ $cherrycolor: #A00323;
   background: rgba(255, 255, 255, 0.7);
   border: none;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 10%;
+  height: 10%;
   cursor: pointer;
   font-weight: bold;
   
@@ -296,23 +514,12 @@ $cherrycolor: #A00323;
 }
 
 /* Інфо блок картки */
-.car-card-info {
-  padding: 15px;
-}
 
-.car-card-header {
-  display: flex;
-  justify-content: space-between;
-}
 
-.car-card-title {
-  margin: 0;
-}
 
-.car-card-price {
-  color: #d32f2f;
-  font-weight: bold;
-}
+
+
+
 
 .car-card-subtext {
   font-size: 13px;
@@ -376,59 +583,3 @@ $cherrycolor: #A00323;
   }
 }
 
-.car-card-info {
-  // Розділювач перед блоком продавця
-  .car-card-divider {
-    border: 0;
-    border-top: 1px solid #e5e5e5;
-    margin: 12px 0 8px 0;
-  }
-
-  // Блок з контактами продавця
-  .car-card-seller {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 5px;
-
-    .seller-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1px solid #0f1a32;
-    }
-
-    .seller-avatar-placeholder {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background-color: #f5f4f5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      color: #464646;
-      border: 1px solid #ccd1d9;
-    }
-
-    .seller-details {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.2;
-
-      .seller-name {
-        font-weight: bold;
-        font-size: 14px;
-        color: #0f1a32;
-        margin: 0;
-      }
-
-      .seller-phone {
-        font-size: 12px;
-        color: #464646;
-        margin: 2px 0 0 0;
-      }
-    }
-  }
-}
