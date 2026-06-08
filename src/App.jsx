@@ -11,6 +11,7 @@ import InsurancePage from './components/insurance/insurance';
 import Footer from './components/footer/footer';
 import InsuranceForm from './components/insurance/insuranceForm';
 import OffersGrid from './components/insurance/offersGrid';
+import PoschePage from './components/porsche/auto';
 
 const AboutPage = () => <div style={{padding: '100px'}}>Сторінка ПРО НАС</div>;
 
@@ -34,6 +35,7 @@ const AppLayout = () => {
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/profile" element={<UserPage />} />
+        <Route path="/porsche" element={<PoschePage />} />
         
       </Routes>
 

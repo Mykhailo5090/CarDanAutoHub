@@ -1,0 +1,265 @@
+$bluecolor: #0f1a32;
+$bonecolor: #f5f4f5;
+$darkbluecolor: #0f1a32;
+$graycolor: #464646;
+$cherrycolor: #a00323;
+
+// Кнопки масових дій та чекбокси (тепер у блоці фільтрів)
+.bulk-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  color: $bluecolor;
+  font-weight: bold;
+  font-size: 18px;
+
+  input[type="checkbox"] {
+    width: 30px;
+    height: 30px;
+    accent-color: $cherrycolor;
+    cursor: pointer;
+  }
+}
+.p_checkbox_fav{
+    font-size: 28px;
+}
+
+.bulk-buttons {
+  display: flex;
+  gap: 2%;
+}
+
+.bulk-btn {
+  background-color: $cherrycolor;
+  color: $bonecolor;
+  border: none;
+  padding: 2%;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba($cherrycolor, 0.3);
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+.btn-compare{
+    background-color: $bluecolor;
+}
+
+// Чекбокс поверх фотографії авто в обраному
+.fav-car-card-checkbox-wrapper {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 5px;
+  border-radius: 6px;
+  display: flex;
+  border: 1px solid rgba(15, 26, 50, 0.2);
+
+  input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    accent-color: $cherrycolor;
+    cursor: pointer;
+  }
+}
+
+
+.fav-car-card {
+  display: flex !important;
+  flex-direction: column !important; // Строго будуємо зверху вниз
+  position: relative;
+}
+
+
+.fav-car-card-main-row {
+  display: flex !important;
+  flex-direction: row !important; 
+  width: 100%;
+}
+
+
+.fav-car-card-description-block {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1% 
+}
+
+.fav-car-card-item-description {
+  width: 100%;
+  padding: 1%;
+}
+
+.cars-grid {
+  margin-bottom: 2%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* СТИЛІ ДЛЯ СТОРІНКИ ПОРІВНЯННЯ CHARACTERISTICS */
+.comparison-page-view {
+  animation: fadeIn 0.3s ease-in-out;
+  padding-bottom: 2%;
+}
+
+.comparison-page-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.comparison-board-wrapper {
+  overflow-x: auto;
+  background: $bonecolor;
+  border-radius: 15px;
+  
+}
+
+
+
+
+.comparison-board-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+
+  th,
+  td {
+    padding: 10px;
+    border-bottom: 1px solid $bluecolor;
+    border-right: 1px solid $bluecolor;
+    min-width: 280px;
+  }
+
+  .sticky-spec-column {
+    position: sticky;
+    left: 0;
+    background: $bonecolor;
+    color: $bluecolor;
+    font-weight: bold;
+    min-width: 180px;
+    width: 180px;
+    
+    z-index: 5;
+    border-right: 2px solid $bluecolor;
+  }
+
+  .car-header-cell {
+    background: #fbfbfb;
+    vertical-align: top;
+    position: relative;
+    padding-top: 50px; 
+  }
+
+  .remove-from-comp-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: 1px solid rgba(160, 3, 35, 0.3);
+    color: $cherrycolor;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    transition: all 0.2s;
+
+    &:hover {
+      background: $cherrycolor;
+      color: white;
+    }
+  }
+
+  .comp-card-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    .comp-card-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .comp-card-meta {
+      h3 {
+        font-size: 20px;
+        color: $bluecolor;
+        margin-bottom: 4px;
+      }
+      h4 {
+        font-size: 16px;
+        color: $graycolor;
+        margin-bottom: 8px;
+      }
+      .comp-card-price {
+        font-size: 22px;
+        font-weight: bold;
+        color: $cherrycolor;
+      }
+    }
+  }
+
+  .comp-data-cell {
+    font-size: 16px;
+    color: $bluecolor;
+    vertical-align: middle;
+
+    &.comp-desc-cell {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #444;
+      white-space: normal;
+    }
+  }
+
+  .comp-seller-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .comp-seller-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+
+  tr:hover td:not(.sticky-spec-column) {
+    background-color: rgba(15, 26, 50, 0.01);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

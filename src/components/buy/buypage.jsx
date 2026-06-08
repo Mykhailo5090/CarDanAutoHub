@@ -6,6 +6,7 @@ import engineimg from "../buy/img/engine-img.png";
 import gearimg from "../buy/img/gear-box-img.png";
 import mileageimg from "../buy/img/mileage-img.png";
 import locationimg from "../buy/img/location-img.png";
+import phoneimg from "../buy/img/telephone.png";
 
 const BuyPage = () => {
   const [cars, setCars] = useState([]);
@@ -399,9 +400,14 @@ const BuyPage = () => {
                             />
                             <h6 className="car-card-title">{car.region}</h6>
                           </div>
-                          <div className="seller-details">
+                          <div className=" year_container_car_card year_container_car_card_1">
+                            <img
+                              src={phoneimg}
+                              alt="year-img"
+                              className="img_car_card img_car_card_1"
+                            />
                             <h6 className="car-card-title">
-                              📞 {car.owner_phone || "Не вказано"}
+                              {car.owner_phone || "Не вказано"}
                             </h6>
                           </div>
                         </div>

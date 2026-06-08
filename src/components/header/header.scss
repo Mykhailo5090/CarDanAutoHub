@@ -87,17 +87,97 @@ select {
 }
 /*Null css END*/
 
-$bluecolor:#0F1A32;
-$bonecolor:#F5F4F5;
-$darkbluecolor:#0F1A32;
-$graycolor:#464646;
+$bluecolor: #0f1a32;
+$bonecolor: #f5f4f5;
+$darkbluecolor: #0f1a32;
+$graycolor: #464646;
 $cherrycolor: #a00323;
 
-.__jump{
-  &:hover {
-    color: $cherrycolor; // Підсвічуємо твоїм вишневим при наведенні
+.__jump {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  transition:
+    transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+    color 0.3s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: $cherrycolor;
+    border-radius: 10px;
+    transform: scaleX(0);
+    transform-origin: center;
+    opacity: 0;
+    transition:
+      transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+      opacity 0.3s ease;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 15%;
+    width: 70%;
+    height: 4px;
+
+    background: rgba(15, 26, 50, 0.35);
+    border-radius: 50%;
+
+    opacity: 0;
+    filter: blur(1px);
+    transform: scaleX(0.6);
+
+    transition:
+      transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+      opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  &:not(.active):hover {
+    transform: translateY(-6px);
+    color: $cherrycolor;
+
+    &::after {
+      opacity: 1;
+      transform: scaleX(1.1);
+      filter: blur(2px);
+    }
+  }
+
+  &:not(.active):active {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(15, 26, 50, 0.15);
+
+    &::after {
+      transform: scaleX(0.9);
+      opacity: 0.6;
+    }
+  }
+
+  &.active {
+    color: $cherrycolor;
+    transform: none;
+
+    &::before {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+
+    &::after {
+      opacity: 0;
+    }
+
+    &:hover {
+      transform: none;
+    }
   }
 }
 
@@ -110,132 +190,112 @@ $cherrycolor: #a00323;
 header {
   background-color: $bonecolor;
   color: $bluecolor;
-
-}
-body{
-    background-color: $bluecolor;
 }
 
+body {
+  background-color: $bluecolor;
+}
+
+.__shadows_header {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.96) 0%,
+    rgba(245, 247, 250, 0.92) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.7);
+
+
+
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s ease;
+
+  &:hover {
+    box-shadow:
+      0 10px 20px -5px rgba(0, 0, 0, 0.1),
+      0 30px 60px -10px rgba(15, 26, 50, 0.35),
+      0 60px 100px -15px rgba(0, 0, 0, 0.5);
+  }
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 20px 40px -5px rgba(15, 26, 50, 0.25),
+    0 40px 80px -10px rgba(0, 0, 0, 0.4);
+}
 
 .__wrapper {
-    padding-left: 50px;
-    padding-right: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
 
-    height: 80px;
-    font-family: hranfsey;
-    display: grid;
-    align-items: center;
-   
-   
-   
 
-  }
-  .nav{
-    color: $bluecolor;
-
-  }
-  .hamburger-menu{
-    display: grid;
-    grid-template-columns: 3;
-    grid-template-rows: 1;
-  
-  }
-  .header_logo_text{
-    grid-column: 1/2;
-    grid-row: 1/2;
-  }
-  .header_porsche_auto{
-    grid-column: 2/3;
-    grid-row: 1/2;
-    display: flex;
-    column-gap: 20px;
-    justify-content: space-around
-  }
-  .header_login{
-    grid-column: 3/4;
-    grid-row: 1/2;
-    display: flex;
-    justify-content: flex-end;
-    
-   
-
-  }
-  .p_login{
-    grid-column: 3/4;
-    grid-row: 1/2;
-  }
-  .p_p{
-    font-size: 32px;
-  }
-  .p_p:hover{
-    
-    
-    background-color: none
-    ;
-  }
+  height: 80px;
+  font-family: hranfsey;
+  display: grid;
+  align-items: center;
+}
+.nav {
+  color: $bluecolor;
+}
+.hamburger-menu {
+  display: grid;
+  grid-template-columns: 3;
+  grid-template-rows: 1;
+}
+.header_logo_text {
+  grid-column: 1/2;
+  grid-row: 1/2;
+}
+.header_porsche_auto {
+  grid-column: 2/3;
+  grid-row: 1/2;
+  display: flex;
+  column-gap: 20px;
+  justify-content: space-around;
+}
+.header_login {
+  grid-column: 3/4;
+  grid-row: 1/2;
+  display: flex;
+  justify-content: flex-end;
+}
+.p_login {
+  grid-column: 3/4;
+  grid-row: 1/2;
+}
+.p_p {
+  font-size: 32px;
+}
+.p_p:hover {
+  background-color: none;
+}
 //   .p_p:visited{
 //     color: red($color: #992121);
 
 //   }
-  .porsche_logo_gap{
-    display: flex;
+.porsche_logo_gap {
+  display: flex;
+}
+.div_user {
+  display: flex;
+}
+.heart-div {
+  margin-right: 7%;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
 
- 
-  }
-  .div_user{
-    display: flex;
-  }
-  .heart-div{
-    margin-right: 7%;
-
-  }
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-
-
-
-
-
-
-
-
-  .heart-img{
-    height: 42px;
-    width: 36px;
-    
-    
-  }
-  .user_img{
-    height: 42px;
-    width: 36px;
-    margin-right: 10px;
-    
-  }
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.heart-img {
+  height: 42px;
+  width: 36px;
+}
+.user_img {
+  height: 42px;
+  width: 36px;
+  margin-right: 10px;
+}
 
 // .li__item:active {
 //   opacity: 30%;
@@ -259,31 +319,6 @@ a {
 #menu__toggle {
   display: none;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @media (max-width: 1160px) {
   .menu__item {
@@ -336,12 +371,12 @@ a {
   }
 
   .menu__btn > span::before {
-    content: '';
+    content: "";
     top: -8px;
   }
 
   .menu__btn > span::after {
-    content: '';
+    content: "";
     top: 8px;
   }
 
