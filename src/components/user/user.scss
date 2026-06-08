@@ -5,83 +5,67 @@ $graycolor: #464646;
 $cherrycolor: #a00323;
 
 .__container_profilepage {
-  padding: 50px;
-  color: $bonecolor;
   font-family: hranfsey, sans-serif;
-
-  h1 {
-    font-size: 36px;
-    margin-bottom: 25px;
-    color: $bonecolor;
-  }
-
-  h2 {
-    font-size: 26px;
-    margin-bottom: 20px;
-    color: $bonecolor;
-  }
 }
 
-// Повідомлення про завантаження
+.profile_flex_container {
+  display: flex;
+  width: 100%;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 2%;
+  padding-top: 2%;
+  gap: 2%; 
+}
 .profile-loading {
   padding: 50px;
   color: $bonecolor;
   font-size: 20px;
-  font-family: hranfsey, sans-serif;
+  font-family: hranfsey;
+}
+.container_profile_2 {
+  flex: 1.5 
+ 
+  
 }
 
-// Картка з інфою юзера (Зробив преміальною, як фільтр-бокс)
+.container_profile_1 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.5%;
+  background-color: $bonecolor;
+  border-radius: 15px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 20px 40px -5px rgba(15, 26, 50, 0.25),
+    0 40px 80px -10px rgba(0, 0, 0, 0.4);
+
+  
+}
+
+
 .user-info-card {
-  padding: 20px;
-  border-radius: 12px;
-  max-width: 400px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.96) 0%,
-    rgba(245, 247, 250, 0.92) 100%
-  );
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  color: $bluecolor; // Текст всередині темний для читабельності на білому
-  box-shadow: 0 20px 40px -5px rgba(15, 26, 50, 0.25);
+  padding: 2%;
+  border-radius: 15px;
+  width: 100%;
 
-  p {
-    margin: 8px 0;
-    font-size: 16px;
-
-    strong {
-      color: $darkbluecolor;
-    }
-  }
+}
+.container_userpage_sub_1{
+  display: flex;
+  column-gap: 3%;
 }
 
 // Панель з кнопками дій
 .profile-actions {
-  margin-top: 25px;
+  margin-top: 15px;
   display: flex;
-  gap: 12px;
-
-  .btn-show-cars {
-    padding: 12px 24px;
-    background-color: $bluecolor;
-    color: $bonecolor;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    font-family: inherit;
-    transition: all 0.3s ease;
-
-    &:hover {
-      
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-  }
+  width: 100%;
 
   .btn-logout {
-    padding: 12px 24px;
+    padding: 10px 20px;
+    width: 100%;
     background-color: transparent;
     color: $cherrycolor;
     border: 2px solid $cherrycolor;
@@ -100,101 +84,111 @@ $cherrycolor: #a00323;
   }
 }
 
-// Список оголошень користувача
+// СЕКЦІЯ РОЗУМНОЇ СІТКИ ОГОЛОШЕНЬ
 .user-cars-section {
-  margin-top: 40px;
+  width: 100%;
 
-  .cars-list-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-width: 700px; // Щоб список не розтягувався на весь екран
+  h2 {
+    color: $bonecolor;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 24px;
   }
 
-  // Рядок однієї машини
+  .no-cars-text {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 16px;
+  }
+
+  /* Сама Smart Grid */
+  .cars-list-container {
+    display: grid;
+    /* auto-fill автоматично створює колонки шириною від 220px до 1fr */
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    width: 100%;
+  }
+
+  /* РЕДИЗАЙН РЯДКА В КАРТКУ СІТКИ */
   .user-car-row {
     display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 15px;
-    background-color: rgba(255, 255, 255, 0.05); // Легкий туманний фон
+    flex-direction: column; // Елементи шикуються зверху вниз
+    background-color: rgba(255, 255, 255, 0.05); 
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
+    border-radius: 12px;
+    overflow: hidden; // Щоб картинка зверху красиво зрізалася по радіусу картки
     transition: all 0.3s ease;
+    height: 100%; // Всі картки в одному ряду будуть однакової висоти
 
     &:hover {
       background-color: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
     }
 
     .user-car-img {
-      width: 100px;
-      height: 70px;
+      width: 100%;
+      height: 140px; // Квадратніша, стабільна висота для зображень авто в сітці
       object-fit: cover;
-      border-radius: 6px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      border-radius: 0; // Скидаємо старий відступ
     }
 
     .user-car-info {
+      padding: 15px;
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
 
       h3 {
         margin: 0;
-        font-size: 18px;
+        font-size: 17px;
         color: $bonecolor;
+        line-height: 1.4;
       }
 
       p {
-        margin: 5px 0 0 0;
+        margin: 0;
         font-size: 14px;
         color: rgba(255, 255, 255, 0.6);
 
         span {
           color: $cherrycolor;
           font-weight: bold;
+          font-size: 16px;
         }
       }
     }
 
     .btn-delete-car {
-      padding: 8px 16px;
+      margin: 0 15px 15px 15px; // Робимо відступи від країв картки
+      padding: 10px 16px;
       background-color: transparent;
       color: #ff4d4d;
       border: 1px solid #ff4d4d;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       font-family: inherit;
+      font-weight: bold;
       transition: all 0.2s ease;
 
       &:hover {
         background-color: #ff4d4d;
         color: $bonecolor;
-        box-shadow: 0 0 10px rgba(255, 77, 77, 0.4);
+        box-shadow: 0 0 12px rgba(255, 77, 77, 0.4);
       }
     }
   }
 }
-// Переконайся, що ці змінні оголошені на початку файлу, якщо їх там немає
-$bluecolor: #0f1a32;
-$bonecolor: #f5f4f5;
-$darkbluecolor: #0f1a32;
-$graycolor: #464646;
-$cherrycolor: #a00323;
 
+// Кастомізація полів та аватара (Залишається без змін)
 .user-info-card {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center; // Центруємо контент картки
-  text-align: center;
+ 
 
-  @media (min-width: 480px) {
-    flex-direction: row; // Якщо екран широкий — аватарка буде ліворуч, інфа праворуч
-    align-items: flex-start;
-    text-align: left;
-  }
+ 
 
-  // БЛОК АВАТАРКИ
   .avatar-section {
     display: flex;
     justify-content: center;
@@ -226,7 +220,6 @@ $cherrycolor: #a00323;
         color: $graycolor;
       }
 
-      // Кнопка-фотоапарат поверх аватарки під час редагування
       .upload-avatar-btn {
         position: absolute;
         bottom: 0;
@@ -250,7 +243,6 @@ $cherrycolor: #a00323;
     }
   }
 
-  // ТЕКСТОВІ ПОЛЯ
   .profile-fields {
     flex: 1;
     display: flex;
@@ -277,10 +269,8 @@ $cherrycolor: #a00323;
 
     .user-id-text {
       font-size: 13px;
-     
     }
 
-    // Інпути під час редагування
     .profile-input {
       padding: 6px 12px;
       font-size: 15px;
@@ -300,16 +290,16 @@ $cherrycolor: #a00323;
     }
   }
 
-  // КНОПКИ РЕДАГУВАННЯ ПРОФІЛЮ
   .edit-profile-actions {
     width: 100%;
     display: flex;
+    flex-direction: column;
     gap: 8px;
     margin-top: 10px;
 
     @media (min-width: 480px) {
       width: auto;
-      align-self: flex-end; // Притискаємо кнопку редагування до низу форми
+      align-self: flex-end;
     }
 
     .btn-edit-profile,
@@ -324,12 +314,10 @@ $cherrycolor: #a00323;
       font-weight: bold;
       font-size: 14px;
       transition: background 0.2s ease;
-
-   
     }
 
     .btn-save-profile {
-      background-color: #28a745; // Зелена для збереження
+      background-color: #28a745;
 
       &:hover {
         background-color: #218838;
