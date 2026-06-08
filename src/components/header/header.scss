@@ -91,6 +91,15 @@ $bluecolor:#0F1A32;
 $bonecolor:#F5F4F5;
 $darkbluecolor:#0F1A32;
 $graycolor:#464646;
+$cherrycolor: #a00323;
+
+.__jump{
+  &:hover {
+    color: $cherrycolor; // Підсвічуємо твоїм вишневим при наведенні
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(15, 26, 50, 0.15);
+  }
+}
 
 /*--------------------- Header START ----------------------*/
 
