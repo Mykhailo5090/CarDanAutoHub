@@ -4,7 +4,7 @@ $darkbluecolor: #0f1a32;
 $graycolor: #464646;
 $cherrycolor: #a00323;
 
-// Кнопки масових дій та чекбокси (тепер у блоці фільтрів)
+
 .bulk-checkbox-label {
   display: flex;
   align-items: center;
@@ -55,7 +55,7 @@ $cherrycolor: #a00323;
     background-color: $bluecolor;
 }
 
-// Чекбокс поверх фотографії авто в обраному
+
 .fav-car-card-checkbox-wrapper {
   position: absolute;
   top: 15px;
@@ -78,7 +78,7 @@ $cherrycolor: #a00323;
 
 .fav-car-card {
   display: flex !important;
-  flex-direction: column !important; // Строго будуємо зверху вниз
+  flex-direction: column !important;
   position: relative;
 }
 
@@ -116,7 +116,7 @@ $cherrycolor: #a00323;
 
 
 
-/* СТИЛІ ДЛЯ СТОРІНКИ ПОРІВНЯННЯ CHARACTERISTICS */
+/* CHARACTERISTICS */
 .comparison-page-view {
   animation: fadeIn 0.3s ease-in-out;
   padding-bottom: 2%;

@@ -1,41 +1,41 @@
 import React from 'react';
 
-const InsuranceForm = ({ selectedPkg, formData, setFormData, handleOrder, loading, setStep, styles }) => {
+const InsuranceForm = ({ selectedPkg, formData, setFormData, handleOrder, loading, setStep }) => {
   return (
-    <div style={styles.card}>
-      <button onClick={() => setStep(2)} style={styles.backBtn}>← До списку цін</button>
-      <h3 style={{ marginTop: '15px' }}>Анкета для {selectedPkg?.name}</h3>
+    <div className="insurance-card form-card">
+      <button onClick={() => setStep(2)} className="back-btn">← До списку цін</button>
+      <h3 className="form-title">Анкета для {selectedPkg?.name}</h3>
 
-      <div style={styles.formSection}>
-        <div style={styles.formGrid}>
+      <div className="form-section">
+        <div className="form-grid">
           <input 
             placeholder="Прізвище" 
-            style={styles.input} 
+            className="form-input" 
             value={formData.surname}
             onChange={e => setFormData({ ...formData, surname: e.target.value })}
           />
           <input 
             placeholder="Ім'я" 
-            style={styles.input} 
+            className="form-input" 
             value={formData.name}
             onChange={e => setFormData({ ...formData, name: e.target.value })}
           />
           <input 
             placeholder="ІПН" 
-            style={styles.input} 
+            className="form-input" 
             value={formData.inn}
             onChange={e => setFormData({ ...formData, inn: e.target.value })}
           />
           <input 
             placeholder="Телефон" 
-            style={styles.input} 
+            className="form-input" 
             value={formData.phone} 
             onChange={e => setFormData({ ...formData, phone: e.target.value })}
           />
         </div>
       </div>
       
-      <button style={styles.btnConfirm} onClick={handleOrder} disabled={loading}>
+      <button className="btn-confirm" onClick={handleOrder} disabled={loading}>
         {loading ? "Зачекайте..." : `Оформити за ${selectedPkg?.price} грн`}
       </button>
     </div>

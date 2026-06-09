@@ -1,10 +1,10 @@
 /**
- * Функція для точного парсингу даних автомобіля з модалки Hotline.finance
+ * 
  * @param {import('puppeteer').Page} page 
- * @returns {Promise<Object>} Розпарсені дані про автомобіль
+ * @returns {Promise<Object>}
  */
 export const parseVehicleModalData = async (page) => {
-    console.log('👀 Очікуємо появу модального вікна з даними авто...');
+    // console.log(' Очікуємо появу модального вікна з даними авто...');
     
     // Селектори для першої модалки (дані ТЗ)
     const firstModalContent = '.ui-modal__content, [class*="transportModalContent"]';
@@ -19,7 +19,7 @@ export const parseVehicleModalData = async (page) => {
       // КРОК 1: ОБРОБКА ПЕРШОЇ МОДАЛКИ (ДАНІ МВС)
       // ----------------------------------------------------
       await page.waitForSelector(firstModalContent, { visible: true, timeout: 12000 });
-      console.log('✨ Перше модальне вікно успішно знайдено!');
+      // console.log(' Перше модальне вікно ');
   
       await new Promise(r => setTimeout(r, 500));
   
@@ -52,34 +52,34 @@ export const parseVehicleModalData = async (page) => {
   
       console.log(` court ТЗ: ${carDetails.model}`);
   
-      // Натискаємо "Продовжити" на першій модалці
-      console.log('⚡ Натискаємо кнопку на першій модалці...');
+
+      // console.log('кнопка на першій модалці');
       await page.waitForSelector(firstContinueBtn, { visible: true });
       await page.click(firstContinueBtn);
       
       // ----------------------------------------------------
       // КРОК 2: ОБРОБКА ДРУГОЇ МОДАЛКИ (ТЕРМІН ОФОРМЛЕННЯ)
       // ----------------------------------------------------
-      console.log('⏳ Очікуємо появу модалки вибору терміну...');
+    
       
       // Чекаємо, поки з'явиться кнопка або сама форма другої модалки
       await page.waitForSelector(secondContinueBtn, { visible: true, timeout: 5000 });
-      console.log('✨ Друга модалка (термін) з\'явилася.');
+      // console.log('Друга модалка з\'явилася.');
   
       // Невеликий таймаут, щоб інтерфейс не "зажував" клік
       await new Promise(r => setTimeout(r, 500));
   
-      console.log('⚡ Натискаємо кнопку "Продовжити" на модалці терміну...');
+
       await page.click(secondContinueBtn);
   
-      console.log('➡️ Все підтверджено. Робот переходить до таблиці з цінами!');
+      // console.log('підтверджено');
       return carDetails;
   
     } catch (err) {
-      console.error('❌ Помилка під час обробки модальних вікон:', err.message);
+      console.error(' Помилка модальних ', err.message);
       return { 
         success: false, 
-        error: "Не вдалося пройти сценарій модальних вікон",
+        error: "-------",
         details: err.message 
       };
     }

@@ -1,73 +1,104 @@
 import React from 'react';
 
-const OffersGrid = ({ result, plate, setStep, setSelectedPkg, styles }) => {
-  // Безпечно дістаємо пакети (перевіряємо і packages, і offers про всяк випадок)
-  const packages = result?.packages || result?.offers || [];
+const OffersGrid = ({ result, plate, setStep, setSelectedPkg }) => {
+  const packages = result?.offers || result?.packages || [];
+  const vehicleData = result?.vehicle;
+
+  const vehicleModel = vehicleData?.model || ''; 
+  const vehicleType = vehicleData?.type || '';
+  const vehicleYear = vehicleData?.year || '';
 
   return (
-    <div>
-      {/* Шапка з даними про авто */}
-      <div style={styles.carHeader}>
-        <button onClick={() => setStep(1)} style={styles.backBtn}>← Назад</button>
-        <h3 style={{ margin: '5px 0 0 0', color: '#fff' }}>
-          {result?.car?.brand || 'Авто'} {result?.car?.model || ''}
-        </h3>
-        <p style={{ margin: '5px 0 0 0', opacity: 0.8, color: '#fff' }}>
-          {result?.car?.year ? `${result.car.year} р.` : ''} | {plate}
-        </p>
-      </div>
-      
-      {/* Якщо масив порожній, показуємо повідомлення та сирі дані для розробника */}
-      {packages.length === 0 ? (
-        <div style={{ 
-          backgroundColor: '#fff', 
-          padding: '30px', 
-          borderRadius: '15px', 
-          color: '#333', 
-          textAlign: 'center',
-          boxShadow: '0 10px 25px rgba(0,0,0,0.3)'
-        }}>
-          <h3 style={{color: '#e74c3c', marginTop: 0}}>⚠️ Пропозиції не знайдено</h3>
-          <p>Бот відпрацював, але масив страхових пакетів порожній або прийшов у невідомому форматі.</p>
-          
-          <div style={{
-            textAlign: 'left', 
-            background: '#f5f5f5', 
-            padding: '15px', 
-            borderRadius: '8px', 
-            marginTop: '15px',
-            overflowX: 'auto'
-          }}>
-            <strong style={{fontSize: '13px'}}>Відповідь від сервера (Діагностика):</strong>
-            <pre style={{fontSize: '12px', margin: '5px 0 0 0'}}>
-              {JSON.stringify(result, null, 2)}
-            </pre>
+    <>
+      {/* ЛІВИЙ БЛОК: ІНФОРМАЦІЯ ПРО АВТОМОБІЛЬ */}
+      <div className="container_profile container_profile_1 insurance_left_panel">
+        <div className="user-info-card __shadows insurance_car_info_card">
+          <div className="container_userpage_sub container_userpage_sub_1 insurance_car_details_wrapper">
+            <div className='container_button_insurance-page'>
+               <button onClick={() => setStep(1)} className="bulk-btn insurance_back_btn">
+              ← Back
+            </button>
+
+            </div>
+           
+            
+            <div className="profile-fields insurance_car_specs">
+              <p className="insurance_car_title">
+                <strong>{vehicleModel || 'Автомобіль'}</strong>
+              </p>
+              {vehicleType && (
+                <p className='p_strong_profilepage '><strong>Type: </strong> {vehicleType}</p>
+              )}
+              {vehicleYear && (
+                <p p_strong_profilepage ><strong>Year: </strong> {vehicleYear} y.</p>
+              )}
+              <p p_strong_profilepage ><strong>Gov. Plate: </strong> {plate}</p>
+            </div>
           </div>
         </div>
-      ) : (
-        /* Якщо дані є — малюємо картки */
-        <div style={styles.grid}>
-          {packages.map((pkg, index) => (
-            <div key={pkg.id || index} style={styles.pkgCard}>
-              <div style={styles.logoRow}>
-                {pkg.logo && <img src={pkg.logo} alt={pkg.name} style={styles.logoImg} />}
-                <span style={{fontWeight: 'bold', color: '#333'}}>{pkg.name || pkg.company}</span>
-              </div>
-              <div style={styles.price}>{pkg.price} <small>грн</small></div>
-              <p style={{color: '#666', fontSize: '14px', margin: '5px 0 15px 0'}}>
-                Франшиза: {pkg.franchise}
+      </div>
+
+      {/* ПРАВИЙ БЛОК: СІТКА СТРАХОВИХ ПРОПОЗИЦІЙ */}
+      <div className="container_profile container_profile_2 insurance_right_panel">
+        <div className="user-cars-section container_profile_1 insurance_offers_section">
+          
+          <div className="__shadows insurance_header_shadow">
+            <p className="p_buypage_filtration __paddings_buypage">Available insurance policies:</p>
+          </div>
+
+          {packages.length === 0 ? (
+            <div className="cars-list-container __shadows insurance_error_container">
+              <p className="p_strong_profilepage insurance_error_title">
+                ⚠️ Wrong number or 0 insurance offers
               </p>
-              <button 
-                style={styles.btnSelect} 
-                onClick={() => { setSelectedPkg(pkg); setStep(3); }}
-              >
-                Обрати
-              </button>
+              <p className="insurance_error_text">
+                Бот відпрацював, але масив пропозицій порожній.
+              </p>
+              <pre className="insurance_diagnostic_pre">
+                {JSON.stringify(result, null, 2)}
+              </pre>
             </div>
-          ))}
+          ) : (
+            <div className="cars-list-container __shadows insurance_offers_grid_list">
+              {packages.map((pkg, index) => (
+                <div key={pkg.id || index} className="user-car-row __shadows_mini insurance_offer_row">
+                  
+                  {pkg.logo && (
+                    <img 
+                      src={pkg.logo} 
+                      alt={pkg.name} 
+                      className="user-car-img insurance_company_logo" 
+                    />
+                  )}
+
+                  <div className="user-car-info insurance_offer_meta">
+                    <p className="p_strong_profilepage insurance_company_name">
+                      {pkg.name || pkg.company}
+                    </p>
+                    <p className="p_strong_profilepage insurance_franchise_text">
+                      Franchise: <strong>{pkg.franchise}</strong>
+                    </p>
+                    <p className="p_strong_profilepage insurance_price_text">
+                      {pkg.price} <strong>грн</strong>
+                    </p>
+                  </div>
+
+                  <div className="insurance_action_wrapper">
+                    <button 
+                      className="bulk-btn bulk-btn_userpage btn-save-profile insurance_select_pkg_btn" 
+                      onClick={() => { setSelectedPkg(pkg); setStep(3); }}
+                    >
+                      Choose
+                    </button>
+                  </div>
+
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-      )}
-    </div>
+      </div>
+    </>
   );
 };
 

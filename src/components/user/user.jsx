@@ -9,7 +9,7 @@ const ProfilePage = () => {
   const [myCars, setMyCars] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Стейти для кастомізації профілю
+
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -270,7 +270,7 @@ const ProfilePage = () => {
             <div className="container_profile container_profile_2">
               <div className="user-cars-section container_profile_1">
                 <div className="__shadows">
-                  <p className="p_buypage_filtration">Your cars: </p>
+                  <p className="p_buypage_filtration __paddings_buypage">Your cars: </p>
                 </div>
                 
                 {myCars.length === 0 ? (

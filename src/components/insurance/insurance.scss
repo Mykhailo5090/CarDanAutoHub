@@ -1,174 +1,156 @@
-// Змінні для кольорів
-$dark-bg: #07152f;
-$card-bg: #0f172a;
-$accent-orange: #f59e0b;
-$success-green: #10b981;
-$text-white: #ffffff;
-$border-color: #1e293b;
+$bluecolor: #0f1a32;
+$bonecolor: #f5f4f5;
+$darkbluecolor: #0f1a32;
+$graycolor: #464646;
+$cherrycolor: #a00323;
+$lightgreen: #7ba05b;
 
 .insurance-page {
-  min-height: 100vh;
-  background: linear-gradient(to bottom, $dark-bg, #020817);
-  padding: 40px 20px;
-  font-family: 'Arial', sans-serif;
+  height: 100%;
+  font-family: hranfsey;
+  color: $bluecolor;
+}
+.insurance-container {
+  background-color: $bonecolor;
+  border-radius: 15px;
+  flex: 2;
+  padding: 2%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.container_flex_insurance_page {
+  display: flex;
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+.item_flex_insurance {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+}
+.p_ins_page {
+  text-align: center;
+}
 
-  .container {
-    max-width: 950px;
-    margin: 0 auto;
-  }
+.insurance-card {
+  padding: 2%;
+}
 
-  .title {
-    color: $text-white;
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 38px;
-    font-weight: 700;
-  }
+.__borders {
+  padding: 2%;
+}
 
-  // Картка пошуку
-  .search-card {
-    background: $card-bg;
-    border-radius: 18px;
-    padding: 25px;
-    border: 1px solid $border-color;
+.insurance-row {
+  display: flex;
+  gap: 2%;
+}
 
-    .search-row {
-      display: flex;
-      gap: 12px;
+.input-plate {
+  flex: 2;
+  padding: 15px;
+  font-size: 24px;
+  border-radius: 15px;
+  border: 2px solid $graycolor;
+  text-align: center;
+  font-weight: bold;
+  outline: none;
+  text-transform: uppercase;
+}
 
-      input {
-        flex: 1;
-        padding: 18px;
-        border-radius: 14px;
-        border: none;
-        font-size: 22px;
-        text-align: center;
-        outline: none;
-      }
+.btn-main {
+  background-color: $lightgreen;
+  flex: 1;
+  color: $bonecolor;
+  border: none;
+  border-radius: 15px;
+  font-size: 24px;
+}
+.__margin-top {
+  margin-top: 5%;
+}
 
-      button {
-        background: $accent-orange;
-        color: white;
-        border: none;
-        border-radius: 14px;
-        padding: 0 28px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: opacity 0.2s;
-        &:disabled { opacity: 0.7; }
-      }
-    }
-
-    .quick-cars {
-      margin-top: 20px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-
-      button {
-        background: #1e293b;
-        color: white;
-        border: none;
-        padding: 10px 16px;
-        border-radius: 10px;
-        cursor: pointer;
-        &:hover { background: #2d3748; }
-      }
-    }
-  }
-
-  // Інфо про машину
-  .car-info {
-    background: #111c34;
-    border-radius: 18px;
-    padding: 20px;
-    margin-bottom: 25px;
-    color: white;
-    position: relative;
-
-    .close-btn {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: transparent;
-      border: none;
-      color: white;
-      font-size: 20px;
-      cursor: pointer;
-    }
-
-    .car-title { font-size: 24px; font-weight: 700; }
-    .car-plate { opacity: 0.7; margin-top: 5px; }
-  }
-
-  // Грід з пакетами
-  .offers-grid {
+// Блок збережених оголошень користувача
+.my-cars-section {
+  .my-cars-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
-
-    .package-card {
-      background: white;
-      border-radius: 18px;
-      padding: 25px;
-      text-align: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-
-      .logo-wrap {
-        height: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 10px;
-        img { max-height: 45px; max-width: 140px; object-fit: contain; }
-      }
-
-      .price { color: $success-green; font-weight: 700; font-size: 34px; margin: 10px 0; }
-      .franchise { color: #64748b; font-size: 14px; margin-bottom: 20px; }
-
-      .choose-btn {
-        width: 100%;
-        background: $accent-orange;
-        color: white;
-        border: none;
-        border-radius: 12px;
-        padding: 14px;
-        font-weight: 700;
-        cursor: pointer;
-      }
-    }
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
   }
 
-  // Форма оформлення
-  .form-card {
-    background: white;
-    border-radius: 18px;
-    padding: 30px;
+  .my-car-card {
+    background-color: $bonecolor;
+    padding: 15px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid $bluecolor;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin-bottom: 20px;
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+    }
 
-      input {
-        padding: 14px;
-        border-radius: 12px;
-        border: 1px solid #ddd;
+    .car-info-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .car-plate-tag {
+        background-color: #f0f0f0;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 20px;
+        font-weight: bold;
+        width: fit-content;
+        border: 1px solid #ccc;
+        color: #333;
+      }
+
+      .car-brand-text {
         font-size: 16px;
+        color: $bluecolor;
+      }
+
+      .car-year-text {
+        font-size: 16px;
+        color: $bluecolor;
       }
     }
 
-    .confirm-btn {
-      width: 100%;
-      background: $success-green;
-      color: white;
-      border: none;
-      border-radius: 14px;
-      padding: 16px;
-      font-weight: 700;
-      font-size: 18px;
-      cursor: pointer;
+    .select-text {
+      color: $lightgreen;
+      font-weight: bold;
+      font-size: 20px;
     }
   }
 }
+
+.insurance_car_details_wrapper {
+  display: flex;
+}
+.container_button_insurance-page {
+  display: flex;
+  align-items: center;
+  flex: 0.2;
+}
+.insurance_back_btn {
+  padding: 7%;
+}
+.insurance_action_wrapper {
+  padding-right: 5%;
+  padding-left: 5%;
+}
+.insurance_select_pkg_btn {
+  background-color: $lightgreen;
+}
+.insurance_offer_row {
+  padding-bottom: 4%;
+}
+
+
