@@ -122,6 +122,12 @@ $cherrycolor: #a00323;
     0 20px 40px -5px rgba(15, 26, 50, 0.25),
     0 40px 80px -10px rgba(0, 0, 0, 0.4);
 }
+.__shadows_mini{
+  box-shadow:
+      0 10px 20px -5px rgba(0, 0, 0, 0.1),
+      0 30px 60px -10px rgba(15, 26, 50, 0.35),
+      0 60px 100px -15px rgba(0, 0, 0, 0.5);
+}
 
 
 .p_buypage_filtration {

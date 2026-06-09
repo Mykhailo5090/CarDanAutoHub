@@ -6,6 +6,8 @@ $cherrycolor: #a00323;
 
 .__container_profilepage {
   font-family: hranfsey, sans-serif;
+  font-size: 20px;
+  color: $bluecolor;
 }
 
 .profile_flex_container {
@@ -33,6 +35,7 @@ $cherrycolor: #a00323;
   flex: 1;
   display: flex;
   flex-direction: column;
+  // row-gap: 2%;
   height: 100%;
   padding: 1.5%;
   background-color: $bonecolor;
@@ -51,139 +54,40 @@ $cherrycolor: #a00323;
   border-radius: 15px;
   width: 100%;
 
+
 }
 .container_userpage_sub_1{
   display: flex;
   column-gap: 3%;
 }
 
+
+.p_strong_profilepage{
+  flex: 1;
+}
+.filter-input_userpage{
+  flex: 2;
+}
+
 // Панель з кнопками дій
 .profile-actions {
-  margin-top: 15px;
+
   display: flex;
+  
   width: 100%;
 
-  .btn-logout {
-    padding: 10px 20px;
-    width: 100%;
-    background-color: transparent;
-    color: $cherrycolor;
-    border: 2px solid $cherrycolor;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    font-family: inherit;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background-color: $cherrycolor;
-      color: $bonecolor;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba($cherrycolor, 0.3);
-    }
-  }
+  
 }
-
-// СЕКЦІЯ РОЗУМНОЇ СІТКИ ОГОЛОШЕНЬ
-.user-cars-section {
+.bulk-btn_userpage{
   width: 100%;
-
-  h2 {
-    color: $bonecolor;
-    margin-top: 0;
-    margin-bottom: 25px;
-    font-size: 24px;
-  }
-
-  .no-cars-text {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 16px;
-  }
-
-  /* Сама Smart Grid */
-  .cars-list-container {
-    display: grid;
-    /* auto-fill автоматично створює колонки шириною від 220px до 1fr */
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
-    width: 100%;
-  }
-
-  /* РЕДИЗАЙН РЯДКА В КАРТКУ СІТКИ */
-  .user-car-row {
-    display: flex;
-    flex-direction: column; // Елементи шикуються зверху вниз
-    background-color: rgba(255, 255, 255, 0.05); 
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    overflow: hidden; // Щоб картинка зверху красиво зрізалася по радіусу картки
-    transition: all 0.3s ease;
-    height: 100%; // Всі картки в одному ряду будуть однакової висоти
-
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.25);
-      transform: translateY(-5px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-    }
-
-    .user-car-img {
-      width: 100%;
-      height: 140px; // Квадратніша, стабільна висота для зображень авто в сітці
-      object-fit: cover;
-      border-radius: 0; // Скидаємо старий відступ
-    }
-
-    .user-car-info {
-      padding: 15px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 10px;
-
-      h3 {
-        margin: 0;
-        font-size: 17px;
-        color: $bonecolor;
-        line-height: 1.4;
-      }
-
-      p {
-        margin: 0;
-        font-size: 14px;
-        color: rgba(255, 255, 255, 0.6);
-
-        span {
-          color: $cherrycolor;
-          font-weight: bold;
-          font-size: 16px;
-        }
-      }
-    }
-
-    .btn-delete-car {
-      margin: 0 15px 15px 15px; // Робимо відступи від країв картки
-      padding: 10px 16px;
-      background-color: transparent;
-      color: #ff4d4d;
-      border: 1px solid #ff4d4d;
-      border-radius: 8px;
-      cursor: pointer;
-      font-family: inherit;
-      font-weight: bold;
-      transition: all 0.2s ease;
-
-      &:hover {
-        background-color: #ff4d4d;
-        color: $bonecolor;
-        box-shadow: 0 0 12px rgba(255, 77, 77, 0.4);
-      }
-    }
-  }
 }
 
-// Кастомізація полів та аватара (Залишається без змін)
+
+
+
+
+
+
 .user-info-card {
  
 
@@ -192,7 +96,7 @@ $cherrycolor: #a00323;
   .avatar-section {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 
     .avatar-wrapper {
       position: relative;
@@ -261,39 +165,18 @@ $cherrycolor: #a00323;
         gap: 8px;
       }
 
-      span {
-        color: #333;
-        font-size: 16px;
-      }
+     
     }
 
-    .user-id-text {
-      font-size: 13px;
-    }
+   
 
-    .profile-input {
-      padding: 6px 12px;
-      font-size: 15px;
-      border: 1px solid $graycolor;
-      border-radius: 6px;
-      background-color: #fff;
-      color: $bluecolor;
-      font-family: inherit;
-      width: 100%;
-      max-width: 220px;
-
-      &:focus {
-        outline: none;
-        border-color: $cherrycolor;
-        box-shadow: 0 0 5px rgba($cherrycolor, 0.2);
-      }
-    }
+    
   }
 
   .edit-profile-actions {
     width: 100%;
     display: flex;
-    flex-direction: column;
+   
     gap: 8px;
     margin-top: 10px;
 
@@ -302,43 +185,104 @@ $cherrycolor: #a00323;
       align-self: flex-end;
     }
 
-    .btn-edit-profile,
-    .btn-save-profile {
-      padding: 8px 14px;
-      background-color: $cherrycolor;
-      color: $bonecolor;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-family: inherit;
-      font-weight: bold;
-      font-size: 14px;
-      transition: background 0.2s ease;
+    .btn-save-profile{
+      background-color: #7BA05B;
+      flex: 1;
+    }
+    .btn-cancel-profile{
+      background-color: #CD5C5C;
+      flex: 1;
+    }
+    .profile-actions{
+      flex: 1;
+    }
+    
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// СЕКЦІЯ СІТКИ ОГОЛОШЕНЬ
+.user-cars-section {
+  width: 100%;
+  row-gap: 15px;
+
+  
+
+  .no-cars-text {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 16px;
+  }
+
+
+  .cars-list-container {
+    display: grid;
+    
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    width: 100%;
+    padding: 2%;
+  }
+
+  
+  .user-car-row {
+    display: flex;
+    flex-direction: column; 
+    background-color: $bluecolor; 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    overflow: hidden; 
+    transition: all 0.3s ease;
+    height: 100%; 
+    color: $bonecolor;
+    font-family: hranfsey;
+    padding-bottom: 2%;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
     }
 
-    .btn-save-profile {
-      background-color: #28a745;
-
-      &:hover {
-        background-color: #218838;
-      }
+    .user-car-img {
+      width: 100%;
+      height: 140px; 
+      object-fit: cover;
+      border-radius: 0; 
     }
 
-    .btn-cancel-profile {
-      padding: 8px 14px;
-      background-color: transparent;
-      color: $graycolor;
-      border: 1px solid $graycolor;
-      border-radius: 6px;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 14px;
-      transition: all 0.2s ease;
+    .user-car-info {
+      padding: 3%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 3%;
 
-      &:hover {
-        background-color: $graycolor;
-        color: #fff;
-      }
+      
+
+      
     }
+
+    
+  }
+  .user-car-row:hover{
+    color: $bluecolor;
+    border: solid 1px $bluecolor;
   }
 }

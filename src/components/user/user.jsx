@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../user/user.scss";
 import "../buy/buypage.scss";
+import "../favourite/favourite.scss";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
@@ -174,41 +175,41 @@ const ProfilePage = () => {
 
                 <div className="profile-fields">
                   <p>
-                    <strong>Email:</strong> {user?.email || "Не вказано"}
+                    <strong>E-mail:</strong> {user?.email || "Не вказано"}
                   </p>
 
                   <div className="field-group">
-                    <strong>Ім'я:</strong>
+                    <strong className="p_strong_profilepage">Name: </strong>
                     {isEditing ? (
                       <input
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder="Ваше ім'я"
-                        className="profile-input"
+                        placeholder="Vanya"
+                        className="filter-input filter-input_userpage"
                       />
                     ) : (
-                      <span>{user?.name || "Не вказано"}</span>
+                      <strong>{user?.name || "Не вказано"}</strong>
                     )}
                   </div>
 
                   <div className="field-group">
-                    <strong>Телефон:</strong>
+                    <strong className="p_strong_profilepage">Phone number: </strong>
                     {isEditing ? (
                       <input
                         type="text"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        placeholder="+380..."
-                        className="profile-input"
+                        placeholder="+380(097)7777777"
+                        className="filter-input filter-input_userpage"
                       />
                     ) : (
-                      <span>{user?.phone || "Не вказано"}</span>
+                      <strong>{user?.phone || "Не вказано"}</strong>
                     )}
                   </div>
 
-                  <p className="user-id-text">
-                    <strong>User ID:</strong> {user?.id || "ID відсутній"}
+                  <p>
+                    <strong>User ID: </strong> {user?.id || "ID відсутній"}
                   </p>
                 </div>
 
@@ -220,9 +221,9 @@ const ProfilePage = () => {
                     <>
                       <button
                         onClick={handleSaveProfile}
-                        className="btn-save-profile"
+                        className="btn-save-profile bulk-btn"
                       >
-                        Зберегти
+                        Confirm
                       </button>
                       <button
                         onClick={() => {
@@ -233,17 +234,17 @@ const ProfilePage = () => {
                               : ""
                           );
                         }}
-                        className="btn-cancel-profile"
+                        className="btn-cancel-profile bulk-btn"
                       >
-                        Скасувати
+                        Denied
                       </button>
                     </>
                   ) : (
                     <button
                       onClick={() => setIsEditing(true)}
-                      className="btn-edit-profile"
+                      className="bulk-btn bulk-btn_userpage btn-save-profile"
                     >
-                      Налаштувати профіль
+                      Configure profile
                     </button>
                   )}
                   
@@ -253,9 +254,9 @@ const ProfilePage = () => {
                         localStorage.clear();
                         navigate("/login");
                       }}
-                      className="btn-logout"
+                      className="bulk-btn bulk-btn_userpage bulk-btn_userpage_1"
                     >
-                      Вийти
+                      Exit profile
                     </button>
                   </div>
                 </div>
@@ -267,14 +268,17 @@ const ProfilePage = () => {
 
             {/* ПРАВИЙ БЛОК: ВАШІ ОГОЛОШЕННЯ (СІТКА) */}
             <div className="container_profile container_profile_2">
-              <div className="user-cars-section">
-                <h2>Ваші оголошення</h2>
+              <div className="user-cars-section container_profile_1">
+                <div className="__shadows">
+                  <p className="p_buypage_filtration">Your cars: </p>
+                </div>
+                
                 {myCars.length === 0 ? (
                   <p className="no-cars-text">You dont have car on sale</p>
                 ) : (
-                  <div className="cars-list-container">
+                  <div className="cars-list-container __shadows">
                     {myCars.map((car) => (
-                      <div key={car.id} className="user-car-row">
+                      <div key={car.id} className="user-car-row __shadows_mini">
                         {car.images && car.images !== "null" && (
                           <img
                             src={`http://localhost:5001${
@@ -287,20 +291,21 @@ const ProfilePage = () => {
                         )}
 
                         <div className="user-car-info">
-                          <h3>
+                          <p className="p_strong_profilepage">
                             {car.brand} {car.model}
-                          </h3>
-                          <p>
-                            Ціна: <span>${car.price}</span>
                           </p>
-                        </div>
-
-                        <button
+                          <p className="p_strong_profilepage">
+                            Price: <strong>${car.price}</strong>
+                          </p>
+                          <button
                           onClick={() => handleDelete(car.id)}
-                          className="btn-delete-car"
+                          className="bulk-btn "
                         >
                           Видалити
                         </button>
+                        </div>
+
+                        
                       </div>
                     ))}
                   </div>
