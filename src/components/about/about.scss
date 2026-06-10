@@ -1,0 +1,296 @@
+$bluecolor: #0f1a32;
+$bonecolor: #f5f4f5;
+$darkbluecolor: #0f1a32;
+$graycolor: #464646;
+$cherrycolor: #a00323;
+$lightgreen: #7ba05b;
+
+.about_page_container {
+  background: transparent !important; // ФОНОВИЙ ФІКС: тепер крізь компонент видно рідну димку сайту
+  min-height: 100vh;
+  color: #ffffff;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.about_sub_body__2 {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 2%;
+}
+
+.about_grid_layout {
+  display: flex;
+  flex-direction: column;
+  gap: 90px; 
+}
+
+.about_section_row {
+  display: grid;
+  gap: 40px;
+  align-items: center; 
+}
+
+// СЕКЦІЯ 1 МАКЕТУ
+.section_layout_1 {
+  grid-template-columns: 1fr 1.1fr;
+
+  .left_vertical_col {
+    height: 100%;
+  }
+
+  .right_staggered_col {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+  }
+}
+
+// СЕКЦІЇ 2 ТА 3
+.section_layout_2 {
+  grid-template-columns: 0.9fr 1.3fr;
+}
+
+.section_layout_3 {
+  grid-template-columns: 1.3fr 0.9fr;
+}
+
+// СТИЛІЗАЦІЯ ПРЕМІУМ-КАРТОК
+.about_text_card {
+  background: rgba(13, 22, 42, 0.55) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 20px;
+  padding: 45px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4) !important;
+  box-sizing: border-box;
+
+  &.tall_card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &.sub_horizontal_card {
+    padding: 35px 40px;
+    p { margin: 0; font-size: 15px; color: rgba(255, 255, 255, 0.7); }
+  }
+
+  .card_badge {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #2196F3;
+    font-weight: 700;
+    margin-bottom: 15px;
+    display: block;
+    opacity: 0.8;
+  }
+
+  h2 {
+    font-size: 38px;
+    font-weight: 800;
+    margin: 0 0 20px 0;
+    letter-spacing: -0.5px;
+  }
+
+  p {
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0 0 20px 0;
+  }
+}
+
+// РОБОТА З МАСШТАБАМИ ПОРШІВ ТА ОБРІЗАННЯМ ЗАЙВИХ ПОЛІВ
+.about_image_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  overflow: visible; // Дозволяємо великим машинам виходити за рамки контейнера
+
+  .porsche_img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.7));
+    transition: transform 0.3s ease;
+  }
+
+  // ПЕРШИЙ ПОРШ: прибираємо вертикальні оверлапи, робимо акуратне центрування
+  &.wrapper_side {
+    padding: 0;
+    margin-top: -10px;
+    margin-bottom: -10px;
+
+    .img_natural_side {
+      max-width: 95%;
+      transform: scale(1.4);
+    }
+  }
+
+  // ДРУГИЙ ПОРШ (Top-down): Обрізаємо горизонтальний запас по ширині, збільшуємо масштаб
+  &.wrapper_top_down {
+    margin-left: -40px;  // Зсуваємо ближче до краю, компенсуючи пусті поля зображення
+    margin-right: -40px;
+
+    .img_blend_black {
+      mix-blend-mode: screen;
+      filter: brightness(1.1) contrast(1.05);
+      transform: scale(2); // Робимо відчутно більшим!
+    }
+  }
+
+  // ТРЕТІЙ ПОРШ (Top-up): Обрізаємо горизонтальний запас по ширині, збільшуємо масштаб
+  &.wrapper_top_up {
+    margin-left: -40px;
+    margin-right: -40px;
+
+    .porsche_img {
+      transform: scale(2); // Робимо відчутно більшим!
+    }
+  }
+}
+
+// МЕТРИКИ
+.tech_metrics_grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 35px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 25px;
+
+  .metric_item {
+    display: flex;
+    flex-direction: column;
+    .num { font-size: 24px; font-weight: 800; color: #ffffff; font-family: monospace; }
+    .label { font-size: 10px; color: rgba(255, 255, 255, 0.4); margin-top: 4px; text-transform: uppercase; }
+  }
+}
+
+// ІНТЕРАКТИВНІ КНОПКИ (PILLS)
+.insurance_interactive_pills {
+  display: flex;
+  gap: 10px;
+  margin: 25px 0 15px 0;
+  flex-wrap: wrap;
+
+  .pill_clicker {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.6);
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+    &.active {
+      background: #2196F3;
+      border-color: #2196F3;
+      color: #fff;
+      box-shadow: 0 0 15px rgba(33, 150, 243, 0.3);
+    }
+  }
+}
+
+// ТЕРМІНАЛ ЕКРАНУ
+.interactive_display_box {
+  background: rgba(5, 10, 20, 0.4);
+  border-radius: 12px;
+  padding: 20px 25px;
+  border: 1px solid rgba(33, 150, 243, 0.15);
+
+  .terminal_header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    padding-bottom: 8px;
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-right: 5px;
+      &:nth-child(1) { background: #ff5f56; }
+      &:nth-child(2) { background: #ffbd2e; }
+      &:nth-child(3) { background: #27c93f; }
+    }
+    .terminal_status { font-family: monospace; font-size: 10px; color: #2196F3; margin-left: auto; }
+  }
+  h3 { margin: 0 0 8px 0; font-size: 18px; color: #fff; }
+  p { font-size: 14px !important; color: rgba(255, 255, 255, 0.6) !important; margin: 0; }
+}
+
+// СПИСОК БЕЗПЕКИ
+.security_interactive_list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 25px;
+
+  .security_list_item {
+    background: rgba(255,255,255,0.01);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 10px;
+    padding: 14px 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    .item_header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      .indicator { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.2); }
+      h4 { margin: 0; font-size: 15px; color: rgba(255,255,255,0.7); }
+    }
+    .item_content {
+      max-height: 0; overflow: hidden; transition: max-height 0.3s ease, margin-top 0.3s ease;
+      p { font-size: 13.5px !important; color: rgba(255,255,255,0.5) !important; margin: 0; }
+    }
+
+    &.active {
+      background: rgba(33, 150, 243, 0.03);
+      border-color: rgba(33, 150, 243, 0.25);
+      .item_header {
+        .indicator { background: #2196F3; box-shadow: 0 0 8px #2196F3; }
+        h4 { color: #fff; }
+      }
+      .item_content { max-height: 80px; margin-top: 8px; }
+    }
+  }
+}
+
+// СКРОЛЛ-АНІМАЦІЇ
+.anim_from_right {
+  opacity: 0; transform: translateX(80px);
+  transition: transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease-out;
+  &.visible { opacity: 1; transform: translateX(0); }
+}
+.anim_from_bottom {
+  opacity: 0; transform: translateY(80px);
+  transition: transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease-out;
+  &.visible { opacity: 1; transform: translateY(0); }
+}
+.anim_from_top {
+  opacity: 0; transform: translateY(-80px);
+  transition: transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease-out;
+  &.visible { opacity: 1; transform: translateY(0); }
+}
+
+// РЕЗЕРВНИЙ АДАПТИВ
+@media (max-width: 1024px) {
+  .about_section_row { grid-template-columns: 1fr !important; gap: 30px; }
+  .section_layout_1 .right_staggered_col { flex-direction: column-reverse; }
+  .section_layout_3 .main_content_col { order: 1; }
+  .section_layout_3 .image_sidebar_col { order: 2; }
+  .about_image_container.wrapper_top_down, 
+  .about_image_container.wrapper_top_up { margin: 0; .porsche_img { transform: scale(1.1); } }
+}

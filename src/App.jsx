@@ -12,8 +12,9 @@ import Footer from './components/footer/footer';
 import InsuranceForm from './components/insurance/insuranceForm';
 import OffersGrid from './components/insurance/offersGrid';
 import PoschePage from './components/porsche/auto';
+import AboutPage from './components/about/about';
 
-const AboutPage = () => <div style={{padding: '100px'}}>Сторінка ПРО НАС</div>;
+
 
 const AppLayout = () => {
   const location = useLocation();
@@ -39,7 +40,7 @@ const AppLayout = () => {
         
       </Routes>
 
-      {/* Рендеримо Footer за тією ж умовою */}
+     
       {!shouldHideLayout && <Footer />}
     </>
   );
