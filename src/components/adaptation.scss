@@ -1,0 +1,1047 @@
+/* ========================================================
+   МОДУЛЬ АДАПТИВУ ДЛЯ СТОРІНКИ BUYPAGE
+   ======================================================== */
+
+/* 1. ВЕЛИКІ НОУТБУКИ ТА МОНІТОРИ (max-width: 1440px) */
+
+@media (max-width: 1500px) {
+    .car-card-title__22{
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 1440px) {
+  .__wrapper_buypage {
+    padding-left: 20px;
+    padding-right: 20px;
+    column-gap: 15px;
+  }
+
+  // Оптимізація шрифтів під ноутбуки
+  .p_buypage_filtration { font-size: 30px; }
+  .car-card { font-size: 22px; }
+  .p_filter_range { font-size: 24px; }
+  .filter-input, .filter_drop, .filter_right_sort, .option_drop_menu { font-size: 18px; }
+
+  .car-card-info {
+    row-gap: 8px;
+  }
+}
+
+/* 2. КОМПАКТНІ НОУТБУКИ ТА ПЛАНШЕТИ (max-width: 1250px) */
+@media (max-width: 1250px) {
+  .__wrapper_buypage {
+    flex-wrap: wrap; // Дозволяємо контенту переноситись
+  }
+
+  .filter-box {
+    flex: 0 0 280px; // Сайдбар стає фіксованим за шириною
+  }
+
+  // Виносимо сортування наверх над картками
+  .container_buypage_filter {
+    width: 100%;
+    order: -1; 
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+
+    .filter_right_sort {
+      position: static; // Знімаємо sticky на цьому етапі
+      width: auto;
+      padding: 10px 20px;
+    }
+  }
+
+  // Перебудова внутрішніх елементів картки авто
+  .car-card-container {
+    flex-direction: column;
+    row-gap: 15px;
+  }
+
+  .car-card-item_1, .car-card-seller {
+    width: 100%;
+  }
+
+  .car-card-seller {
+    flex-direction: row;
+    align-items: center;
+    column-gap: 15px;
+    padding: 10px;
+
+    .seller-avatar, .seller-avatar-placeholder {
+      width: 50px !important;  // Захист аватарки від деформації
+      height: 50px !important;
+    }
+  }
+}
+
+/* 3. ПЛАНШЕТИ ТА ВЕЛИКІ СМАРТФОНИ (max-width: 860px) */
+@media (max-width: 860px) {
+  .__wrapper_buypage {
+    // flex-direction: column; // Все стає в одну вертикальну лінію
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  // Сайдбар фільтрів зверху на всю ширину
+  .filter-box {
+    width: 100%;
+    position: static; // Скасовуємо sticky, щоб не блокувати скрол сторінки
+    max-height: none;
+    overflow-y: visible;
+    margin-bottom: 25px;
+    padding: 20px;
+  }
+
+  .container_buypage_filtration_2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr; // Фільтри стають у два ряди для економії місця
+    gap: 12px;
+    width: 100%;
+
+    .filter-input_1 {
+      width: 100%; // Пошукова строка на повну ширину своєї комірки
+    }
+    .filter_drop {
+      width: 100%;
+    }
+  }
+
+  // Картка авто переходить у вертикальний режим (Фото зверху, інфо знизу)
+  .car-card {
+    flex-direction: column;
+    font-size: 18px;
+  }
+
+  .car-card-image-wrapper {
+    width: 100%;
+    height: 280px; // Стабільна висота для фото на планшеті
+  }
+
+  .car-card-nav-btn {
+    width: 45px; // Робимо кнопки стрілок зручними для пальців
+    height: 45px;
+  }
+
+  .img_car_card {
+    max-width: 24px;
+    max-height: 24px;
+  }
+}
+
+/* 4. СМАРТФОНИ (max-width: 480px) */
+@media (max-width: 480px) {
+  .container_buypage_filtration_2 {
+    grid-template-columns: 1fr; // На дрібних екранах фільтри вишикуються в один ряд
+  }
+
+  .filter-range {
+    flex-direction: column;
+    row-gap: 8px;
+    width: 100%;
+  }
+
+  .container_filter_range_2 {
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+    
+    input {
+      width: 50%;
+    }
+  }
+
+  .car-card-image-wrapper {
+    height: 200px; // Компактніше фото для телефонів
+  }
+
+  .car-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 5px;
+    
+    .car-card-price {
+      align-self: flex-end; // Ціна виділяється знизу праворуч
+    }
+  }
+
+  .car-car-sub-header {
+    align-items: center;
+    flex-direction: row; // Бренд і рік залишаємо на одній лінії
+  }
+
+  .pagination-arrow {
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+
+  .pagination-number {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+}
+/* ========================================================
+   ПЕРЕНЕСЕННЯ ФІЛЬТРАЦІЇ НАВЕРХ (max-width: 860px)
+   ======================================================== */
+
+@media (max-width: 860px) {
+  // Переводячи головний контейнер у column, фільтри автоматично падають наверх
+  .__wrapper_buypage {
+    flex-direction: column !important;
+    row-gap: 20px;
+  }
+
+  // Трансформуємо боковий сайдбар у верхню горизонтальну панель
+  .filter-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    position: static !important; // Знімаємо фіксацію збоку
+    max-height: none !important; // Скасовуємо обмеження по висоті
+    overflow-y: visible !important; // Прибираємо внутрішній скрол сайдбару
+    order: 1; // Залізобетонно закріплюємо першим зверху
+    padding: 20px !important;
+  }
+
+  // Перетворюємо вертикальний список інпутів на акуратну сітку
+  .container_buypage_filtration_2 {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important; // Елементи самі вирішують, ставати в 2 чи 3 колонки залежно від ширини
+    gap: 15px !important;
+    width: 100%;
+
+    .filter-input_1, .filter_drop {
+      width: 100% !important; // Інпути тепер займають усю ширину своєї комірки в сітці
+    }
+  }
+
+
+  .container_buypage_filtration_3 {
+    width: 100%;
+    
+    .filter-range {
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+  }
+
+
+  .container_buypage_filter {
+    order: 2;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+
+    .filter_right_sort {
+      position: static !important;
+      width: auto !important;
+      padding: 8px 15px !important;
+    }
+  }
+
+
+  .cars-grid {
+    order: 3;
+    width: 100% !important;
+  }
+}
+/* ========================================================
+   МОДУЛЬ АДАПТИВУ ДЛЯ СТОРІНКИ SELLPAGE (ДОДАВАННЯ АВТО)
+   ======================================================== */
+
+/* 1. ВЕЛИКІ НОУТБУКИ (max-width: 1440px) */
+@media (max-width: 1440px) {
+  // Коригуємо пропорції розпірок та форми
+  .sub_container_sellpage_1 { flex: 0.5; }
+  .sub_container_sellpage_2 { flex: 2; }
+
+  // Оптимізація розмірів під монітори ноутбуків
+  .p_buypage_filtration_sellpage { font-size: 30px !important; }
+  .p_gov_number_auto { font-size: 20px; }
+  .license-plate-box .license-plate-input { font-size: 18px; padding: 10px; }
+  .filter-input, .filter_right_sort_sellpage { font-size: 18px; }
+  .submit-btn { font-size: 20px; }
+}
+
+/* 2. КОМПАКТНІ НОУТБУКИ ТА ПЛАНШЕТИ (max-width: 1100px) */
+@media (max-width: 1100px) {
+  // Повністю ховаємо бічні пусті блоки, віддаємо формі 100% ширини
+  .sub_container_sellpage_1 {
+    display: none !important;
+  }
+  .sub_container_sellpage_2 {
+    flex: 1 !important;
+    width: 100% !important;
+    padding: 15px !important;
+  }
+}
+
+/* 3. ЕКРАНИ 860px (Синхронно з переходом хедера в бургер) */
+@media (max-width: 860px) {
+  .main_container_sellpage {
+    padding-top: 10px;
+  }
+
+  .sell-form {
+    padding: 15px !important;
+    gap: 12px !important;
+  }
+
+  // Блок завантаження фото та опису міняємо з горизонтального на вертикальний
+  .license-plate-box_2 {
+    flex-direction: column !important;
+    row-gap: 15px;
+  }
+
+  .container_foot_sellpage_1, 
+  .container_foot_sellpage_2 {
+    width: 100% !important;
+    flex: none !important;
+  }
+
+  // Текстова область опису підлаштовується під висоту
+  .filter-input-form-area {
+    min-height: 120px;
+  }
+
+  // Адаптуємо блоки інпутів під двоколонкову сітку
+  .container_sellpage_plate_2 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px !important;
+    column-gap: 10px !important;
+  }
+
+  // Скидаємо флекси з елементів усередині цієї сітки
+  .form-label, 
+  .filter-input_sellpage {
+    flex: none !important;
+    width: 100% !important;
+  }
+}
+
+/* 4. СМАРТФОНИ (max-width: 480px) */
+@media (max-width: 480px) {
+  // Переводимо абсолютно всі інпути в одну колонку
+  .container_sellpage_plate_2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  // Блок з держ. номером робимо компактнішим
+  .license-plate-box {
+    padding: 12px !important;
+    
+    .license-plate-input {
+      font-size: 16px !important;
+      letter-spacing: 1px;
+    }
+  }
+
+  // Прибираємо лишні бокові відступи навколо інпуту номера
+  .sellpage_padding_plate {
+    display: none !important;
+  }
+
+  // Нижня панель: Ціна та Кнопка публікації стають один під одним
+  .license-plate-box_3 {
+    flex-direction: column !important;
+    row-gap: 12px;
+    
+    .filter_input_submit_sellpage, 
+    .submit-btn {
+      width: 100% !important;
+      flex: none !important;
+      padding: 12px !important;
+      font-size: 18px !important;
+    }
+  }
+
+  // Оптимізація шрифтів під крихітні екрани
+  .p_buypage_filtration_sellpage { font-size: 24px !important; }
+  .p_gov_number_auto { font-size: 16px; }
+  .upload-text { font-size: 14px; padding: 6px 0; }
+  .selected-files-badge { font-size: 14px; }
+}
+
+/* ========================================================
+   МОДУЛЬ АДАПТИВУ ДЛЯ СТОРІНКИ СТРАХУВАННЯ (INSURANCEPAGE)
+   ======================================================== */
+
+/* 1. ПЛАНШЕТИ ТА КОМПАКТНІ НОУТБУКИ (max-width: 1100px) */
+@media (max-width: 1100px) {
+  // Прибираємо бічні порожні блоки, щоб звільнити місце
+  .item_flex_insurance {
+    display: none !important;
+  }
+  
+  // Контейнер страхування розгортається на всю ширину
+  .insurance-container {
+    flex: 1 !important;
+    width: 100% !important;
+    padding: 15px !important;
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+}
+
+/* 2. СЕРЕДНІ ЕКРАНИ (max-width: 860px) */
+@media (max-width: 860px) {
+  .container_flex_insurance_page {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  // Оптимізуємо шапку сторінки страхування
+  .p_buypage_filtration.p_ins_page {
+    font-size: 26px !important;
+  }
+
+  // Зменшуємо внутрішні відступи карток, щоб виграти корисну площу
+  .__borders {
+    padding: 10px !important;
+  }
+
+  .insurance-card {
+    padding: 10px !important;
+  }
+
+  // Трішки коригуємо розміри головного пошукового інпуту та кнопки
+  .input-plate {
+    font-size: 20px !important;
+    padding: 12px !important;
+  }
+
+  .btn-main {
+    font-size: 20px !important;
+  }
+
+  // Сітка збережених автомобілів юзера
+  .my-cars-section {
+    margin-top: 20px !important;
+
+    .my-cars-grid {
+      // Якщо екран замалий для двох карток по 280px, вони красиво стрибнуть в 1 колонку
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+      gap: 12px !important;
+    }
+  }
+}
+
+/* 3. СМАРТФОНИ (max-width: 480px) */
+@media (max-width: 480px) {
+  // Головний рядок пошуку (інпут + кнопка) переводимо у вертикальний формат
+  .insurance-row {
+    flex-direction: column !important;
+    row-gap: 12px;
+    width: 100%;
+  }
+
+  .input-plate {
+    width: 100% !important;
+    flex: none !important;
+    font-size: 18px !important;
+    padding: 14px !important;
+    letter-spacing: 1px;
+  }
+
+  .btn-main {
+    width: 100% !important;
+    flex: none !important;
+    padding: 14px !important;
+    font-size: 18px !important;
+    height: auto !important;
+  }
+
+  // Картки збережених авто робимо компактнішими
+  .my-cars-section {
+    .my-car-card {
+      padding: 12px !important;
+      
+      .car-info-stack {
+        .car-plate-tag {
+          font-size: 16px !important;
+          padding: 2px 6px !important;
+        }
+        .car-brand-text, .car-year-text {
+          font-size: 14px !important;
+        }
+      }
+
+      .select-text {
+        font-size: 16px !important;
+      }
+    }
+  }
+
+  .p_buypage_filtration.p_ins_page {
+    font-size: 22px !important;
+  }
+}
+/* ========================================================
+   МОДУЛЬ АДАПТИВУ ДЛЯ СТОРІНКИ ОБРАНОГО ТА ПОРІВНЯННЯ
+   ======================================================== */
+
+/* 1. КОМПАКТНІ ЛЕПТОПИ ТА ПЛАНШЕТИ (max-width: 1024px) */
+@media (max-width: 1024px) {
+  // Зменшуємо гігантські десктопні шрифти кнопок масових дій
+  .p_checkbox_fav {
+    font-size: 22px !important;
+  }
+  
+  .bulk-btn {
+    font-size: 18px !important;
+    padding: 10px 20px !important;
+    border-radius: 12px !important;
+  }
+
+  // Оптимізуємо ширину колонок у порівнянні, щоб влазило більше інформації
+  .comparison-board-table {
+    th, td {
+      min-width: 240px !important; // Трішки компактніше, ніж десктопні 280px
+    }
+  }
+}
+
+/* 2. ЕКРАНИ ПЛАНШЕТІВ ТА МОБІЛОК У ГОРИЗОНТАЛІ (max-width: 860px) */
+@media (max-width: 860px) {
+  // Адаптуємо шапку сторінки порівняння
+  .comparison-page-header {
+    margin-bottom: 15px;
+    
+    .btn-back {
+      font-size: 16px !important;
+      padding: 8px 16px !important;
+    }
+  }
+
+  // Робимо так, щоб довгі описи в порівнянні не розтягували рядки до безкінечності
+  .comp-desc-cell p {
+    max-height: 150px;
+    overflow-y: auto;
+  }
+}
+
+/* 3. СМАРТФОНИ (max-width: 480px) */
+@media (max-width: 480px) {
+  
+  /* --- ГОЛОВНИЙ ЕКРАН ОБРАНОГО --- */
+  
+  // Перетворюємо блок фільтрів/масових дій на вертикальний стек
+  // Припускаємо, що ці елементи лежать всередині компонента CarFilters
+  .bulk-checkbox-label {
+    width: 100%;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+
+    input[type="checkbox"] {
+      width: 24px !important; // Компактніший чекбокс для пальця
+      height: 24px !important;
+    }
+  }
+
+  .p_checkbox_fav {
+    font-size: 18px !important;
+  }
+
+  // Кнопки "Порівняти" та "Видалити" стають на всю ширину одна під одною
+  .bulk-buttons {
+    flex-direction: column !important;
+    row-gap: 10px;
+    width: 100%;
+    gap: 0 !important; // Скидаємо десктопний gap у відсотках
+  }
+
+  .bulk-btn {
+    width: 100% !important;
+    text-align: center;
+    font-size: 16px !important;
+    padding: 12px !important;
+  }
+
+  // Зсуваємо блок сортування в самий низ і розширюємо на 100%
+  .container_buypage_filter {
+    width: 100% !important;
+    justify-content: center !important;
+    margin-top: 15px;
+
+    .filter_right_sort {
+      width: 100% !important;
+      text-align: center;
+    }
+  }
+
+  /* --- ЕКРАН ПОРІВНЯННЯ АВТО (ТАБЛИЦЯ) --- */
+
+  .comparison-board-wrapper {
+    border-radius: 8px !important; // Акуратніші закруглення на мобільних
+    margin: 0 -10px; // Легкий вихід за краї екрана для зручності скролу
+  }
+
+  .comparison-board-table {
+    th, td {
+      min-width: 200px !important; // Картки авто стають вужчими, скролити легше
+      padding: 8px !important;
+      font-size: 14px !important;
+    }
+
+    // Рятуємо ліву фіксовану колонку зі специфікаціями від поглинання екрана
+    .sticky-spec-column {
+      min-width: 110px !important;
+      width: 110px !important;
+      font-size: 13px !important;
+    //   border-right: 1px solid $bluecolor !important;
+      padding-right: 4px !important;
+    }
+
+    // Зменшуємо висоту фотографій у прев'ю порівняння
+    .comp-card-preview {
+      gap: 8px !important;
+
+      .comp-card-img {
+        height: 110px !important; // Зменшуємо висоту картинок, щоб бачити характеристики
+      }
+
+      .comp-card-meta {
+        h3 { font-size: 16px !important; }
+        h4 { font-size: 13px !important; }
+        .comp-card-price { font-size: 16px !important; }
+      }
+    }
+
+    // Кнопка видалення картки з порівняння стає компактнішим хрестиком
+    .remove-from-comp-btn {
+      top: 8px !important;
+      right: 8px !important;
+      padding: 2px 6px !important;
+      font-size: 11px !important;
+    }
+  }
+}
+/* ========================================================
+   АДАПТИВ КАРТКИ АВТО: ПЕРЕКЛАДАННЯ ІНФО ПІД ФОТО (max-width: 860px)
+   ======================================================== */
+
+@media (max-width: 860px) {
+  
+  // Головний рядок картки (де живуть фото та основні блоки) перетворюємо на колонку
+  .fav-car-card-main-row {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 12px; // Робимо акуратні відступи між елементами, які встали один під одного
+  }
+
+  // Якщо всередині ряду є блоки фото, характеристик чи юзера — 
+  // змушуємо їх розтягуватися на всю ширину екрана
+  .fav-car-card-main-row {
+    
+    // Блок з фотографією (зазвичай це перший елемент)
+    .fav-car-card-image-wrapper, 
+    img.comp-card-img { 
+      width: 100% !important;
+      height: auto !important;
+      aspect-ratio: 16 / 10; // Тримаємо преміальне автомобільне співвідношення сторін
+      object-fit: cover;
+    }
+
+    // Блок з технічними характеристиками авто
+    .fav-car-card-info-block, 
+    .car-specs-container {
+      width: 100% !important;
+      flex: none !important;
+      padding: 5px 0 !important;
+    }
+
+    // Блок з інформацією про продавця/юзера
+    .fav-car-card-user-block, 
+    .user-info-container {
+      width: 100% !important;
+      flex: none !important;
+      padding: 5px 0 !important;
+      border-top: 1px dashed rgba(15, 26, 50, 0.1); // Легкий роздільник перед контактами
+      padding-top: 10px !important;
+    }
+  }
+
+  // Блок з описом, який вже був знизу, просто підтискається ще нижче за потоком
+  .fav-car-card-description-block {
+    width: 100% !important;
+    padding: 10px 0 0 0 !important;
+    border-top: 1px solid rgba(15, 26, 50, 0.1); // Візуально відокремлюємо лонгрід-опис
+  }
+
+  // Коригуємо позиціонування чекбокса "Обране", щоб він акуратно сидів поверх фотографії
+  .fav-car-card-checkbox-wrapper {
+    top: 10px !important;
+    left: 10px !important;
+    padding: 4px !important;
+  }
+}
+/* ========================================================
+   ПЕРЕФОРМАТУВАННЯ КАРТКИ: ВСІ БЛОКИ В ОДИН СТОВПЧИК (860px)
+   ======================================================== */
+
+@media (max-width: 860px) {
+  
+  // Головний контейнер картки стає єдиним флекс-стовпчиком
+  .fav-car-card {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+  }
+
+  // МАГІЯ: розмиваємо межі внутрішнього рядка, щоб його діти стали прямими дітьми картки
+  .fav-car-card-main-row {
+    display: contents !important;
+  }
+
+  // !!! УВАГА: Заміни `.right-side-info` на клас свого правого блоку (де бренд, ціна, інфо)
+  .right-side-info {
+    display: contents !important; 
+  }
+
+  /* ========================================================
+     ТЕПЕР КЕРУЄМО ЧЕРГОВІСТЮ (ORDER) ТА РОБИМО ВСЕ НА 100% ШИРИНИ
+     ======================================================== */
+
+  // 1. Блок з великим фото автомобіля
+  // (Заміни `.car-image-wrapper` на свій клас обгортки фотки)
+  .car-image-wrapper {
+    order: 1 !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 10; // Зберігаємо правильні пропорції авто
+  }
+
+  // 2. Рядок з Брендом та Ціною (Audi | $20000)
+  // (Заміни `.brand-price-row` на свій клас)
+  .brand-price-row {
+    order: 2 !important;
+    width: 100% !important;
+  }
+
+  // 3. Рядок з Моделлю та Роком (A6 | Year: 2015)
+  // (Заміни `.model-year-row` на свій клас)
+  .model-year-row {
+    order: 3 !important;
+    width: 100% !important;
+  }
+
+  // 4. Блок з технічною інфою (Мотор, Коробка, Пробіг, Місто)
+  // Вона падає ПІД фото і розтягується на всю ширину як опис!
+  // (Заміни `.specs-box` на свій клас цієї рамки)
+  .specs-box {
+    order: 4 !important;
+    width: 100% !important;
+    box-sizing: border-box;
+    margin: 0 !important;
+  }
+
+  // 5. Блок з інформацією про Продавця (Misha)
+  // Теж стає окремим повноширинним елементом
+  // (Заміни `.user-box` на свій клас рамки з Мішою)
+  .user-box {
+    order: 5 !important;
+    width: 100% !important;
+    box-sizing: border-box;
+    margin: 0 !important;
+  }
+
+  // 6. Опис автомобіля (Description from owner)
+  // Завжди залишається залізобетонно в самому низу
+  .fav-car-card-description-block {
+    order: 6 !important;
+    width: 100% !important;
+    box-sizing: border-box;
+    padding: 0 !important;
+  }
+}
+/* ========================================================
+   МОДУЛЬ АДАПТИВУ ДЛЯ СТОРІНКИ ПРОФІЛЮ (PROFILEPAGE) - 860px
+   ======================================================== */
+
+@media (max-width: 1000px) {
+
+  // 1. Головний контейнер міняємо на стовпчик (профіль автоматично стане НАВЕРХ)
+  .profile_flex_container {
+    flex-direction: column !important;
+    gap: 20px !important; // Робимо гарний відступ між профілем та машинами
+  }
+//   .p_strong_profilepage{
+//     text-align: end;
+//   }
+.field-group{
+    display: 0;
+
+}
+
+
+  // 2. Розтягуємо обидві секції на 100% ширини екрана
+  .container_profile {
+    width: 100% !important;
+    flex: none !important;
+  }
+
+  // 3. Оптимізуємо внутрішній блок інфо користувача
+  .container_userpage_sub_1 {
+    flex-direction: column !important; // Аватарка та інпути стають один під одним
+    align-items: center !important;
+    gap: 15px;
+  }
+
+  .profile-fields {
+    width: 100% !important;
+    text-align: center; // Центруємо текст для кращого вигляду на мобілці
+
+    .field-group {
+      justify-content: center !important; // Центруємо інпути з назвами полів
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .filter-input_userpage {
+      width: 100% !important; // Інпути редагування імені/телефону на всю ширину
+    }
+  }
+
+  // 4. Перетворюємо кнопки дій (Редагувати / Вийти) на зручні мобільні плашки
+  .edit-profile-actions {
+    display: flex !important;
+    flex-direction: column !important;
+    row-gap: 10px !important;
+    width: 100% !important;
+
+    .bulk-btn {
+      width: 100% !important;
+      padding: 12px !important;
+      font-size: 18px !important;
+      text-align: center;
+    }
+  }
+  
+  .profile-actions {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* --- СЕКЦІЯ АВТОМОБІЛІВ КОРИСТУВАЧА --- */
+
+  // 5. Рядок машини перетворюємо на вертикальну мобільну картку
+  .user-car-row {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 15px !important;
+
+    // Фотографія машини стає повнорозмірною
+    .user-car-img {
+      width: 100% !important;
+      height: auto !important;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    // Блок з текстом та кнопкою видалення
+    .user-car-info {
+      width: 100% !important;
+      text-align: center;
+
+      // Кнопка "Видалити" падає вниз картки і стає на всю ширину
+      .bulk-btn {
+        width: 100% !important;
+        margin-top: 10px !important;
+        padding: 10px !important;
+        font-size: 16px !important;
+      }
+    }
+  }
+}
+
+/* ========================================================
+   МОДУЛЬ АДАПТИВУ ДЛЯ ГОЛОВНОЇ СТОРІНКИ (MAINPAGE)
+   ======================================================== */
+
+@media (max-width: 860px) {
+
+  /* --- ЗАГАЛЬНІ НАЛАШТУВАННЯ ТА СКРОЛ --- */
+  .main_item, 
+  .main_item_1, 
+  .div_white, 
+  .__wrapper_main, 
+  .__wrapper_flex {
+    height: auto !important;      // Дозволяємо блокам розтягуватися, якщо текст не влазить
+    min-height: 100vh;           // Але зберігаємо ефект повного екрана, де це можливо
+    padding: 40px 20px !important; // Зменшуємо гігантські десктопні паддінги з 50px
+  }
+
+  .main_wrapper, 
+  .__wrapper_main {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* --- БЛОК 1: ГОЛОВНИЙ БАНЕР PORSCHE --- */
+  .sub_header_text_container {
+    margin-top: 15vh !important;
+    text-align: center;
+  }
+
+  .p_main_porsche_1, 
+  .p_main_porsche_2 {
+    font-size: 32px !important;  // Зменшуємо з 64px, щоб не було розривів слів
+    line-height: 1.3;
+  }
+
+  .porsche_font {
+    font-size: 24px !important;  // Зменшуємо назву бренда внизу
+  }
+
+  .porsche_right_under_container {
+    justify-content: center !important; // Центруємо логотип на мобільних
+    margin-top: 30px;
+  }
+
+
+  /* --- БЛОК 2:СПЕЦІАЛЬНА ПРОПОЗИЦІЯ (DEAL) --- */
+  .container_deal {
+    justify-content: center !important;
+  }
+
+  .deal_item_1 {
+    flex-direction: column !important; // Текст та кнопка стають один під одним
+    row-gap: 20px;
+    align-items: center;
+  }
+
+  .text_container_main_left {
+    font-size: 26px !important;  // Зменшуємо з 56px
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .constructor_button {
+    font-size: 20px !important;  // Кнопка стає акуратною та зручною для тапу
+    padding: 15px 30px !important;
+    width: 100% !important;      // Кнопка на всю ширину для пальця
+    text-align: center;
+  }
+
+  .deal_item_2 {
+    justify-content: center !important;
+    margin-top: 40px;
+  }
+
+
+  /* --- БЛОК 3: СТРАХУВАННЯ (INSURANCE) --- */
+  .main_item_3 {
+    font-size: 20px !important;  // Зменшуємо базовий шрифт секції
+  }
+
+  .up_cont_ins {
+    flex-direction: column !important; // Картинка авто та логотипи шикуються в один стовпчик
+    row-gap: 20px;
+  }
+
+  .sub_up_cont_1, 
+  .sub_up_cont_2 {
+    flex: none !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .sub_text {
+    padding: 20px !important;
+    margin-bottom: 20px;
+    
+    .p_text_ins {
+      font-size: 18px !important;
+      text-align: center;
+    }
+  }
+
+  // Сітка логотипів: замість 3 колонок робимо 2, щоб іконки не злипалися
+  .sub_insurance {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 15px !important;
+    width: 100% !important;
+  }
+
+  .item_ins {
+    width: 100% !important;
+    justify-content: center;
+    
+    .link_button {
+      width: 100%;
+      justify-content: center;
+      background: rgba(15, 26, 50, 0.05); // Легка підкладка для клікабельності
+      padding: 10px;
+      border-radius: 10px;
+    }
+  }
+
+  .container_down_button {
+    padding-left: 0 !important;
+    margin-top: 25px;
+    width: 100% !important;
+    
+    .inshurance_button {
+      width: 100% !important;
+      text-align: center;
+    }
+  }
+
+
+  /* --- БЛОК 4: ФОРМА ПІДТРИМКИ (SUPPORT) --- */
+  .container_call {
+    flex-direction: column !important; // Прибираємо row-reverse, пускаємо все вниз
+    width: 100% !important;
+  }
+
+  .padding_left_call {
+    font-size: 18px !important; // Зменшуємо з гігантських 40px
+    padding: 25px !important;
+    text-align: center;
+    row-gap: 20px !important;
+  }
+
+  .p_sub_call {
+    line-height: 1.5;
+  }
+
+  // Перетворюємо інпут та кнопку форми на повноширинний вертикальний стек
+  .sub_call_2 {
+    display: flex !important;
+    flex-direction: column !important;
+    row-gap: 15px;
+    width: 100%;
+
+    .input_callito {
+      width: 100% !important;
+      padding: 15px !important;
+      font-size: 16px !important;
+      text-align: center;
+    }
+
+    .button_callito {
+      width: 100% !important;
+      margin-left: 0 !important; // Скидаємо десктопний відступ ліворуч
+      padding: 15px !important;
+      font-size: 18px !important;
+      font-weight: bold;
+    }
+  }
+}
+
+/* 4. ДОДАТКОВИЙ ФІКС ДЛЯ СУПЕР-МАЛЕНЬКИХ ЕКРАНІВ (max-width: 480px) */
+@media (max-width: 480px) {
+  .sub_insurance {
+    grid-template-columns: 1fr !important; // На мікро-екранах логотипи стають в 1 ряд
+  }
+  
+  .p_main_porsche_1, 
+  .p_main_porsche_2 {
+    font-size: 26px !important;
+  }
+}

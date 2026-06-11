@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
 const OffersGrid = ({ result, plate, setStep, setSelectedPkg }) => {
   const packages = result?.offers || result?.packages || [];
   const vehicleData = result?.vehicle;
 
-  const vehicleModel = vehicleData?.model || ''; 
-  const vehicleType = vehicleData?.type || '';
-  const vehicleYear = vehicleData?.year || '';
+  const vehicleModel = vehicleData?.model || "";
+  const vehicleType = vehicleData?.type || "";
+  const vehicleYear = vehicleData?.year || "";
 
   return (
     <>
@@ -14,25 +14,32 @@ const OffersGrid = ({ result, plate, setStep, setSelectedPkg }) => {
       <div className="container_profile container_profile_1 insurance_left_panel">
         <div className="user-info-card __shadows insurance_car_info_card">
           <div className="container_userpage_sub container_userpage_sub_1 insurance_car_details_wrapper">
-            <div className='container_button_insurance-page'>
-               <button onClick={() => setStep(1)} className="bulk-btn insurance_back_btn">
-              ← Back
-            </button>
-
+            <div className="container_button_insurance-page">
+              <button
+                onClick={() => setStep(1)}
+                className="bulk-btn insurance_back_btn"
+              >
+                ← Back
+              </button>
             </div>
-           
-            
+
             <div className="profile-fields insurance_car_specs">
               <p className="insurance_car_title">
-                <strong>{vehicleModel || 'Автомобіль'}</strong>
+                <strong>{vehicleModel || "Автомобіль"}</strong>
               </p>
               {vehicleType && (
-                <p className='p_strong_profilepage '><strong>Type: </strong> {vehicleType}</p>
+                <p className="p_strong_profilepage ">
+                  <strong>Type: </strong> {vehicleType}
+                </p>
               )}
               {vehicleYear && (
-                <p p_strong_profilepage ><strong>Year: </strong> {vehicleYear} y.</p>
+                <p p_strong_profilepage>
+                  <strong>Year: </strong> {vehicleYear} y.
+                </p>
               )}
-              <p p_strong_profilepage ><strong>Gov. Plate: </strong> {plate}</p>
+              <p p_strong_profilepage>
+                <strong>Gov. Plate: </strong> {plate}
+              </p>
             </div>
           </div>
         </div>
@@ -41,9 +48,10 @@ const OffersGrid = ({ result, plate, setStep, setSelectedPkg }) => {
       {/* ПРАВИЙ БЛОК: СІТКА СТРАХОВИХ ПРОПОЗИЦІЙ */}
       <div className="container_profile container_profile_2 insurance_right_panel">
         <div className="user-cars-section container_profile_1 insurance_offers_section">
-          
           <div className="__shadows insurance_header_shadow">
-            <p className="p_buypage_filtration __paddings_buypage">Available insurance policies:</p>
+            <p className="p_buypage_filtration __paddings_buypage">
+              Available insurance policies:
+            </p>
           </div>
 
           {packages.length === 0 ? (
@@ -61,13 +69,15 @@ const OffersGrid = ({ result, plate, setStep, setSelectedPkg }) => {
           ) : (
             <div className="cars-list-container __shadows insurance_offers_grid_list">
               {packages.map((pkg, index) => (
-                <div key={pkg.id || index} className="user-car-row __shadows_mini insurance_offer_row">
-                  
+                <div
+                  key={pkg.id || index}
+                  className="user-car-row __shadows_mini insurance_offer_row"
+                >
                   {pkg.logo && (
-                    <img 
-                      src={pkg.logo} 
-                      alt={pkg.name} 
-                      className="user-car-img insurance_company_logo" 
+                    <img
+                      src={pkg.logo}
+                      alt={pkg.name}
+                      className="user-car-img insurance_company_logo"
                     />
                   )}
 
@@ -84,14 +94,16 @@ const OffersGrid = ({ result, plate, setStep, setSelectedPkg }) => {
                   </div>
 
                   <div className="insurance_action_wrapper">
-                    <button 
-                      className="bulk-btn bulk-btn_userpage btn-save-profile insurance_select_pkg_btn" 
-                      onClick={() => { setSelectedPkg(pkg); setStep(3); }}
+                    <button
+                      className="bulk-btn bulk-btn_userpage btn-save-profile insurance_select_pkg_btn"
+                      onClick={() => {
+                        setSelectedPkg(pkg);
+                        setStep(3);
+                      }}
                     >
                       Choose
                     </button>
                   </div>
-
                 </div>
               ))}
             </div>

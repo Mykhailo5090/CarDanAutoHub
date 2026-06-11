@@ -57,7 +57,6 @@ export const getInsuranceOffers = async (data) => {
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     );
 
-
     await page.goto("https://hotline.finance/osago", {
       waitUntil: "networkidle2",
       timeout: 60000,
@@ -81,16 +80,11 @@ export const getInsuranceOffers = async (data) => {
       'form button[type="submit"], button[class*="Button_orange"], button[class*="submit"]';
     await page.waitForSelector(submitButtonSelector, { visible: true });
 
-
     await page.click(submitButtonSelector);
-
-   
 
     const vehicleInfo = await parseVehicleModalData(page);
 
     await new Promise((r) => setTimeout(r, 5000));
-
-
 
     const insuranceOffers = await parseInsuranceOffers(page);
 

@@ -7,6 +7,7 @@ import gearimg from "../buy/img/gear-box-img.png";
 import mileageimg from "../buy/img/mileage-img.png";
 import locationimg from "../buy/img/location-img.png";
 import phoneimg from "../buy/img/telephone.png";
+import '../adaptation.scss';
 
 const BuyPage = () => {
   const [cars, setCars] = useState([]);

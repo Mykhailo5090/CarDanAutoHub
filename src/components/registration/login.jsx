@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import '../registration/registration.scss';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "../registration/registration.scss";
 
-import porschebckg from '../registration/img/porschebkg.jpg';
-import logo from '../header/img/porschelogo.png';
+import porschebckg from "../registration/img/porschebkg.jpg";
+import logo from "../header/img/porschelogo.png";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [agree, setAgree] = useState(false);
   const navigate = useNavigate();
 
@@ -20,23 +20,22 @@ const LoginPage = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5001/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("http://localhost:5001/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-
         const userToSave = data.user || data;
 
         if (userToSave && (userToSave.id || userToSave.email)) {
-          localStorage.setItem('user', JSON.stringify(userToSave));
+          localStorage.setItem("user", JSON.stringify(userToSave));
           alert("Вхід успішний!");
 
-          window.location.href = '/profile';
+          window.location.href = "/profile";
         } else {
           alert("Помилка: Сервер повернув порожній об'єкт користувача");
         }
@@ -50,52 +49,54 @@ const LoginPage = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className='reg_container_1'>
+    <form onSubmit={handleSubmit} className="reg_container_1">
       <img className="porsche_bckg" src={porschebckg} alt="porsche" />
-      <div className='right_logos'>
-        <div className='reg_por_logo'>
+      <div className="right_logos">
+        <div className="reg_por_logo">
           <img className="logo-img" src={logo} alt="logo" />
-          <p className='reg_logo_por'>PORSCHE</p>
+          <p className="reg_logo_por">PORSCHE</p>
         </div>
-        <p className='p_reg_logo'>CarDan AutoHub</p>
+        <p className="p_reg_logo">CarDan AutoHub</p>
       </div>
 
-      <div className='reg_container'>
-        <div className='div_reg_comp'>
-          <p className='p_reg_h1'>Login</p>
-          <p className='p_input_reg'>enter your email:</p>
+      <div className="reg_container">
+        <div className="div_reg_comp">
+          <p className="p_reg_h1">Login</p>
+          <p className="p_input_reg">enter your email:</p>
           <input
             type="email"
             placeholder="example@gmail.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className='input_reg'
+            className="input_reg"
           />
-          <p className='p_input_reg'>enter your password:</p>
+          <p className="p_input_reg">enter your password:</p>
           <input
             type="password"
             placeholder="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className='input_reg'
+            className="input_reg"
           />
-          <div className='reg_have'>
-            <label className='lbl_chk'>
+          <div className="reg_have">
+            <label className="lbl_chk">
               <input
                 type="checkbox"
                 checked={agree}
                 onChange={(e) => setAgree(e.target.checked)}
-                className='chk_reg'
+                className="chk_reg"
               />
               I Agree
             </label>
             <Link to="/registration">
-              <p className='p_link_reg'>Create account</p>
+              <p className="p_link_reg">Create account</p>
             </Link>
           </div>
-          <button type="submit" className='reg_button'>Submit</button>
+          <button type="submit" className="reg_button">
+            Submit
+          </button>
         </div>
       </div>
     </form>

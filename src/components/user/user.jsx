@@ -9,7 +9,6 @@ const ProfilePage = () => {
   const [myCars, setMyCars] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -18,7 +17,6 @@ const ProfilePage = () => {
 
   const navigate = useNavigate();
 
-  
   useEffect(() => {
     const checkAuth = () => {
       try {
@@ -51,11 +49,10 @@ const ProfilePage = () => {
     checkAuth();
   }, [navigate]);
 
-
   const fetchMyCars = async (userId) => {
     try {
       const response = await fetch(
-        `http://localhost:5001/api/my-cars/${userId}`
+        `http://localhost:5001/api/my-cars/${userId}`,
       );
       if (!response.ok) throw new Error("Server error");
 
@@ -65,7 +62,6 @@ const ProfilePage = () => {
       console.error("Помилка завантаження машин:", err);
     }
   };
-
 
   useEffect(() => {
     if (user?.id) {
@@ -95,7 +91,7 @@ const ProfilePage = () => {
         {
           method: "PUT",
           body: data,
-        }
+        },
       );
       if (!response.ok) throw new Error("Помилка при оновленні");
 
@@ -142,127 +138,124 @@ const ProfilePage = () => {
       <div className="sub-body profile_sub-body">
         <div className="sub-body__2 profile_sub-body__2">
           <div className="profile_flex_container">
-            
             {/* ЛІВИЙ БЛОК: ДАНІ КОРИСТУВАЧА */}
             <div className="container_profile container_profile_1">
               <div className="user-info-card __shadows">
-                
                 <div className="container_userpage_sub container_userpage_sub_1">
                   <div className="avatar-section">
-                  <div className="avatar-wrapper">
-                    {avatarPreview ? (
-                      <img
-                        src={avatarPreview}
-                        alt="Avatar"
-                        className="user-avatar"
-                      />
-                    ) : (
-                      <div className="avatar-placeholder">👤</div>
-                    )}
-                    {isEditing && (
-                      <label className="upload-avatar-btn">
-                        📸
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={handleAvatarChange}
-                          style={{ display: "none" }}
+                    <div className="avatar-wrapper">
+                      {avatarPreview ? (
+                        <img
+                          src={avatarPreview}
+                          alt="Avatar"
+                          className="user-avatar"
                         />
-                      </label>
-                    )}
-                  </div>
-                </div>
-
-                <div className="profile-fields">
-                  <p>
-                    <strong>E-mail:</strong> {user?.email || "Не вказано"}
-                  </p>
-
-                  <div className="field-group">
-                    <strong className="p_strong_profilepage">Name: </strong>
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="Vanya"
-                        className="filter-input filter-input_userpage"
-                      />
-                    ) : (
-                      <strong>{user?.name || "Не вказано"}</strong>
-                    )}
+                      ) : (
+                        <div className="avatar-placeholder">👤</div>
+                      )}
+                      {isEditing && (
+                        <label className="upload-avatar-btn">
+                          📸
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleAvatarChange}
+                            style={{ display: "none" }}
+                          />
+                        </label>
+                      )}
+                    </div>
                   </div>
 
-                  <div className="field-group">
-                    <strong className="p_strong_profilepage">Phone number: </strong>
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        placeholder="+380(097)7777777"
-                        className="filter-input filter-input_userpage"
-                      />
-                    ) : (
-                      <strong>{user?.phone || "Не вказано"}</strong>
-                    )}
+                  <div className="profile-fields">
+                    <p>
+                      <strong>E-mail:</strong> {user?.email || "Не вказано"}
+                    </p>
+
+                    <div className="field-group">
+                      <strong className="p_strong_profilepage">Name: </strong>
+                      {isEditing ? (
+                        <input
+                          type="text"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          placeholder="Vanya"
+                          className="filter-input filter-input_userpage"
+                        />
+                      ) : (
+                        <strong>{user?.name || "Не вказано"}</strong>
+                      )}
+                    </div>
+
+                    <div className="field-group">
+                      <strong className="p_strong_profilepage">
+                        Phone number:{" "}
+                      </strong>
+                      {isEditing ? (
+                        <input
+                          type="text"
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                          placeholder="+380(097)7777777"
+                          className="filter-input filter-input_userpage"
+                        />
+                      ) : (
+                        <strong>{user?.phone || "Не вказано"}</strong>
+                      )}
+                    </div>
+
+                    <p>
+                      <strong>User ID: </strong> {user?.id || "ID відсутній"}
+                    </p>
                   </div>
-
-                  <p>
-                    <strong>User ID: </strong> {user?.id || "ID відсутній"}
-                  </p>
-                </div>
-
                 </div>
 
                 <div className="container_userpage_sub container_userpage_sub_2">
                   <div className="edit-profile-actions">
-                  {isEditing ? (
-                    <>
+                    {isEditing ? (
+                      <>
+                        <button
+                          onClick={handleSaveProfile}
+                          className="btn-save-profile bulk-btn"
+                        >
+                          Confirm
+                        </button>
+                        <button
+                          onClick={() => {
+                            setIsEditing(false);
+                            setAvatarPreview(
+                              user.avatar
+                                ? `http://localhost:5001${user.avatar}`
+                                : "",
+                            );
+                          }}
+                          className="btn-cancel-profile bulk-btn"
+                        >
+                          Denied
+                        </button>
+                      </>
+                    ) : (
                       <button
-                        onClick={handleSaveProfile}
-                        className="btn-save-profile bulk-btn"
+                        onClick={() => setIsEditing(true)}
+                        className="bulk-btn bulk-btn_userpage btn-save-profile"
                       >
-                        Confirm
+                        Configure profile
                       </button>
+                    )}
+
+                    <div className="profile-actions">
                       <button
                         onClick={() => {
-                          setIsEditing(false);
-                          setAvatarPreview(
-                            user.avatar
-                              ? `http://localhost:5001${user.avatar}`
-                              : ""
-                          );
+                          localStorage.clear();
+                          navigate("/login");
                         }}
-                        className="btn-cancel-profile bulk-btn"
+                        className="bulk-btn bulk-btn_userpage bulk-btn_userpage_1"
                       >
-                        Denied
+                        Exit profile
                       </button>
-                    </>
-                  ) : (
-                    <button
-                      onClick={() => setIsEditing(true)}
-                      className="bulk-btn bulk-btn_userpage btn-save-profile"
-                    >
-                      Configure profile
-                    </button>
-                  )}
-                  
-                  <div className="profile-actions">
-                    <button
-                      onClick={() => {
-                        localStorage.clear();
-                        navigate("/login");
-                      }}
-                      className="bulk-btn bulk-btn_userpage bulk-btn_userpage_1"
-                    >
-                      Exit profile
-                    </button>
+                    </div>
                   </div>
                 </div>
-                </div>
-
-                
               </div>
             </div>
 
@@ -270,9 +263,11 @@ const ProfilePage = () => {
             <div className="container_profile container_profile_2">
               <div className="user-cars-section container_profile_1">
                 <div className="__shadows">
-                  <p className="p_buypage_filtration __paddings_buypage">Your cars: </p>
+                  <p className="p_buypage_filtration __paddings_buypage">
+                    Your cars:{" "}
+                  </p>
                 </div>
-                
+
                 {myCars.length === 0 ? (
                   <p className="no-cars-text">You dont have car on sale</p>
                 ) : (
@@ -298,21 +293,18 @@ const ProfilePage = () => {
                             Price: <strong>${car.price}</strong>
                           </p>
                           <button
-                          onClick={() => handleDelete(car.id)}
-                          className="bulk-btn "
-                        >
-                          Видалити
-                        </button>
+                            onClick={() => handleDelete(car.id)}
+                            className="bulk-btn "
+                          >
+                            Видалити
+                          </button>
                         </div>
-
-                        
                       </div>
                     ))}
                   </div>
                 )}
               </div>
             </div>
-
           </div>
         </div>
       </div>

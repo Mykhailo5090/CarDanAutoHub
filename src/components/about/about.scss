@@ -287,12 +287,16 @@ $lightgreen: #7ba05b;
 
 // РЕЗЕРВНИЙ АДАПТИВ
 @media (max-width: 1024px) {
+
   .about_section_row { grid-template-columns: 1fr !important; gap: 30px; }
   .section_layout_1 .right_staggered_col { flex-direction: column-reverse; }
   .section_layout_3 .main_content_col { order: 1; }
   .section_layout_3 .image_sidebar_col { order: 2; }
   .about_image_container.wrapper_top_down, 
   .about_image_container.wrapper_top_up { margin: 0; .porsche_img { transform: scale(1.1); } }
+  .porsche_img{
+    display: none;
+  }
 }
 .about_sub_body__2{
     padding-bottom: 2%;

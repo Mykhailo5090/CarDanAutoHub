@@ -3,7 +3,7 @@ import OffersGrid from "./offersGrid";
 import InsuranceForm from "./insuranceForm";
 import "../insurance/insurance.scss";
 import "../buy/buypage.scss";
-import '../user/user.scss';
+import "../user/user.scss";
 
 const InsurancePage = () => {
   const savedUser = localStorage.getItem("user");

@@ -1,0 +1,127 @@
+// Фікси для верхньої картки привітання
+.welcome_hero_card {
+  margin-bottom: 50px;
+  text-align: left;
+  
+  .welcome_title {
+    font-size: 42px;
+    font-weight: 800;
+    margin: 5px 0 15px 0;
+    background: linear-gradient(90deg, #ffffff, rgba(255, 255, 255, 0.7));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+// Сітка для двох центральних блоків
+.porsche_cards_grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 35px;
+  margin-top: 20px;
+}
+
+// Стилізація інтерактивних карток-посилань
+.porsche_clickable_block {
+  text-decoration: none; // Прибираємо дефолтне підкреслення лінків
+  color: #inherit;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.4s ease, box-shadow 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content:开;
+  height: 100%;
+
+  h3 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 10px 0 15px 0;
+    transition: color 0.3s ease;
+  }
+
+  p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 40px;
+  }
+
+  // Футер картки із закликом до дії
+  .block_action_footer {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 20px;
+
+    .action_link_text {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(255, 255, 255, 0.5);
+      transition: color 0.3s ease;
+    }
+
+    .action_arrow {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.4);
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+  }
+
+  // Внутрішній неоновий ефект при наведенні
+  .block_glow_effect {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at 50% -20%, rgba(33, 150, 243, 0.15), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+
+  // ХОВЕР ЕФЕКТИ
+  &:hover {
+    transform: translateY(-8px) scale(1.015);
+    border-color: rgba(33, 150, 243, 0.3);
+    box-shadow: 0 35px 60px rgba(0, 0, 0, 0.6) !important;
+
+    h3 {
+      color: #2196F3; // Підсвічуємо заголовок фірмовим синім
+    }
+
+    .block_glow_effect {
+      opacity: 1;
+    }
+
+    .block_action_footer {
+      .action_link_text {
+        color: #ffffff;
+      }
+      .action_arrow {
+        color: #2196F3;
+        transform: translateX(5px);
+      }
+    }
+  }
+}
+
+// Адаптив під мобілки (блоки стають один під один)
+@media (max-width: 900px) {
+  .porsche_cards_grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  .welcome_hero_card .welcome_title {
+    font-size: 32px;
+  }
+}
+.auto_sub_body{
+    height: 100vh;
+}
+.auto_sub_body__2{
+    height: 100vh;
+}

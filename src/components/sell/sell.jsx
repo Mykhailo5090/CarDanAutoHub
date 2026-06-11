@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./sell.scss";
 import "../buy/buypage.scss";
 import addimg from "../buy/img/photo-add.png";
+import '../adaptation.scss';
 
 const SellPage = () => {
   const [formData, setFormData] = useState({

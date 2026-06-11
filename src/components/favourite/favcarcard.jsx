@@ -20,9 +20,9 @@ const FavCarCard = ({ car, isChecked, onSelectToggle, onRemove }) => {
   };
 
   return (
-   
-    <div className={`car-card fav-car-card  ${isChecked ? "car-card-selected" : ""}`}>
-      
+    <div
+      className={`car-card fav-car-card  ${isChecked ? "car-card-selected" : ""}`}
+    >
       {/* ЧЕКБОКС НА КАРТЦІ (Новий ізольований клас) */}
       <div className="fav-car-card-checkbox-wrapper">
         <input
@@ -31,10 +31,7 @@ const FavCarCard = ({ car, isChecked, onSelectToggle, onRemove }) => {
           onChange={() => onSelectToggle(car.id)}
         />
       </div>
-
-      {/* НОВИЙ ВЕРХНІЙ КОНТЕЙНЕР (Новий ізольований клас) */}
       <div className="fav-car-card-main-row">
-        
         {/* 1. БЛОК З ФОТОГРАФІЄЮ ТА КАРУСЕЛЛЮ */}
         <div className="car-card-image-wrapper">
           <img
@@ -72,13 +69,11 @@ const FavCarCard = ({ car, isChecked, onSelectToggle, onRemove }) => {
 
         {/* 2. ІНФОРМАЦІЙНИЙ БЛОК КАРТКИ */}
         <div className="car-card-info ">
-          {/* Заголовок: Бренд та Ціна */}
           <div className="car-card-header">
             <h3 className="car-card-title">{car.brand}</h3>
             <span className="car-card-price">${car.price}</span>
           </div>
 
-          {/* Суб-заголовок: Модель та Рік */}
           <div className="car-card-header car-car-sub-header">
             <h5 className="car-card-title">{car.model}</h5>
             <div className="year_container_car_card">
@@ -87,7 +82,6 @@ const FavCarCard = ({ car, isChecked, onSelectToggle, onRemove }) => {
             </div>
           </div>
 
-          {/* Контейнер з деталями та продавцем */}
           <div className="car-card-container">
             {/* Технічні характеристики */}
             <div className="car-card-item_1">
@@ -145,9 +139,6 @@ const FavCarCard = ({ car, isChecked, onSelectToggle, onRemove }) => {
           </div>
         </div>
       </div>{" "}
-      {/* КІНЕЦЬ ВЕРХНЬОГО КОНТЕЙНЕРА */}
-
-      {/* 3. ОКРЕМЙ НИЖНІЙ БЛОК (Нові ізольовані класи) */}
       {car.description && (
         <div className="fav-car-card-description-block">
           <div className="car-card-item_1 fav-car-card-item-description">
@@ -160,4 +151,4 @@ const FavCarCard = ({ car, isChecked, onSelectToggle, onRemove }) => {
   );
 };
 
-export default FavCarCard
+export default FavCarCard;

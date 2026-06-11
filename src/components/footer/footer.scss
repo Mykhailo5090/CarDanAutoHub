@@ -1,102 +1,198 @@
-$bluecolor:#0F1A32;
-$bonecolor:#F5F4F5;
-$darkbluecolor:#0F1A32;
-$graycolor:#464646;
+$bluecolor: #0f1a32;
+$bonecolor: #f5f4f5;
+$darkbluecolor: #0f1a32;
+$graycolor: #464646;
 
-.wrapper_footer{
+.wrapper_footer {
   padding-left: 50px;
   padding-right: 50px;
   padding-top: 30px;
   padding-bottom: 30px;
   // border: 2px solid $bluecolor;
 }
-.footer{
+.footer {
   width: 100%;
-  background-color: $bonecolor; 
+  background-color: $bonecolor;
   margin-top: auto;
   font-family: hranfsey;
 }
 
-
-
-.footer_maps_container{
+.footer_maps_container {
   display: flex;
   justify-content: space-between;
-  height: 100%; 
-  gap: 40px;  
-  padding: .5%;
-  border: $bluecolor solid 2px; 
-  border-radius: 15px;  
+  height: 100%;
+  gap: 40px;
+  padding: 0.5%;
+  border: $bluecolor solid 2px;
+  border-radius: 15px;
 }
 
-.map_item{
+.map_item {
   display: flex;
   column-gap: 3%;
   max-width: 100%;
   min-height: 100%;
-  flex: 1; 
-  border: $bluecolor solid 2px; 
-  border-radius: 15px;  
+  flex: 1;
+  border: $bluecolor solid 2px;
+  border-radius: 15px;
   padding: 1%;
-  
-  
+
   iframe {
-    max-height: 100%; 
+    max-height: 100%;
     min-height: 100%;
-    flex: 1;   
-    border-radius: 15px;   
+    flex: 1;
+    border-radius: 15px;
     display: flex;
   }
 }
 
-.text_map_container{
+.text_map_container {
   font-size: 32px;
-  flex: 1; 
+  flex: 1;
 }
 
-.text_map_container_2{
+.text_map_container_2 {
   display: grid;
   justify-items: end;
-  align-content: start; 
-  row-gap: 15px;        
+  align-content: start;
+  row-gap: 15px;
   font-size: 32px;
-  flex: 1;             
+  flex: 1;
 }
-.text_map_container_1{
+.text_map_container_1 {
   display: grid;
   justify-items: start;
-  align-content: start; 
-  row-gap: 15px;        
+  align-content: start;
+  row-gap: 15px;
   font-size: 32px;
-  flex: 1;              
+  flex: 1;
 }
 
-.text_bkg{
+.text_bkg {
   background-color: $bluecolor;
-  width:fit-content;
+  width: fit-content;
   padding: 1%;
   padding-left: 2%;
   padding-right: 2%;
+  border-radius: 10px;
 }
-.p_text_bkg{
+.p_text_bkg {
   color: $bonecolor;
   width: 100%;
 }
-.porsche_right_under_container{
-    display: flex;
-    justify-content: end;
+.porsche_right_under_container {
+  display: flex;
+  justify-content: end;
 }
-.porsche_font_1{
+.porsche_font_1 {
   font-size: 32px;
   font-family: porsche;
-
-
-
-
 }
 
 .porsche_right_under {
   display: flex;
   align-items: center;
-  gap: 5px; 
+  gap: 5px;
+}
+
+.text_map_container {
+  flex-shrink: 0;
+  min-width: 250px;
+}
+
+.p_text_bkg,
+.text_adress_1,
+.porsche_font_1 {
+  white-space: nowrap;
+}
+
+@media (max-width: 1350px) {
+  .footer_maps_container {
+    flex-direction: column;
+    gap: 25px;
+    border: none;
+    padding: 0;
+  }
+
+  .map_item {
+    width: 100%;
+    padding: 20px;
+
+    iframe {
+      height: 250px;
+    }
+  }
+
+  .text_map_container_1,
+  .text_map_container_2 {
+    font-size: 26px;
+  }
+}
+@media (max-width: 700px) {
+  .map_item {
+    &.map_item_1 {
+      flex-direction: column-reverse;
+    }
+    &.map_item_2 {
+      flex-direction: column;
+    }
+  }
+}
+
+@media (max-width: 860px) {
+  .map_item {
+    // &.map_item_1 { flex-direction: column-reverse; }
+    // &.map_item_2 { flex-direction: column; }
+    align-items: stretch;
+    gap: 15px;
+
+    iframe {
+      width: 100%;
+      height: 200px;
+    }
+  }
+
+  .text_map_container_1,
+  .text_map_container_2 {
+    width: 100%;
+    justify-items: start !important;
+    text-align: left !important;
+    font-size: 22px;
+    row-gap: 10px;
+  }
+
+  .porsche_right_under {
+    justify-content: flex-start !important;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .wrapper_footer {
+    padding: 20px 15px;
+  }
+
+  .map_item {
+    padding: 15px;
+  }
+
+  .text_map_container_1,
+  .text_map_container_2 {
+    font-size: 18px;
+  }
+
+  .porsche_font_1 {
+    font-size: 20px;
+  }
+}
+@media (max-width: 1550px) {
+  .porsche_font_1 {
+    font-size: 24px;
+  }
+  .text_adress_1 {
+    font-size: 24px;
+  }
+  .p_text_bkg {
+    font-size: 24px;
+  }
 }

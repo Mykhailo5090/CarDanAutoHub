@@ -1,5 +1,5 @@
-import React, { useState } from "react"; 
-import emailjs from "@emailjs/browser"; 
+import React, { useState } from "react";
+import emailjs from "@emailjs/browser";
 import "../main/mainpage.scss";
 import porschesubheader from "../main/img/porschesubheader.jpg";
 import logo from "../header/img/porschelogo.png";
@@ -12,16 +12,15 @@ import insimg3 from "../main/img/insurance/axa.png";
 import insimg4 from "../main/img/insurance/logo_ingo.png";
 import insimg5 from "../main/img/insurance/tas.png";
 import insimg6 from "../main/img/insurance/uniqa.png";
-import maincall from '../main/img/main-call.jpg';
+import maincall from "../main/img/main-call.jpg";
+import '../adaptation.scss';
 
 const MainPage = () => {
-
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
- 
   const handleSupportSubmit = (e) => {
     e.preventDefault();
     setError("");
@@ -29,21 +28,17 @@ const MainPage = () => {
 
     const trimmedEmail = email.trim();
 
-    
     if (!trimmedEmail) {
       setError("Email field cannot be empty!");
       return;
     }
 
-    
     if (!trimmedEmail.endsWith("@gmail.com")) {
       setError("Please use a valid @gmail.com address!");
       return;
     }
 
-
     setLoading(true);
-
 
     const serviceID = "service_7bscywk";
     const templateID = "template_6306tro";
@@ -54,10 +49,11 @@ const MainPage = () => {
       message: "Support request received! We will contact you shortly.",
     };
 
-    emailjs.send(serviceID, templateID, templateParams, publicKey)
+    emailjs
+      .send(serviceID, templateID, templateParams, publicKey)
       .then(() => {
         setSuccess(true);
-        setEmail(""); 
+        setEmail("");
       })
       .catch((err) => {
         console.error("EmailJS Error:", err);
@@ -153,7 +149,12 @@ const MainPage = () => {
                   <div className="sub_insurance">
                     {/* 1. Arsenal */}
                     <div className="item_ins item_ins_1 location-listing">
-                      <a href="https://arsenal-ic.ua/" target="_blank" rel="noreferrer" className="link_button">
+                      <a
+                        href="https://arsenal-ic.ua/"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="link_button"
+                      >
                         <div className="location-image">
                           <img src={insimg1} alt="Arsenal" />
                         </div>
@@ -163,7 +164,12 @@ const MainPage = () => {
 
                     {/* 2. ARX */}
                     <div className="item_ins item_ins_2 location-listing">
-                      <a href="https://arx.com.ua/" target="_blank" rel="noreferrer" className="link_button">
+                      <a
+                        href="https://arx.com.ua/"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="link_button"
+                      >
                         <div className="location-image">
                           <img src={insimg2} alt="ARX" />
                         </div>
@@ -173,7 +179,12 @@ const MainPage = () => {
 
                     {/* 3. AXA */}
                     <div className="item_ins item_ins_3 location-listing">
-                      <a href="https://www.axa.com/" target="_blank" rel="noreferrer" className="link_button">
+                      <a
+                        href="https://www.axa.com/"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="link_button"
+                      >
                         <div className="location-image">
                           <img src={insimg3} alt="AXA" />
                         </div>
@@ -183,7 +194,12 @@ const MainPage = () => {
 
                     {/* 4. INGO */}
                     <div className="item_ins item_ins_4 location-listing">
-                      <a href="https://ingo.ua/" target="_blank" rel="noreferrer" className="link_button">
+                      <a
+                        href="https://ingo.ua/"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="link_button"
+                      >
                         <div className="location-image">
                           <img src={insimg4} alt="INGO" />
                         </div>
@@ -193,7 +209,12 @@ const MainPage = () => {
 
                     {/* 5. TAS */}
                     <div className="item_ins item_ins_5 location-listing">
-                      <a href="https://sgtas.ua/" target="_blank" rel="noreferrer" className="link_button">
+                      <a
+                        href="https://sgtas.ua/"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="link_button"
+                      >
                         <div className="location-image">
                           <img src={insimg5} alt="TAS" />
                         </div>
@@ -203,7 +224,12 @@ const MainPage = () => {
 
                     {/* 6. UNIQA */}
                     <div className="item_ins item_ins_6 location-listing">
-                      <a href="https://uniqa.ua/" target="_blank" rel="noreferrer" className="link_button">
+                      <a
+                        href="https://uniqa.ua/"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="link_button"
+                      >
                         <div className="location-image">
                           <img src={insimg6} alt="UNIQA" />
                         </div>
@@ -231,49 +257,48 @@ const MainPage = () => {
 
       {/* БЛОК 4 (ПІДТРИМКА ТА ФОРМА) */}
       <div className="main_item main_item_1 main_item_4">
-        <img
-          className="porsche_sub_header_img"
-          src={maincall}
-          alt="service"
-        />
+        <img className="porsche_sub_header_img" src={maincall} alt="service" />
         <div className="__wrapper __wrapper_flex">
           <div className="sub_call_left"></div>
           <div className="container_call">
             <div className="padding_right_call"></div>
             <div className="padding_left_call">
               <div className="sub_call sub_call_1">
-              <p className="p_sub_call">
-                Our support service is available 24/7 to ensure your safe use. 
-                To receive support, enter your email below.
-              </p>
-            </div>
-            
-            
-            <form onSubmit={handleSupportSubmit} className="sub_call sub_call_2">
-              <input 
-                type="text" 
-                className="input_callito" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="example@gmail.com"
-              />
-              
-              <button type="submit" disabled={loading} className="button_callito ">
-                {loading ? "Sending..." : "Submit"}
-              </button>
+                <p className="p_sub_call">
+                  Our support service is available 24/7 to ensure your safe use.
+                  To receive support, enter your email below.
+                </p>
+              </div>
 
-              
-              {error && <p className="error_callito">{error}</p>}
-              {success && <p className="success_callito">Letter sent successfully!</p>}
-            </form>
+              <form
+                onSubmit={handleSupportSubmit}
+                className="sub_call sub_call_2"
+              >
+                <input
+                  type="text"
+                  className="input_callito"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="example@gmail.com"
+                />
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="button_callito "
+                >
+                  {loading ? "Sending..." : "Submit"}
+                </button>
+
+                {error && <p className="error_callito">{error}</p>}
+                {success && (
+                  <p className="success_callito">Letter sent successfully!</p>
+                )}
+              </form>
             </div>
-            
-            
-            
           </div>
         </div>
       </div>
-      
     </div>
   );
 };
