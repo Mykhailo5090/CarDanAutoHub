@@ -1,9 +1,9 @@
-import { Router } from 'express';
-import { getInsuranceOffers, createPolisContract } from '../insurance.js';
+import { Router } from "express";
+import { getInsuranceOffers, createPolisContract } from "../insurance.js";
 
 const router = Router();
 
-router.post('/get-price', async (req, res) => {
+router.post("/get-price", async (req, res) => {
   try {
     const data = await getInsuranceOffers(req.body.plate);
     res.json({ success: true, ...data });
@@ -13,7 +13,7 @@ router.post('/get-price', async (req, res) => {
   }
 });
 
-router.post('/create-contract', async (req, res) => {
+router.post("/create-contract", async (req, res) => {
   try {
     const result = await createPolisContract(req.body);
     res.json(result);

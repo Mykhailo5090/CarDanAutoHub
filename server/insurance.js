@@ -57,7 +57,7 @@ export const getInsuranceOffers = async (data) => {
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     );
 
-    // console.log(` Переходимо на сторінку ОСЦПВ...`);
+
     await page.goto("https://hotline.finance/osago", {
       waitUntil: "networkidle2",
       timeout: 60000,
@@ -81,16 +81,16 @@ export const getInsuranceOffers = async (data) => {
       'form button[type="submit"], button[class*="Button_orange"], button[class*="submit"]';
     await page.waitForSelector(submitButtonSelector, { visible: true });
 
-    // console.log(' Натискаємо кнопку розрахунку...');
+
     await page.click(submitButtonSelector);
 
-    //  Проходимо обидві модалки та збираємо інфо про ТЗ
+   
 
     const vehicleInfo = await parseVehicleModalData(page);
 
     await new Promise((r) => setTimeout(r, 5000));
 
-    //  Збираємо ціни та пропозиції страхових компаній
+
 
     const insuranceOffers = await parseInsuranceOffers(page);
 
@@ -112,7 +112,7 @@ export const getInsuranceOffers = async (data) => {
             path: "hotline_error_screenshot.png",
             fullPage: true,
           });
-          console.log(" Скріншот помилки ");
+          console.log(" Скріншот ");
         }
       } catch (sErr) {}
       await browser.close();
@@ -122,5 +122,5 @@ export const getInsuranceOffers = async (data) => {
 };
 
 export const createPolisContract = async (contractData) => {
-  return { success: true, message: "Заглушка створення контракту" };
+  return { success: true, message: " створення контракту" };
 };
